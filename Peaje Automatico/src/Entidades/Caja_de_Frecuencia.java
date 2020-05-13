@@ -22,7 +22,6 @@ public class Caja_de_Frecuencia implements Runnable{
     @Override
     public void run() {
         while (!cola_para_despachar.isEmpty()) {
-            int dormir= 
             Vehiculo v = cola_para_despachar.poll();
             if(v.isUnidad_especial()){
                 Cola_Vehiculos_Especiales.cola.add(v);
