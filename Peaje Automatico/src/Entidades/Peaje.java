@@ -18,7 +18,7 @@ public class Peaje {
     private int cantCabinas;
     LinkedList listaCabinas;
     private int totalDinero = 0;
-    
+    TipoDeVehiculos tipos;
     
     public void Peaje(String nombre, int numCabinas){
         this.nombre = nombre;
@@ -32,22 +32,9 @@ public class Peaje {
         vehiculo.setHoraFin(0);
     }
     
-    enum tiposDeVehiculos{
-        auto (20),
-        moto (10),
-        camion (30),
-        omnibus (25);
-        
-        public final int label;
-        
-        private tiposDeVehiculos(int label){
-            this.label = label;
-        }
-    }
-    
     public int fijarsePrecio(Vehiculo vehiculo){
         String tipoDelVehiculo = vehiculo.getTipo();
-        return tiposDeVehiculos.valueOf(tipoDelVehiculo).label;
+        return tipos.valueOf(tipoDelVehiculo).label;
     }
     
 }
