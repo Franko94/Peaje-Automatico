@@ -27,9 +27,8 @@ public class Peaje {
     }
     
     
-    public void cobrar(Vehiculo vehiculo){
-        totalDinero += this.fijarsePrecio(vehiculo);
-        vehiculo.setHoraSalida(0);
+    public synchronized void actualizarCaja(int monto){
+        totalDinero += monto;
     }
     
     public int fijarsePrecio(Vehiculo vehiculo){

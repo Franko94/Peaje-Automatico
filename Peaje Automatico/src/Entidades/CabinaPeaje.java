@@ -9,7 +9,7 @@ package Entidades;
  *
  * @author fran_
  */
-public class CabinaPeaje {
+public class CabinaPeaje extends Thread{
     
     private boolean habilitada;
     private int numero;
@@ -19,6 +19,15 @@ public class CabinaPeaje {
         this.habilitada = true;
         this.numero = numero;
         this.ocupada = false;
+    }
+    
+    @Override
+    public void run(){
+        cobrarVehiculo();
+    }
+    
+    private void cobrarVehiculo(){
+        
     }
 
     public int getNumero() {
