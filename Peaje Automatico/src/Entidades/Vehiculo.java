@@ -38,6 +38,14 @@ public class Vehiculo {
         return unidad_especial;
     }
     
+    public void setHoraFin(long numero){
+        hora_fin = numero;
+    }
+    
+    public String getTipo(){
+        return tipo;
+    }
+    
     
     
     
