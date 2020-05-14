@@ -14,11 +14,13 @@ public class CabinaPeaje extends Thread{
     private boolean habilitada;
     private int numero;
     private boolean ocupada;
+    private Vehiculo vehiculo;
     
     public CabinaPeaje(int numero){
         this.habilitada = true;
         this.numero = numero;
         this.ocupada = false;
+        vehiculo = null;
     }
     
     @Override
@@ -27,7 +29,9 @@ public class CabinaPeaje extends Thread{
     }
     
     private void cobrarVehiculo(){
-        
+        if(vehiculo != null){
+            Peaje.cobrar(vehiculo);
+        }
     }
 
     public int getNumero() {
