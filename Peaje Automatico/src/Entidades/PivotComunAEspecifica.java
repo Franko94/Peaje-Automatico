@@ -11,7 +11,7 @@ import java.util.Queue;
  *
  * @author Teo
  */
-public class PivotComunAEspecifica {
+public class PivotComunAEspecifica implements Runnable {
     
     public static Queue <Vehiculo> colaComun;
     public static Queue <Vehiculo> colaNormales;
@@ -33,5 +33,10 @@ public class PivotComunAEspecifica {
                 colaNormales.add(vehiculo);
             }
         }
+    }
+
+    @Override
+    public void run() {
+        this.clasificarColas();
     }
 }
