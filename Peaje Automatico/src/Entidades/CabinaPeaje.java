@@ -5,6 +5,9 @@
  */
 package Entidades;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author fran_
@@ -25,12 +28,20 @@ public class CabinaPeaje extends Thread{
     
     @Override
     public void run(){
-        cobrarVehiculo();
+        try {
+            cobrarVehiculo();
+            wait(); //con esto no volvera a tomar accion hasta que ocurra un notify
+                    //externo
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CabinaPeaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void cobrarVehiculo(){
         if(vehiculo != null){
             Peaje.cobrar(vehiculo);
+            vehiculo = null;
+            setOcupada(false);
         }
     }
 

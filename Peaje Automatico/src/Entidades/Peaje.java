@@ -6,6 +6,7 @@
 package Entidades;
 
 import Entidades.Enums.PreciosDeVehiculos;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -16,13 +17,13 @@ public class Peaje {
     
     private String nombre;
     private int cantCabinas;
-    LinkedList listaCabinas;
+    public  ArrayList<CabinaPeaje> listaCabinas;
     private static int totalDinero = 0;
     
-    public void Peaje(String nombre, int numCabinas){
+    public Peaje(String nombre, int numCabinas){
         this.nombre = nombre;
         cantCabinas = numCabinas;
-        listaCabinas = new LinkedList();
+        listaCabinas = new ArrayList<>();
     }
     
 
@@ -39,6 +40,12 @@ public class Peaje {
     private static void setTotalDinero(int monto){
         totalDinero += monto;
 
+    }
+    
+    public void abrirCabinas(){
+        for(int i = 0; i < cantCabinas; i++){
+            listaCabinas.add(new CabinaPeaje(i));
+        }
     }
     
 }

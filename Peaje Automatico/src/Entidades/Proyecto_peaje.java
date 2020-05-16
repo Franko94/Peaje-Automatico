@@ -22,6 +22,11 @@ public class Proyecto_peaje {
         Vehiculo v = new Vehiculo("matricula,tipo,true,false");
         Caja_de_vehiculos cajav = new Caja_de_vehiculos();
         cajav.cargar_vehiculos();
+        
+        Peaje peaje = new Peaje("Peaje Pando",9);
+        peaje.abrirCabinas();
+        System.out.println(peaje.listaCabinas.size());
+        
         Caja_de_finalizados cajaf = new Caja_de_finalizados();
         Caja_de_finalizados.addVehiculo(v);
         cajaf.guardarAutosEnArchivo();
