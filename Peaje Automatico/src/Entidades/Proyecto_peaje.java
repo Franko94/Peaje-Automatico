@@ -5,6 +5,9 @@
  */
 package Entidades;
 
+import Entidades.Cajas.Caja_de_vehiculos;
+import Entidades.Cajas.Caja_de_finalizados;
+
 /**
  *
  * @author Agustín Picos

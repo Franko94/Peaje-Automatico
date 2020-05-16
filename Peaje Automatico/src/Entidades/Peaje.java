@@ -5,6 +5,7 @@
  */
 package Entidades;
 
+import Entidades.Enums.PreciosDeVehiculos;
 import java.util.LinkedList;
 
 /**
@@ -32,7 +33,7 @@ public class Peaje {
     
     private static int fijarsePrecio(Vehiculo vehiculo){
         String tipoDelVehiculo = vehiculo.getTipo();
-        return TipoDeVehiculos.valueOf(tipoDelVehiculo).label;
+        return PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
     }
     
     private static void setTotalDinero(int monto){
