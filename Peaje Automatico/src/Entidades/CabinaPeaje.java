@@ -53,4 +53,8 @@ public class CabinaPeaje extends Thread{
     public void setOcupada(boolean ocupada){
         this.ocupada = ocupada;
     }
+    
+    public void setVehiculo(Vehiculo vehiculo){
+        this.vehiculo = vehiculo;
+    }
 }

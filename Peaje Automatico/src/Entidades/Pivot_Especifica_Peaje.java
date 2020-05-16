@@ -14,13 +14,10 @@ import java.util.Queue;
 public class Pivot_Especifica_Peaje implements Runnable {
 
     public static Queue <CabinaPeaje> colaPeaje;
-    public static Queue <Vehiculo> colaNormales;
-    public static Queue <Vehiculo> colaEspeciales;
+  
     
-    public Pivot_Especifica_Peaje(Queue colaPeaje, Queue colaNormales, Queue colaEspeciales){
+    public Pivot_Especifica_Peaje(Queue colaPeaje){
         this.colaPeaje = colaPeaje;
-        this.colaNormales = colaNormales;
-        this.colaEspeciales = colaEspeciales;
     }
 
     @Override
@@ -30,11 +27,11 @@ public class Pivot_Especifica_Peaje implements Runnable {
     
     private void distribuir(){
         Vehiculo vehiculo;
-        if(!colaEspeciales.isEmpty()){
-            vehiculo = colaEspeciales.poll();
+        if(!Colas_Vehiculos_Clasificados.especiales.isEmpty()){
+            vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
         }
         else{
-            vehiculo = colaNormales.poll();
+            vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
         }
         for(CabinaPeaje cp : colaPeaje){
             if(!cp.getOcupada()){
