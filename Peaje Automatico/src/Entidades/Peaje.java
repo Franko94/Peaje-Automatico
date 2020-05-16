@@ -27,7 +27,7 @@ public class Peaje {
 
     public static synchronized void cobrar(Vehiculo vehiculo){
         setTotalDinero(fijarsePrecio(vehiculo));
-        vehiculo.setHoraFin(0);
+        vehiculo.setHoraSalida(0);
     }
     
     private static int fijarsePrecio(Vehiculo vehiculo){
@@ -35,19 +35,6 @@ public class Peaje {
         return TipoDeVehiculos.valueOf(tipoDelVehiculo).label;
     }
     
-    public int fijarsePrecio(Vehiculo vehiculo){
-        int x = -1;
-        if (vehiculo.getTipo() == "auto"){
-            x=10;
-        }
-        else if (vehiculo.getTipo() == "camion"){
-            x=20;
-        }
-        else if (vehiculo.getTipo() == "moto"){
-            x=15;
-        }
-        return x;
-
     private static void setTotalDinero(int monto){
         totalDinero += monto;
 

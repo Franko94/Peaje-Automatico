@@ -12,7 +12,7 @@ import java.util.Queue;
  *
  * @author apicos
  */
-public class Cola_Comun_Ruta extends Cola {
+public class Cola_Comun_Ruta {
 
     public static Queue <Vehiculo> cola;
 

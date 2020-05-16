@@ -19,8 +19,15 @@ import javax.swing.JOptionPane;
  *
  * @author Agustín Picos
  */
-public class Caja_de_finalizados extends  Cola{
+public class Caja_de_finalizados {
 
+    Queue<Vehiculo> cola = new LinkedList<>();
+
+    public Caja_de_finalizados() {
+    }
+    public void add_Vehiculo(Vehiculo v) {
+        cola.add(v);
+    }
 
     public void escribirArchivo() {
         FileWriter fw;
@@ -31,7 +38,7 @@ public class Caja_de_finalizados extends  Cola{
                 String lineaActual = cola.poll().pasar_a_String();
                 bw.write(lineaActual);
                 bw.newLine();
-                
+
             }
 
             bw.close();

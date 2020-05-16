@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Agustín Picos
  */
-public class Caja_de_vehiculos extends Cola {
+public class Caja_de_vehiculos {
 
     public void cargar_vehiculos() {
         File archivo;

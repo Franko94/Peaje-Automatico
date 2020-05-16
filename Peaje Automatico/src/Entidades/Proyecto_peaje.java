@@ -23,6 +23,29 @@ public class Proyecto_peaje {
         cajaf.add_Vehiculo(v);
         cajaf.escribirArchivo();
         System.out.println("");
+        
+        
+        
+        
+        /**
+         * Acá abajos vamos armado la ejecucion del programa final
+         */
+        
+        /**
+         * Primero: Creación de todos los objetos
+         */
+        
+        /**
+         * Segundo: Carga de datos
+         */
+        
+        /**
+         * Tercero: ejecucion del programa principal
+         */
+        
+        /**
+         * Cuarto: Guardado de datos
+         */
     }
 
 }
