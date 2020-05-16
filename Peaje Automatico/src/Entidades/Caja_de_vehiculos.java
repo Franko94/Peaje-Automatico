@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Caja_de_vehiculos {
     
-    Queue<Vehiculo> cola = new LinkedList<>();
+    public static Queue<Vehiculo> cola = new LinkedList<>();
 
     public void cargar_vehiculos() {
         File archivo;
@@ -41,8 +41,4 @@ public class Caja_de_vehiculos {
             JOptionPane.showMessageDialog(null, "Hubo un error leyendo el archivo" + e);
         }
     }
-    public Vehiculo getPrimero(){
-        return cola.poll();
-    }
-
 }

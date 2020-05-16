@@ -13,9 +13,6 @@ import java.util.Queue;
  * @author apicos
  */
 public class Colas_Vehiculos_Clasificados {
-    public static Queue <Vehiculo> cola;
-
-    public static void add_Vehiculo_Clasificado(Vehiculo v) {
-        cola.add(v);
-    }
+    public static Queue <Vehiculo> especiales;
+public static Queue <Vehiculo> normales;
 }
