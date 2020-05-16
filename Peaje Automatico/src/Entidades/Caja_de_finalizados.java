@@ -19,26 +19,33 @@ import javax.swing.JOptionPane;
  *
  * @author Agustín Picos
  */
-public class Caja_de_finalizados extends  Cola{
+public class Caja_de_finalizados {
 
+    Queue<Vehiculo> cola = new LinkedList<>();
 
-    public void escribirArchivo() {
+    public Caja_de_finalizados() {
+    }
+    public void add_Vehiculo(Vehiculo v) {
+        cola.add(v);
+    }
+
+    public void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
-            fw = new FileWriter("src\\Escenarios\\archivo_salida.txt", true);
+            fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             while (!cola.isEmpty()) {
                 String lineaActual = cola.poll().pasar_a_String();
                 bw.write(lineaActual);
                 bw.newLine();
-                
+
             }
 
             bw.close();
             fw.close();
         } catch (IOException e) {
             System.out.println("Error al escribir el archivo "
-                    + "src\\Escenarios\\archivo_salida.txt");
+                    + "src\\Escenarios\\archivo_salida_vehiculos.txt");
             e.printStackTrace();
         }
     }

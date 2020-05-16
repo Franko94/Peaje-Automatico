@@ -16,7 +16,9 @@ import javax.swing.JOptionPane;
  *
  * @author Agustín Picos
  */
-public class Caja_de_vehiculos extends Cola {
+public class Caja_de_vehiculos {
+    
+    public static Queue<Vehiculo> cola = new LinkedList<>();
 
     public void cargar_vehiculos() {
         File archivo;
@@ -31,6 +33,7 @@ public class Caja_de_vehiculos extends Cola {
             int i = 0;
             while ((linea = br.readLine()) != null) {
                 Vehiculo vehiculo = new Vehiculo(linea); //ACA MODIFICAR LOS DATOS QUE CREAN EL AUTO
+                cola.add(vehiculo);
             }
             br.close();
             fr.close();
@@ -38,5 +41,4 @@ public class Caja_de_vehiculos extends Cola {
             JOptionPane.showMessageDialog(null, "Hubo un error leyendo el archivo" + e);
         }
     }
-
 }

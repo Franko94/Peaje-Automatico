@@ -7,7 +7,6 @@ package Entidades;
 
 import java.util.LinkedList;
 
-
 /**
  *
  * @author Teo
@@ -28,7 +27,7 @@ public class Peaje {
 
     public static synchronized void cobrar(Vehiculo vehiculo){
         setTotalDinero(fijarsePrecio(vehiculo));
-        vehiculo.setHoraFin(0);
+        vehiculo.setHoraSalida(0);
     }
     
     private static int fijarsePrecio(Vehiculo vehiculo){
@@ -38,6 +37,7 @@ public class Peaje {
     
     private static void setTotalDinero(int monto){
         totalDinero += monto;
+
     }
     
 }
