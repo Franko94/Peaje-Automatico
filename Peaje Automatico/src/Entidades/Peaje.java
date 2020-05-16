@@ -27,7 +27,7 @@ public class Peaje {
 
     public static synchronized void cobrar(Vehiculo vehiculo){
         setTotalDinero(fijarsePrecio(vehiculo));
-        vehiculo.setHoraSalida(0);
+        vehiculo.setHoraSalida(System.nanoTime());
     }
     
     private static int fijarsePrecio(Vehiculo vehiculo){

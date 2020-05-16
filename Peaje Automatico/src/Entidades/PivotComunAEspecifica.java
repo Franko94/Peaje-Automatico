@@ -32,8 +32,11 @@ public class PivotComunAEspecifica implements Runnable {
     }
 
     public void clasificarColas() {
-        while (Cola_Comun_Ruta.cola.isEmpty() != true) {
+        while (true) {
             Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
+            if(vehiculo==null){
+                break;
+            }
             if (vehiculo.isUnidad_especial()) {
                 try {
                     Thread.sleep(retraso_por_vehiculos_especiales);
