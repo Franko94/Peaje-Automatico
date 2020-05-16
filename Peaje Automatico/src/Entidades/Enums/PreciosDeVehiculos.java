@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entidades;
+package Entidades.Enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Teo
  */
-public enum TipoDeVehiculos {
+public enum PreciosDeVehiculos {
     
     auto (20),
     moto (10),
@@ -21,7 +21,7 @@ public enum TipoDeVehiculos {
         
     public final int label;
         
-    private TipoDeVehiculos(int label){
+    private PreciosDeVehiculos(int label){
         this.label = label;
     }
     

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Entidades;
+package Entidades.Pivots;
 
+import Entidades.Colas.Cola_Comun_Ruta;
+import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
