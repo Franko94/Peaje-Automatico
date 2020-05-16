@@ -29,10 +29,10 @@ public class Caja_de_finalizados {
         cola.add(v);
     }
 
-    public void escribirArchivo() {
+    public void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
-            fw = new FileWriter("src\\Escenarios\\archivo_salida.txt", true);
+            fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             while (!cola.isEmpty()) {
                 String lineaActual = cola.poll().pasar_a_String();
@@ -45,7 +45,7 @@ public class Caja_de_finalizados {
             fw.close();
         } catch (IOException e) {
             System.out.println("Error al escribir el archivo "
-                    + "src\\Escenarios\\archivo_salida.txt");
+                    + "src\\Escenarios\\archivo_salida_vehiculos.txt");
             e.printStackTrace();
         }
     }

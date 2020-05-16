@@ -1,3 +1,2 @@
-matricula,tipo,true,false,0
-matricula,tipo,true,false,0
-matricula,tipo,true,false,0
+//Este archivo tiene la siguiente estructura:
+//matricula,tipo,unidad especial,genera accidente, hora entrada, hora salida,tiempo transcurrido 

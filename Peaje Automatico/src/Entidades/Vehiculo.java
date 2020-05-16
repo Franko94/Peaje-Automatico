@@ -25,6 +25,8 @@ public class Vehiculo {
         dato+=tipo+",";
         dato+=String.valueOf(unidad_especial)+",";
         dato+=String.valueOf(genera_accidente)+",";
+        dato+=String.valueOf(horaEntrada)+",";
+        dato+=String.valueOf(horaSalida)+",";
         dato+=String.valueOf(horaSalida-horaEntrada);
         return dato;
     }

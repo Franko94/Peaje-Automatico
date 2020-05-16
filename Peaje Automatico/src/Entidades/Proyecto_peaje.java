@@ -21,7 +21,7 @@ public class Proyecto_peaje {
         cajav.cargar_vehiculos();
         Caja_de_finalizados cajaf = new Caja_de_finalizados();
         cajaf.add_Vehiculo(v);
-        cajaf.escribirArchivo();
+        cajaf.guardarAutosEnArchivo();
         System.out.println("");
         
         
