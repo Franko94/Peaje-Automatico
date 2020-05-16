@@ -21,14 +21,19 @@ import javax.swing.JOptionPane;
  */
 public class Caja_de_finalizados {
 
-    Queue<Vehiculo> cola = new LinkedList<>();
-
-    public Caja_de_finalizados() {
-    }
-    public void add_Vehiculo(Vehiculo v) {
+    public static Queue<Vehiculo> cola = new LinkedList<>();
+    
+    public static synchronized void addVehiculo(Vehiculo v){
         cola.add(v);
     }
 
+    public Caja_de_finalizados() {
+    }
+    /**
+     * el metodo toma los autos de la cola y los pasa a string para guardarlos
+     * para variar los campos, se debe modificar el metodo pasar a string de la 
+     * clase vehiculo
+     */
     public void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
@@ -38,9 +43,7 @@ public class Caja_de_finalizados {
                 String lineaActual = cola.poll().pasar_a_String();
                 bw.write(lineaActual);
                 bw.newLine();
-
             }
-
             bw.close();
             fw.close();
         } catch (IOException e) {
