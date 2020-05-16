@@ -13,23 +13,18 @@ import java.util.Queue;
  */
 public class Caja_de_Frecuencia implements Runnable{
     private int autos_por_minuto;
-    private Queue <Vehiculo> cola_para_despachar;
+    private Caja_de_vehiculos caja_de_vehiculos;
     
-    public Caja_de_Frecuencia(int autos_per_minute,Queue<Vehiculo> cola){
+    public Caja_de_Frecuencia(int autos_per_minute,Caja_de_vehiculos caja_vehiculos){
         this.autos_por_minuto=autos_per_minute;
-        this.cola_para_despachar = cola;
+        this.caja_de_vehiculos=caja_vehiculos;
     }
     @Override
     public void run() {
         //int dormir = x;
-        while (!cola_para_despachar.isEmpty()) {
-            Vehiculo v = cola_para_despachar.poll();
-            if(v.isUnidad_especial()){
-                Cola_Vehiculos_Especiales.cola.add(v);
-            }
-            else{
-                Cola_Comun_Ruta.cola.add(v);
-            }
+        while (caja_de_vehiculos.getPrimero()!= null) {
+            Vehiculo v = caja_de_vehiculos.getPrimero();
+            Cola_Comun_Ruta.add_Vehiculo(v);
         }
     }
     

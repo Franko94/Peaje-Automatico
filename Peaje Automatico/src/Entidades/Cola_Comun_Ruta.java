@@ -16,7 +16,10 @@ public class Cola_Comun_Ruta {
 
     public static Queue <Vehiculo> cola;
 
-    public static void add_Vehiculo_Clasificado(Vehiculo v) {
+    public static void add_Vehiculo(Vehiculo v) {
         cola.add(v);
+    }
+    public static Vehiculo getPrimero(){
+        return cola.poll();
     }
 }
