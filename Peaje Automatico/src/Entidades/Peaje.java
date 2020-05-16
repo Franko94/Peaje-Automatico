@@ -6,7 +6,6 @@
 package Entidades;
 
 import java.util.LinkedList;
-//import peaje.automatico.Entidades.Vehiculo;
 
 /**
  *
@@ -17,8 +16,7 @@ public class Peaje {
     private String nombre;
     private int cantCabinas;
     LinkedList listaCabinas;
-    private int totalDinero = 0;
-    
+    private static int totalDinero = 0;
     
     public void Peaje(String nombre, int numCabinas){
         this.nombre = nombre;
@@ -26,10 +24,15 @@ public class Peaje {
         listaCabinas = new LinkedList();
     }
     
+
+    public static synchronized void cobrar(Vehiculo vehiculo){
+        setTotalDinero(fijarsePrecio(vehiculo));
+        vehiculo.setHoraFin(0);
+    }
     
-    public void cobrar(Vehiculo vehiculo){
-        totalDinero += this.fijarsePrecio(vehiculo);
-        vehiculo.setHoraSalida(0);
+    private static int fijarsePrecio(Vehiculo vehiculo){
+        String tipoDelVehiculo = vehiculo.getTipo();
+        return TipoDeVehiculos.valueOf(tipoDelVehiculo).label;
     }
     
     public int fijarsePrecio(Vehiculo vehiculo){
@@ -44,6 +47,10 @@ public class Peaje {
             x=15;
         }
         return x;
+
+    private static void setTotalDinero(int monto){
+        totalDinero += monto;
+
     }
     
 }
