@@ -13,24 +13,17 @@ import java.util.Queue;
  */
 public class PivotComunAEspecifica implements Runnable {
     
-    public static Queue <Vehiculo> colaComun;
-    public static Queue <Vehiculo> colaNormales;
-    public static Queue <Vehiculo> colaEspeciales;
-    
-    public PivotComunAEspecifica(Queue colaComun, Queue colaNormales, Queue colaEspeciales){
-        this.colaComun = colaComun;
-        this.colaNormales = colaNormales;
-        this.colaEspeciales = colaEspeciales;
+    public PivotComunAEspecifica(){
+
     }
-    
-    public void clasificarColas(){
-        while (colaComun.isEmpty() != true){
-            Vehiculo vehiculo = colaComun.poll();
+     public void clasificarColas(){
+        while (Cola_Comun_Ruta.cola.isEmpty()!= true){
+            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
             if (vehiculo.isUnidad_especial()){
-                colaEspeciales.add(vehiculo);
+                Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
             }
             else{
-                colaNormales.add(vehiculo);
+                Colas_Vehiculos_Clasificados.normales.add(vehiculo);
             }
         }
     }
