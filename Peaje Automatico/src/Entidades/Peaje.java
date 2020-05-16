@@ -6,7 +6,7 @@
 package Entidades;
 
 import java.util.LinkedList;
-import peaje.automatico.Entidades.Vehiculo;
+//import peaje.automatico.Entidades.Vehiculo;
 
 /**
  *
@@ -33,15 +33,17 @@ public class Peaje {
     }
     
     public int fijarsePrecio(Vehiculo vehiculo){
-        if (vehiculo.getTipo == "auto"){
-            return 10;
+        int x = -1;
+        if (vehiculo.getTipo() == "auto"){
+            x=10;
         }
-        else if (vehiculo.getTipo == "camion"){
-            return 20;
+        else if (vehiculo.getTipo() == "camion"){
+            x=20;
         }
-        else if (vehiculo.getTipo == "moto"){
-            return 15;
+        else if (vehiculo.getTipo() == "moto"){
+            x=15;
         }
+        return x;
     }
     
 }

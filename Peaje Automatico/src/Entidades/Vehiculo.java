@@ -13,8 +13,8 @@ public class Vehiculo {
     private boolean unidad_especial;
     private String tipo;
     private boolean genera_accidente;
-    private long hora_comienzo;
-    private long hora_fin;
+    private long horaEntrada;
+    private long horaSalida;
     private String matricula;
     
     public Vehiculo(String linea){
@@ -30,15 +30,24 @@ public class Vehiculo {
         dato+=tipo+",";
         dato+=String.valueOf(unidad_especial)+",";
         dato+=String.valueOf(genera_accidente)+",";
-        dato+=String.valueOf(hora_fin-hora_comienzo);
+        dato+=String.valueOf(horaSalida-horaEntrada);
         return dato;
     }
 
     public boolean isUnidad_especial() {
         return unidad_especial;
     }
-    
-    
-    
-    
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setHoraEntrada(long horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public void setHoraSalida(long horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+        
 }
