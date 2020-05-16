@@ -20,9 +20,32 @@ public class Proyecto_peaje {
         Caja_de_vehiculos cajav = new Caja_de_vehiculos();
         cajav.cargar_vehiculos();
         Caja_de_finalizados cajaf = new Caja_de_finalizados();
-        cajaf.add_Vehiculo(v);
-        cajaf.escribirArchivo();
+        Caja_de_finalizados.addVehiculo(v);
+        cajaf.guardarAutosEnArchivo();
         System.out.println("");
+        
+        
+        
+        
+        /**
+         * Acá abajos vamos armado la ejecucion del programa final
+         */
+        
+        /**
+         * Primero: Creación de todos los objetos
+         */
+        
+        /**
+         * Segundo: Carga de datos
+         */
+        
+        /**
+         * Tercero: ejecucion del programa principal
+         */
+        
+        /**
+         * Cuarto: Guardado de datos
+         */
     }
 
 }

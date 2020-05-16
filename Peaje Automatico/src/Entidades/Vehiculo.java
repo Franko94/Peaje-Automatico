@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entidades;
 
 /**
@@ -13,8 +8,8 @@ public class Vehiculo {
     private boolean unidad_especial;
     private String tipo;
     private boolean genera_accidente;
-    private long hora_comienzo;
-    private long hora_fin;
+    private long horaEntrada;
+    private long horaSalida;
     private String matricula;
     
     public Vehiculo(String linea){
@@ -30,23 +25,26 @@ public class Vehiculo {
         dato+=tipo+",";
         dato+=String.valueOf(unidad_especial)+",";
         dato+=String.valueOf(genera_accidente)+",";
-        dato+=String.valueOf(hora_fin-hora_comienzo);
+        dato+=String.valueOf(horaEntrada)+",";
+        dato+=String.valueOf(horaSalida)+",";
+        dato+=String.valueOf(horaSalida-horaEntrada);
         return dato;
     }
 
     public boolean isUnidad_especial() {
         return unidad_especial;
     }
-    
-    public void setHoraFin(long numero){
-        hora_fin = numero;
-    }
-    
-    public String getTipo(){
+
+    public String getTipo() {
         return tipo;
     }
-    
-    
-    
-    
+
+    public void setHoraEntrada(long horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public void setHoraSalida(long horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
 }
