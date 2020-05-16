@@ -16,13 +16,32 @@ public class Pivot_Especifica_Peaje implements Runnable {
     public static Queue <CabinaPeaje> colaPeaje;
     public static Queue <Vehiculo> colaNormales;
     public static Queue <Vehiculo> colaEspeciales;
+    
+    public Pivot_Especifica_Peaje(Queue colaPeaje, Queue colaNormales, Queue colaEspeciales){
+        this.colaPeaje = colaPeaje;
+        this.colaNormales = colaNormales;
+        this.colaEspeciales = colaEspeciales;
+    }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        distribuir();
     }
     
     private void distribuir(){
-        
+        Vehiculo vehiculo;
+        if(!colaEspeciales.isEmpty()){
+            vehiculo = colaEspeciales.poll();
+        }
+        else{
+            vehiculo = colaNormales.poll();
+        }
+        for(CabinaPeaje cp : colaPeaje){
+            if(!cp.getOcupada()){
+                cp.setVehiculo(vehiculo);
+                cp.setOcupada(true);
+                break;
+            }
+        }
     }
 }
