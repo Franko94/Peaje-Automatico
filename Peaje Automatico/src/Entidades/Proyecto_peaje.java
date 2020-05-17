@@ -25,14 +25,8 @@ public class Proyecto_peaje {
     public static void main(String[] args) {
         // TODO code application logic here
         Vehiculo v = new Vehiculo("matricula,tipo,true,false");
-        
-        Caja_de_vehiculos.cargar_vehiculos();
-        System.out.println(Caja_de_vehiculos.cola.size());
-        
-        Peaje peaje = new Peaje("Peaje Pando",9);
-        peaje.abrirCabinas();
-        peaje.abrir();
-        
+        Caja_de_vehiculos cajav = new Caja_de_vehiculos();
+        cajav.cargar_vehiculos();
         Caja_de_finalizados cajaf = new Caja_de_finalizados();
         Caja_de_finalizados.addVehiculo(v);
         cajaf.guardarAutosEnArchivo();
