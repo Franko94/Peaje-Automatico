@@ -39,7 +39,6 @@ public class Peaje {
     
     private static void setTotalDinero(int monto){
         totalDinero += monto;
-
     }
     
     public void abrirCabinas(){
