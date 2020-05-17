@@ -7,6 +7,11 @@ package Entidades;
 
 import Entidades.Cajas.Caja_de_vehiculos;
 import Entidades.Cajas.Caja_de_finalizados;
+import Entidades.Cajas.Caja_de_Frecuencia;
+import Entidades.Colas.Cola_Comun_Ruta;
+import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Pivots.PivotComunAEspecifica;
+
 
 /**
  *
@@ -37,11 +42,17 @@ public class Proyecto_peaje {
         /**
          * Primero: Creación de todos los objetos
          */
-        
+        Reloj reloj = new Reloj();
+        Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
+        Caja_de_Frecuencia caja_de_Frecuencia = new Caja_de_Frecuencia(0, reloj);
+        PivotComunAEspecifica pivotComunAEspecifica = new PivotComunAEspecifica(0, reloj);
+        Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
+        Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
+        Peaje peaje = new Peaje("Peaje Pando", 0, reloj);
         /**
          * Segundo: Carga de datos
          */
-        
+        Caja_de_vehiculos.cargar_vehiculos();
         /**
          * Tercero: ejecucion del programa principal
          */

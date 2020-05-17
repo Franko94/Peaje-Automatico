@@ -6,6 +6,7 @@
 package Entidades.Cajas;
 
 import Entidades.Colas.Cola_Comun_Ruta;
+import Entidades.Reloj;
 import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -25,34 +26,68 @@ import java.util.logging.Logger;
  *
  * @author Agustin
  */
-public class Caja_de_Frecuencia implements Runnable {
+public class Caja_de_Frecuencia extends Thread {
 
+    private Reloj reloj;
+    private boolean estado = false;
     private int autos_por_minuto;
     private Caja_de_vehiculos caja_de_vehiculos;
 
     /**
      * @param autos_per_minute Este parametro debe ser seteado de acuerdo a lo
-     * siguiente <p> 
-     * Tiempo standar 6 autos / min >> 7ms <p>
-     * Demanda alta 20autos/ min>> 2 ms <p>
+     * siguiente
+     * <p>
+     * Tiempo standar 6 autos / min >> 7ms
+     * <p>
+     * Demanda alta 20autos/ min>> 2 ms
+     * <p>
      * Picos de trafico 50autos / min >> 1 ms
      */
-    public Caja_de_Frecuencia(int autos_per_minute) {
+    public Caja_de_Frecuencia(int autos_per_minute, Reloj r) {
+        super();
+//        this.reloj = r;
         this.autos_por_minuto = autos_per_minute;
     }
 
     @Override
     public void run() {
-        while (Caja_de_vehiculos.cola.isEmpty() != true) {
-            try {
-                Thread.sleep(autos_por_minuto);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
+        while (true) {
+//            if (reloj.nuevoCiclo(estado) != true) {
+//                try {
+//                    synchronized (reloj) {
+//                        reloj.wait();
+//                    }
+//                } catch (InterruptedException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//            reloj.hiloEjecutado(0);
+//            cambiarEstado();
+            if (Caja_de_vehiculos.cola.isEmpty() != true) {
+                try {
+                    Thread.sleep(autos_por_minuto);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Vehiculo v = Caja_de_vehiculos.cola.poll();
+                v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
+                Cola_Comun_Ruta.cola.add(v);
             }
-            Vehiculo v = Caja_de_vehiculos.cola.poll();
-            v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
-            Cola_Comun_Ruta.cola.add(v);
+            
         }
     }
 
+//    public void cambiarEstado() {
+//        if (estado == true) {
+//            estado = false;
+//        } else {
+//            estado = true;
+//        }
+//        synchronized (reloj) {
+//            if (reloj.chequearEstados()) {
+//                reloj.notifyAll();
+//            }
+//        }
+//    }
 }
