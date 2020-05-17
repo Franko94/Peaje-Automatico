@@ -5,6 +5,7 @@
  */
 package Entidades.Pivots;
 
+import Entidades.Reloj;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Vehiculo;
@@ -23,20 +24,41 @@ import java.util.logging.Logger;
 public class PivotComunAEspecifica implements Runnable {
 
     private int retraso_por_vehiculos_especiales;
-/**
- * 
- * @param retraso 
- * 
- * 20 ms equivale a 30 segundos de la vida real
- */
-    public PivotComunAEspecifica(int retraso) {
+    private Reloj reloj;
+    private boolean estado = false;
+    private int id_de_hilo = 0;
+
+    /**
+     *
+     * @param retraso
+     *
+     * 20 ms equivale a 30 segundos de la vida real
+     */
+    public PivotComunAEspecifica(int retraso, Reloj r) {
+        super();
+        this.reloj = r;
         this.retraso_por_vehiculos_especiales = retraso;
 
     }
-
-    public void clasificarColas() {
-        while (Cola_Comun_Ruta.cola.isEmpty() != true) {
+    @Override
+    public void run() {
+        while (true) {
+            if (reloj.nuevoCiclo(estado) != true) {
+                try {
+                    synchronized (reloj) {
+                        reloj.wait();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            reloj.hiloEjecutado(id_de_hilo);
+            cambiarEstado();
             Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
+            if (vehiculo == null) {
+                break;
+            }
             if (vehiculo.isUnidad_especial()) {
                 try {
                     Thread.sleep(retraso_por_vehiculos_especiales);
@@ -50,8 +72,16 @@ public class PivotComunAEspecifica implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        this.clasificarColas();
+    public void cambiarEstado() {
+        if (estado == true) {
+            estado = false;
+        } else {
+            estado = true;
+        }
+        synchronized (reloj) {
+            if (reloj.chequearEstados()) {
+                reloj.notifyAll();
+            }
+        }
     }
 }
