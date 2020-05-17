@@ -15,17 +15,21 @@ import java.util.LinkedList;
 public class Peaje extends Thread {
 
     private int cantCabinas;
-    private static int totalDinero = 0;
-    public CabinaPeaje[] listaCabinas = new CabinaPeaje[cantCabinas];
+    private static int totalDinero;
+    public CabinaPeaje[] listaCabinas;
     private Reloj reloj;
-    private boolean estado = false;
-    private int id_de_hilo = 1;
+    private boolean estado;
+    //private int id_de_hilo;
 
     public Peaje(String nombre, int numCabinas, Reloj r) {
-        cantCabinas = numCabinas;
+        //this.id_de_hilo = 1;
+        this.totalDinero = 0;
+        this.cantCabinas = numCabinas;
+        this.estado = false;
+        this.listaCabinas = new CabinaPeaje[cantCabinas];
 
         for (int i = 0; i < numCabinas; i++) {
-            listaCabinas[i] = new CabinaPeaje(i+1, r, "A");
+            listaCabinas[i] = new CabinaPeaje(i+2, r, "A");//cambiar segun si esta el peaje o no
             listaCabinas[i].start();
         }
     }
@@ -42,9 +46,9 @@ public class Peaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
             System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
+            //reloj.hiloEjecutado(id_de_hilo);
+            cambiarEstado();
             
         }
     }

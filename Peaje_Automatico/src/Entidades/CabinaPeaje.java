@@ -45,12 +45,12 @@ public class CabinaPeaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            reloj.hiloEjecutado(numero+1);
-            cambiarEstado();
             if (this.habilitada == true) {
                 llamarVehiculo();
                 cobrarVehiculo();
             }
+            reloj.hiloEjecutado(numero);
+            cambiarEstado();
         }
     }
 
@@ -90,7 +90,8 @@ public class CabinaPeaje extends Thread {
 
     private static int fijarsePrecio(Vehiculo vehiculo) {
         String tipoDelVehiculo = vehiculo.getTipo();
-        return PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+        int respuesta = PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+        return respuesta;
     }
 
     public void cambiarEstado() {

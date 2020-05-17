@@ -40,6 +40,7 @@ public class PivotComunAEspecifica extends Thread {
         this.retraso_por_vehiculos_especiales = retraso;
 
     }
+
     @Override
     public void run() {
         while (true) {
@@ -53,22 +54,21 @@ public class PivotComunAEspecifica extends Thread {
                     e.printStackTrace();
                 }
             }
+            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
+            if (vehiculo != null) {
+                if (vehiculo.isUnidad_especial()) {
+                    try {
+                        Thread.sleep(retraso_por_vehiculos_especiales);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
+                } else {
+                    Colas_Vehiculos_Clasificados.normales.add(vehiculo);
+                }
+            }
             reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();
-            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
-            if (vehiculo == null) {
-                break;
-            }
-            if (vehiculo.isUnidad_especial()) {
-                try {
-                    Thread.sleep(retraso_por_vehiculos_especiales);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
-            } else {
-                Colas_Vehiculos_Clasificados.normales.add(vehiculo);
-            }
         }
     }
 

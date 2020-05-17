@@ -25,7 +25,7 @@ public class Caja_de_finalizados {
     public static Queue<Vehiculo> cola = new LinkedList<>();
     
     public static synchronized void addVehiculo(Vehiculo v){
-        cola.add(v);
+        Caja_de_finalizados.cola.add(v);
     }
 
     public Caja_de_finalizados() {

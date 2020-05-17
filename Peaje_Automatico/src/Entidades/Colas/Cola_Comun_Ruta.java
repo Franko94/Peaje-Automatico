@@ -15,5 +15,5 @@ import java.util.Queue;
  */
 public class Cola_Comun_Ruta {
 
-    public static Queue <Vehiculo> cola;
+    public static Queue <Vehiculo> cola=new LinkedList<>();
 }

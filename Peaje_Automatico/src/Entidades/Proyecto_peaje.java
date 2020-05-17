@@ -11,7 +11,8 @@ import Entidades.Cajas.Caja_de_Frecuencia;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Pivots.PivotComunAEspecifica;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,11 +29,10 @@ public class Proyecto_peaje {
         /**
          * Acá abajos vamos armado la ejecucion del programa final
          */
-        
         /**
          * Primero: Creación de todos los objetos
          */
-        Reloj reloj = new Reloj();
+        final Reloj reloj = new Reloj();
         Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
         Caja_de_Frecuencia caja_de_Frecuencia = new Caja_de_Frecuencia(0, reloj);
         PivotComunAEspecifica pivotComunAEspecifica = new PivotComunAEspecifica(0, reloj);
@@ -46,12 +46,18 @@ public class Proyecto_peaje {
         /**
          * Tercero: ejecucion del programa principal
          */
-        Peaje peaje = new Peaje("Peaje Pando", 1, reloj);//se crea y tambien se ejecuta
         caja_de_Frecuencia.start();
         pivotComunAEspecifica.start();
+        Peaje peaje = new Peaje("Peaje Pando", 1, reloj);//se crea y tambien se ejecuta
         /**
          * Cuarto: Guardado de datos
          */
+        try {
+
+            Thread.sleep(10000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Proyecto_peaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Caja_de_finalizados.guardarAutosEnArchivo();
     }
 
