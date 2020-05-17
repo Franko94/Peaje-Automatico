@@ -11,6 +11,7 @@ import Entidades.Cajas.Caja_de_Frecuencia;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Pivots.PivotComunAEspecifica;
+import Logger.Logger;
 
 
 /**
@@ -49,6 +50,8 @@ public class Proyecto_peaje {
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
         Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
         Peaje peaje = new Peaje("Peaje Pando", 0, reloj);
+        
+        Logger.log("TEST");
         /**
          * Segundo: Carga de datos
          */

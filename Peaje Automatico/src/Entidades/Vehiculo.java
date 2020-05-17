@@ -38,6 +38,10 @@ public class Vehiculo {
     public String getTipo() {
         return tipo;
     }
+    
+    public String getMatricula(){
+        return matricula;
+    }
 
     public void setHoraEntrada(long horaEntrada) {
         this.horaEntrada = horaEntrada;

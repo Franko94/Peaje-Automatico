@@ -7,7 +7,7 @@ package Entidades;
 
 import Entidades.Enums.PreciosDeVehiculos;
 import java.util.LinkedList;
-
+import Logger.Logger;
 /**
  *
  * @author Teo
@@ -20,13 +20,17 @@ public class Peaje extends Thread {
     private Reloj reloj;
     private boolean estado = false;
     private int id_de_hilo = 1;
-
+    
+    private final String CREACION = "Creacion de Peaje ";
+    private final String CREACION_CABINAS = "Cabina creada y corriendo numero ";
+    
     public Peaje(String nombre, int numCabinas, Reloj r) {
         cantCabinas = numCabinas;
-
+        Logger.log(CREACION + nombre);
         for (int i = 0; i < numCabinas; i++) {
             listaCabinas[i] = new CabinaPeaje(i+1, r, "A");
             listaCabinas[i].start();
+            Logger.log(CREACION_CABINAS);
         }
     }
     @Override
