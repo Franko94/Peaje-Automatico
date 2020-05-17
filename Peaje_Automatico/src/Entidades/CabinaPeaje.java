@@ -8,6 +8,7 @@ package Entidades;
 import Entidades.Cajas.Caja_de_finalizados;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Enums.PreciosDeVehiculos;
+import Logger.Logger;
 
 /**
  *
@@ -45,25 +46,41 @@ public class CabinaPeaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            reloj.hiloEjecutado(numero+1);
-            cambiarEstado();
             if (this.habilitada == true) {
                 llamarVehiculo();
                 cobrarVehiculo();
             }
+            reloj.hiloEjecutado(numero);
+            cambiarEstado();
         }
     }
 
     private synchronized void llamarVehiculo() {
+        Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo, a la cabina "+numero);
         if (!Colas_Vehiculos_Clasificados.especiales.isEmpty()) {
             vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
+            Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo, Vehiculo accede a cabina numero "
+                    + numero+" con matricula "+ 
+                    vehiculo.getMatricula());
         } else {
             vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
+            Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo"+" Cabina numero "+ numero 
+                    + " no encontro vehiculo ");
+             
         }
     }
 
     private void cobrarVehiculo() {
         if (vehiculo != null) {
+             Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+"CabinaPeaje,cobrarVehiculo,"+
+            "Vehiculo "+ vehiculo.getMatricula() + "Cobrado por cabina numero" + numero);
             int monto = fijarsePrecio(vehiculo);
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
@@ -90,7 +107,8 @@ public class CabinaPeaje extends Thread {
 
     private static int fijarsePrecio(Vehiculo vehiculo) {
         String tipoDelVehiculo = vehiculo.getTipo();
-        return PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+        int respuesta = PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+        return respuesta;
     }
 
     public void cambiarEstado() {
@@ -105,4 +123,5 @@ public class CabinaPeaje extends Thread {
             }
         }
     }
+    
 }

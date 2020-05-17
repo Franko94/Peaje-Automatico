@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * Dado que los hilos están sincronizados, el retraso por vehiculos especiales
  * se puede implementar aquí
  */
-public class PivotComunAEspecifica implements Runnable {
+public class PivotComunAEspecifica extends Thread {
 
     private int retraso_por_vehiculos_especiales;
     private Reloj reloj;
@@ -40,6 +40,7 @@ public class PivotComunAEspecifica implements Runnable {
         this.retraso_por_vehiculos_especiales = retraso;
 
     }
+
     @Override
     public void run() {
         while (true) {
@@ -53,22 +54,21 @@ public class PivotComunAEspecifica implements Runnable {
                     e.printStackTrace();
                 }
             }
+            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
+            if (vehiculo != null) {
+                if (vehiculo.isUnidad_especial()) {
+                    try {
+                        Thread.sleep(retraso_por_vehiculos_especiales);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
+                } else {
+                    Colas_Vehiculos_Clasificados.normales.add(vehiculo);
+                }
+            }
             reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();
-            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
-            if (vehiculo == null) {
-                break;
-            }
-            if (vehiculo.isUnidad_especial()) {
-                try {
-                    Thread.sleep(retraso_por_vehiculos_especiales);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
-            } else {
-                Colas_Vehiculos_Clasificados.normales.add(vehiculo);
-            }
         }
     }
 

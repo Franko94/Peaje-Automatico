@@ -31,7 +31,7 @@ public class Caja_de_Frecuencia extends Thread {
     private Reloj reloj;
     private boolean estado = false;
     private int autos_por_minuto;
-    private Caja_de_vehiculos caja_de_vehiculos;
+    private int id_de_hilo;
 
     /**
      * @param autos_per_minute Este parametro debe ser seteado de acuerdo a lo
@@ -45,25 +45,24 @@ public class Caja_de_Frecuencia extends Thread {
      */
     public Caja_de_Frecuencia(int autos_per_minute, Reloj r) {
         super();
-//        this.reloj = r;
+        this.reloj = r;
         this.autos_por_minuto = autos_per_minute;
+        this.id_de_hilo=1;
     }
 
     @Override
     public void run() {
         while (true) {
-//            if (reloj.nuevoCiclo(estado) != true) {
-//                try {
-//                    synchronized (reloj) {
-//                        reloj.wait();
-//                    }
-//                } catch (InterruptedException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//            reloj.hiloEjecutado(0);
-//            cambiarEstado();
+            if (reloj.nuevoCiclo(estado) != true) {
+                try {
+                    synchronized (reloj) {
+                        reloj.wait();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
             if (Caja_de_vehiculos.cola.isEmpty() != true) {
                 try {
                     Thread.sleep(autos_por_minuto);
@@ -72,22 +71,22 @@ public class Caja_de_Frecuencia extends Thread {
                 }
                 Vehiculo v = Caja_de_vehiculos.cola.poll();
                 v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
-                Cola_Comun_Ruta.cola.add(v);
+                if(v!=null){Cola_Comun_Ruta.cola.add(v);}
             }
-            
+            reloj.hiloEjecutado(id_de_hilo);
+            cambiarEstado();
         }
     }
-
-//    public void cambiarEstado() {
-//        if (estado == true) {
-//            estado = false;
-//        } else {
-//            estado = true;
-//        }
-//        synchronized (reloj) {
-//            if (reloj.chequearEstados()) {
-//                reloj.notifyAll();
-//            }
-//        }
-//    }
+    public void cambiarEstado() {
+        if (estado == true) {
+            estado = false;
+        } else {
+            estado = true;
+        }
+        synchronized (reloj) {
+            if (reloj.chequearEstados()) {
+                reloj.notifyAll();
+            }
+        }
+    }
 }

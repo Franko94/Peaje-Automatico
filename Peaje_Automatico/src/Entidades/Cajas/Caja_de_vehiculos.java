@@ -28,7 +28,7 @@ public class Caja_de_vehiculos {
         String linea;
 
         try {
-            archivo = new File("src\\Escenarios\\archivo_entrada.txt");
+            archivo = new File("src\\Escenarios\\Escenario_Demo.csv");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
             int i = 0;
