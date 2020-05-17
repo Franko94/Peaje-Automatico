@@ -25,7 +25,7 @@ public class Caja_de_finalizados {
     public static Queue<Vehiculo> cola = new LinkedList<>();
     
     public static synchronized void addVehiculo(Vehiculo v){
-        cola.add(v);
+        Caja_de_finalizados.cola.add(v);
     }
 
     public Caja_de_finalizados() {
@@ -35,7 +35,7 @@ public class Caja_de_finalizados {
      * para variar los campos, se debe modificar el metodo pasar a string de la 
      * clase vehiculo
      */
-    public void guardarAutosEnArchivo() {
+    public static void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);

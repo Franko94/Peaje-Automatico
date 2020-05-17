@@ -15,16 +15,20 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[2];
+    private Boolean[] listaDeHilos = new Boolean[4];
 
     public Reloj() {
-        listaDeHilos[0] = false;
-        listaDeHilos[1] = false;
+        this.listaDeHilos[0] = false;//primer pivot
+//        this.listaDeHilos[1] = false;//peaje
+        this.listaDeHilos[1] = false;//caja de frecuencias
+        this.listaDeHilos[2] = false;//cabina1
+        this.listaDeHilos[3] = false;//cabina2
+        
     }
 
     public void hiloEjecutado(int i) {
         if (listaDeHilos[i] == false) {
-            listaDeHilos[i] = true;
+            this.listaDeHilos[i] = true;
         } else {
             listaDeHilos[i] = false;
         }
@@ -37,7 +41,6 @@ public class Reloj {
      * @return
      */
     public boolean nuevoCiclo(boolean estadoHilo) {
-        numero_de_ciclo++;
         if (estadoHilo != estadoPrevio) {
             return true;
         }
@@ -53,6 +56,7 @@ public class Reloj {
         for (Boolean estadoHilo : listaDeHilos) {
             if(estadoHilo!= estadoPrevio){
                 cambiarEstado = false;
+                break;
             }
         }
         if (cambiarEstado) {
@@ -61,9 +65,18 @@ public class Reloj {
             } else {
                 estadoPrevio = true;
             }
+            agregarCiclo();
             return true;
+            
         }
         return false;
+    }
+    public void agregarCiclo(){
+        this.numero_de_ciclo++;
+    }
+
+    public int getNumero_de_ciclo() {
+        return numero_de_ciclo;
     }
 
 }

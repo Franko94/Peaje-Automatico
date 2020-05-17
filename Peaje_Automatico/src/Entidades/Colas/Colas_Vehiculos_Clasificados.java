@@ -14,6 +14,9 @@ import java.util.Queue;
  * @author apicos
  */
 public class Colas_Vehiculos_Clasificados {
-    public static Queue<Vehiculo> especiales;
-    public static Queue<Vehiculo> normales;
+    public static Queue<Vehiculo> especiales=new LinkedList<>();
+    
+    public static Queue<Vehiculo> normales=new LinkedList<>();
+    
+   
 }
