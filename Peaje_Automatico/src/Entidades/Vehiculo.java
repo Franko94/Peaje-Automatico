@@ -46,5 +46,8 @@ public class Vehiculo {
     public void setHoraSalida(long horaSalida) {
         this.horaSalida = horaSalida;
     }
+    public String getMatricula(){
+        return matricula;
+    }
 
 }

@@ -11,8 +11,7 @@ import Entidades.Cajas.Caja_de_Frecuencia;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Pivots.PivotComunAEspecifica;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Logger.Logger;
 
 /**
  *
@@ -48,7 +47,7 @@ public class Proyecto_peaje {
          */
         caja_de_Frecuencia.start();
         pivotComunAEspecifica.start();
-        Peaje peaje = new Peaje("Peaje Pando", 2, reloj);//se crea y tambien se ejecuta
+        Peaje peaje = new Peaje("Peaje Pando", 2, reloj);//se crea y tambien se ejecuta, cambiar cantidad de cabinas
         /**
          * Cuarto: Guardado de datos
          */
@@ -56,7 +55,7 @@ public class Proyecto_peaje {
 
             Thread.sleep(10000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Proyecto_peaje.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         Caja_de_finalizados.guardarAutosEnArchivo();
     }

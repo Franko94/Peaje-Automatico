@@ -8,6 +8,7 @@ package Entidades;
 import Entidades.Cajas.Caja_de_finalizados;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Enums.PreciosDeVehiculos;
+import Logger.Logger;
 
 /**
  *
@@ -55,6 +56,7 @@ public class CabinaPeaje extends Thread {
     }
 
     private synchronized void llamarVehiculo() {
+        Logger.log("Cabina llamando vehiculo, numero "+ numero);
         if (!Colas_Vehiculos_Clasificados.especiales.isEmpty()) {
             vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
         } else {
@@ -64,6 +66,7 @@ public class CabinaPeaje extends Thread {
 
     private void cobrarVehiculo() {
         if (vehiculo != null) {
+            Logger.log("Vehiculo "+ vehiculo.getMatricula() + "Cobrado por cabina numero" + numero);
             int monto = fijarsePrecio(vehiculo);
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
@@ -106,4 +109,5 @@ public class CabinaPeaje extends Thread {
             }
         }
     }
+    
 }
