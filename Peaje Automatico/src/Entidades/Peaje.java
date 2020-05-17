@@ -6,63 +6,50 @@
 package Entidades;
 
 import Entidades.Enums.PreciosDeVehiculos;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
  *
  * @author Teo
  */
-public class Peaje extends Thread {
-
+public class Peaje {
+    
+    private String nombre;
     private int cantCabinas;
+    public  ArrayList<CabinaPeaje> listaCabinas;
     private static int totalDinero = 0;
-    public CabinaPeaje[] listaCabinas = new CabinaPeaje[cantCabinas];
-    private Reloj reloj;
-    private boolean estado = false;
-    private int id_de_hilo = 1;
-
-    public Peaje(String nombre, int numCabinas, Reloj r) {
+    
+    public Peaje(String nombre, int numCabinas){
+        this.nombre = nombre;
         cantCabinas = numCabinas;
-
-        for (int i = 0; i < numCabinas; i++) {
-            listaCabinas[i] = new CabinaPeaje(i+1, r, "A");
-            listaCabinas[i].start();
-        }
+        listaCabinas = new ArrayList<>();
     }
-    @Override
-    public void run() {
-        while (true) {
-            if (reloj.nuevoCiclo(estado) != true) {
-                try {
-                    synchronized (reloj) {
-                        reloj.wait();
-                    }
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-            reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
-            System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
-            
-        }
-    }
+    
 
-    public static synchronized void cobrar(int monto) {
+    public static synchronized void cobrar(Vehiculo vehiculo){
+        setTotalDinero(fijarsePrecio(vehiculo));
+        vehiculo.setHoraSalida(0);
+    }
+    
+    private static int fijarsePrecio(Vehiculo vehiculo){
+        String tipoDelVehiculo = vehiculo.getTipo();
+        return PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+    }
+    
+    private static void setTotalDinero(int monto){
         totalDinero += monto;
     }
-
-    public void cambiarEstado() {
-        if (estado == true) {
-            estado = false;
-        } else {
-            estado = true;
+    
+    public void abrirCabinas(){
+        for(int i = 1; i <= cantCabinas; i++){
+            listaCabinas.add(new CabinaPeaje(i));
         }
-        synchronized (reloj) {
-            if (reloj.chequearEstados()) {
-                reloj.notifyAll();
-            }
+    }
+    
+    public void abrir(){
+        for(CabinaPeaje cp : listaCabinas){
+            cp.run();
         }
     }
 }

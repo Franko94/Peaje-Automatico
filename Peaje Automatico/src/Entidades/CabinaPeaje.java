@@ -5,104 +5,64 @@
  */
 package Entidades;
 
-import Entidades.Cajas.Caja_de_finalizados;
-import Entidades.Colas.Colas_Vehiculos_Clasificados;
-import Entidades.Enums.PreciosDeVehiculos;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author fran_
  */
-public class CabinaPeaje extends Thread {
-
-    private Reloj reloj;
-    private boolean estado = false;
+public class CabinaPeaje extends Thread{
+    
     private boolean habilitada;
-    private int numero;//comienzan en 1
+    private int numero;
     private boolean ocupada;
     private Vehiculo vehiculo;
-    private String sentido;
-
-    public CabinaPeaje(int numero, Reloj r, String s) {
-        super();
-        this.reloj = r;
+    
+    public CabinaPeaje(int numero){
         this.habilitada = true;
         this.numero = numero;
-        this.vehiculo = null;
-        this.sentido = s;//esto es para indicar de qué caja toma los autos
+        this.ocupada = false;
+        vehiculo = null;
     }
-
+    
     @Override
-    public void run() {
-        while (true) {
-            if (reloj.nuevoCiclo(estado) != true) {
-                try {
-                    synchronized (reloj) {
-                        reloj.wait();
-                    }
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-            reloj.hiloEjecutado(numero+1);
-            cambiarEstado();
-            if (this.habilitada == true) {
-                llamarVehiculo();
-                cobrarVehiculo();
-            }
-        }
+    public void run(){
+        cobrarVehiculo();
+        System.out.println("Cobro cabina" + numero);
+        
+        
     }
-
-    private synchronized void llamarVehiculo() {
-        if (!Colas_Vehiculos_Clasificados.especiales.isEmpty()) {
-            vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
-        } else {
-            vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
-        }
-    }
-
-    private void cobrarVehiculo() {
-        if (vehiculo != null) {
-            int monto = fijarsePrecio(vehiculo);
-            Peaje.cobrar(monto);
-            vehiculo.setHoraSalida(System.nanoTime());
-            Caja_de_finalizados.addVehiculo(vehiculo);
+    
+    private void cobrarVehiculo(){
+        if(vehiculo != null){
+            Peaje.cobrar(vehiculo);
             vehiculo = null;
+            setOcupada(false);
         }
     }
 
     public int getNumero() {
         return numero;
     }
-
-    public boolean getHabilitada() {
+    
+    public boolean getHabilitada(){
         return habilitada;
     }
-
-    public boolean getOcupada() {
+    
+    public boolean getOcupada(){
         return ocupada;
     }
-
-    public void setHabilitada(boolean habilitada) {
+    
+    public void setHabilitada(boolean habilitada){
         this.habilitada = habilitada;
     }
-
-    private static int fijarsePrecio(Vehiculo vehiculo) {
-        String tipoDelVehiculo = vehiculo.getTipo();
-        return PreciosDeVehiculos.valueOf(tipoDelVehiculo).label;
+    
+    public void setOcupada(boolean ocupada){
+        this.ocupada = ocupada;
     }
-
-    public void cambiarEstado() {
-        if (estado == true) {
-            estado = false;
-        } else {
-            estado = true;
-        }
-        synchronized (reloj) {
-            if (reloj.chequearEstados()) {
-                reloj.notifyAll();
-            }
-        }
+    
+    public void setVehiculo(Vehiculo vehiculo){
+        this.vehiculo = vehiculo;
     }
 }
