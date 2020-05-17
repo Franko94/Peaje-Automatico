@@ -24,17 +24,7 @@ public class Proyecto_peaje {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Vehiculo v = new Vehiculo("matricula,tipo,true,false");
-        Caja_de_vehiculos cajav = new Caja_de_vehiculos();
-        cajav.cargar_vehiculos();
-        Caja_de_finalizados cajaf = new Caja_de_finalizados();
-        Caja_de_finalizados.addVehiculo(v);
-        cajaf.guardarAutosEnArchivo();
-        System.out.println("");
-        
-        
-        
-        
+
         /**
          * Acá abajos vamos armado la ejecucion del programa final
          */
@@ -48,7 +38,7 @@ public class Proyecto_peaje {
         PivotComunAEspecifica pivotComunAEspecifica = new PivotComunAEspecifica(0, reloj);
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
         Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
-        Peaje peaje = new Peaje("Peaje Pando", 0, reloj);
+        Caja_de_finalizados caja_de_finalizados = new Caja_de_finalizados();
         /**
          * Segundo: Carga de datos
          */
@@ -56,10 +46,13 @@ public class Proyecto_peaje {
         /**
          * Tercero: ejecucion del programa principal
          */
-        
+        Peaje peaje = new Peaje("Peaje Pando", 1, reloj);//se crea y tambien se ejecuta
+        caja_de_Frecuencia.start();
+        pivotComunAEspecifica.start();
         /**
          * Cuarto: Guardado de datos
          */
+        Caja_de_finalizados.guardarAutosEnArchivo();
     }
 
 }

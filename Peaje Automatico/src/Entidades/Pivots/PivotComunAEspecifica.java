@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  * Dado que los hilos están sincronizados, el retraso por vehiculos especiales
  * se puede implementar aquí
  */
-public class PivotComunAEspecifica implements Runnable {
+public class PivotComunAEspecifica extends Thread {
 
     private int retraso_por_vehiculos_especiales;
     private Reloj reloj;
