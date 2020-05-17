@@ -49,8 +49,13 @@ public class Reloj {
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
      */
     public boolean chequearEstados() {
-        
-        if (listaDeHilos[0] == estadoPrevio & listaDeHilos[1] == estadoPrevio & listaDeHilos[2]== estadoPrevio) {
+        boolean cambiarEstado =true;
+        for (Boolean estadoHilo : listaDeHilos) {
+            if(estadoHilo!= estadoPrevio){
+                cambiarEstado = false;
+            }
+        }
+        if (cambiarEstado) {
             if (estadoPrevio == true) {
                 estadoPrevio = false;
             } else {
