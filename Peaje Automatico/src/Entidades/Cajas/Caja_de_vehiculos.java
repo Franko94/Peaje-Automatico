@@ -21,7 +21,7 @@ public class Caja_de_vehiculos {
     
     public static Queue<Vehiculo> cola = new LinkedList<>();
 
-    public void cargar_vehiculos() {
+    public static void cargar_vehiculos() {
         File archivo;
         FileReader fr;
         BufferedReader br;

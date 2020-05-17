@@ -5,6 +5,9 @@
  */
 package Entidades;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author fran_
@@ -26,11 +29,16 @@ public class CabinaPeaje extends Thread{
     @Override
     public void run(){
         cobrarVehiculo();
+        System.out.println("Cobro cabina" + numero);
+        
+        
     }
     
     private void cobrarVehiculo(){
         if(vehiculo != null){
             Peaje.cobrar(vehiculo);
+            vehiculo = null;
+            setOcupada(false);
         }
     }
 
