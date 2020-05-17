@@ -5,39 +5,64 @@
  */
 package Entidades;
 
+import Entidades.Enums.PreciosDeVehiculos;
 import java.util.LinkedList;
 
 /**
  *
  * @author Teo
  */
-public class Peaje {
-    
-    private String nombre;
+public class Peaje extends Thread {
+
     private int cantCabinas;
-    LinkedList listaCabinas;
     private static int totalDinero = 0;
-    
-    public void Peaje(String nombre, int numCabinas){
-        this.nombre = nombre;
+    public CabinaPeaje[] listaCabinas = new CabinaPeaje[cantCabinas];
+    private Reloj reloj;
+    private boolean estado = false;
+    private int id_de_hilo = 1;
+
+    public Peaje(String nombre, int numCabinas, Reloj r) {
         cantCabinas = numCabinas;
-        listaCabinas = new LinkedList();
-    }
-    
 
-    public static synchronized void cobrar(Vehiculo vehiculo){
-        setTotalDinero(fijarsePrecio(vehiculo));
-        vehiculo.setHoraSalida(0);
+        for (int i = 0; i < numCabinas; i++) {
+            listaCabinas[i] = new CabinaPeaje(i+1, r, "A");
+            listaCabinas[i].start();
+        }
     }
-    
-    private static int fijarsePrecio(Vehiculo vehiculo){
-        String tipoDelVehiculo = vehiculo.getTipo();
-        return TipoDeVehiculos.valueOf(tipoDelVehiculo).label;
+    @Override
+    public void run() {
+        while (true) {
+            if (reloj.nuevoCiclo(estado) != true) {
+                try {
+                    synchronized (reloj) {
+                        reloj.wait();
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            reloj.hiloEjecutado(id_de_hilo);
+            cambiarEstado();
+            System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
+            
+        }
     }
-    
-    private static void setTotalDinero(int monto){
+
+    public static synchronized void cobrar(int monto) {
         totalDinero += monto;
-
     }
-    
+
+    public void cambiarEstado() {
+        if (estado == true) {
+            estado = false;
+        } else {
+            estado = true;
+        }
+        synchronized (reloj) {
+            if (reloj.chequearEstados()) {
+                reloj.notifyAll();
+            }
+        }
+    }
 }
