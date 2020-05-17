@@ -28,13 +28,10 @@ public class CabinaPeaje extends Thread{
     
     @Override
     public void run(){
-        try {
-            cobrarVehiculo();
-            wait(); //con esto no volvera a tomar accion hasta que ocurra un notify
-                    //externo
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CabinaPeaje.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cobrarVehiculo();
+        System.out.println("Cobro cabina" + numero);
+        
+        
     }
     
     private void cobrarVehiculo(){

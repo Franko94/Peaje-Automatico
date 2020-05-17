@@ -43,9 +43,14 @@ public class Peaje {
     }
     
     public void abrirCabinas(){
-        for(int i = 0; i < cantCabinas; i++){
+        for(int i = 1; i <= cantCabinas; i++){
             listaCabinas.add(new CabinaPeaje(i));
         }
     }
     
+    public void abrir(){
+        for(CabinaPeaje cp : listaCabinas){
+            cp.run();
+        }
+    }
 }

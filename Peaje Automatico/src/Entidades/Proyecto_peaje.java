@@ -25,6 +25,7 @@ public class Proyecto_peaje {
         
         Peaje peaje = new Peaje("Peaje Pando",9);
         peaje.abrirCabinas();
+        peaje.abrir();
         System.out.println(peaje.listaCabinas.size());
         
         Caja_de_finalizados cajaf = new Caja_de_finalizados();

@@ -4,3 +4,8 @@ matricula,tipo,true,false,0,0,0
 matricula,tipo,true,false,0,0,0
 matricula,tipo,true,false,0,0,0
 matricula,tipo,true,false,0,0,0
+matricula,tipo,true,false,0,0,0
+matricula,tipo,true,false,0,0,0
+matricula,tipo,true,false,0,0,0
+matricula,tipo,true,false,0,0,0
+matricula,tipo,true,false,0,0,0
