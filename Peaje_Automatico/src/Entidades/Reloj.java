@@ -15,13 +15,14 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[3];
+    private Boolean[] listaDeHilos = new Boolean[4];
 
     public Reloj() {
         this.listaDeHilos[0] = false;//primer pivot
 //        this.listaDeHilos[1] = false;//peaje
         this.listaDeHilos[1] = false;//caja de frecuencias
-        this.listaDeHilos[2] = false;//cabina
+        this.listaDeHilos[2] = false;//cabina1
+        this.listaDeHilos[3] = false;//cabina2
         
     }
 

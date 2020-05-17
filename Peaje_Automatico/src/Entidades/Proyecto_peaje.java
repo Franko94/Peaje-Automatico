@@ -48,7 +48,7 @@ public class Proyecto_peaje {
          */
         caja_de_Frecuencia.start();
         pivotComunAEspecifica.start();
-        Peaje peaje = new Peaje("Peaje Pando", 1, reloj);//se crea y tambien se ejecuta
+        Peaje peaje = new Peaje("Peaje Pando", 2, reloj);//se crea y tambien se ejecuta
         /**
          * Cuarto: Guardado de datos
          */
