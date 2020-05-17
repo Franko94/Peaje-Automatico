@@ -15,6 +15,7 @@ import java.util.Queue;
  *
  * @author fran_
  */
+/*
 public class Pivot_Especifica_Peaje implements Runnable {
 
     public static Queue<CabinaPeaje> colaPeaje;
@@ -73,4 +74,4 @@ public class Pivot_Especifica_Peaje implements Runnable {
             }
         }
     }
-}
+}*/
