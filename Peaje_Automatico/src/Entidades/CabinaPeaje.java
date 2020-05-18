@@ -36,7 +36,7 @@ public class CabinaPeaje extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (reloj.nuevoCiclo(estado) != true) {
+            if (!reloj.nuevoCiclo(estado)) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
@@ -46,7 +46,7 @@ public class CabinaPeaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            if (this.habilitada == true) {
+            if (this.habilitada) {
                 llamarVehiculo();
                 cobrarVehiculo();
             }
