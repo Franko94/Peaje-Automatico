@@ -16,7 +16,7 @@ import Logger.Logger;
 public class Peaje extends Thread {
 
     private int cantCabinas;
-    private static int totalDinero;
+    public static int totalDinero;
     public CabinaPeaje[] listaCabinas;
     private Reloj reloj;
     private boolean estado;

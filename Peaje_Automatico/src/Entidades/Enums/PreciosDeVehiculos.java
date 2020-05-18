@@ -14,10 +14,10 @@ import java.util.Map;
  */
 public enum PreciosDeVehiculos {
     
-    auto (20),
-    moto (10),
-    camion (30),
-    omnibus (25);
+    A (20), //Auto
+    M (10), //Moto
+    C (30), //Camion
+    O (25); //Omnibus
         
     public final int label;
         

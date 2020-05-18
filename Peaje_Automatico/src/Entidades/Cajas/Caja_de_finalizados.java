@@ -5,6 +5,7 @@
  */
 package Entidades.Cajas;
 
+import Entidades.Peaje;
 import Entidades.Vehiculo;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -45,6 +46,7 @@ public class Caja_de_finalizados {
                 bw.write(lineaActual);
                 bw.newLine();
             }
+            bw.write("Monto Final: "+ String.valueOf(Peaje.totalDinero));
             bw.close();
             fw.close();
         } catch (IOException e) {
