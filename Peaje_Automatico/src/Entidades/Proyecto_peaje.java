@@ -24,7 +24,12 @@ public class Proyecto_peaje {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
+        
+        /*
+        CSV
+        Ciclo reloj;ihHilo;Clase;Metodo,descripcion
+        
+        */
         /**
          * Acá abajos vamos armado la ejecucion del programa final
          */

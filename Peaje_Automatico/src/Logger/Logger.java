@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  */
 public  class Logger {
 
-    private static final String RUTA = "src\\Escenarios\\log.txt"; 
+    private static final String RUTA = "src\\Escenarios\\log.csv"; 
 
     public static void log(String linea){
         FileWriter fw;
@@ -29,7 +29,7 @@ public  class Logger {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
             LocalDateTime now = LocalDateTime.now();  
 
-            String lineaActual = linea + " - " + now;
+            String lineaActual = linea + "," + now;
             bw.write(lineaActual);
             bw.newLine();
             bw.close();

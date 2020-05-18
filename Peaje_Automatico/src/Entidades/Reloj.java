@@ -41,7 +41,6 @@ public class Reloj {
      * @return
      */
     public boolean nuevoCiclo(boolean estadoHilo) {
-        numero_de_ciclo++;
         if (estadoHilo != estadoPrevio) {
             return true;
         }
@@ -66,9 +65,18 @@ public class Reloj {
             } else {
                 estadoPrevio = true;
             }
+            agregarCiclo();
             return true;
+            
         }
         return false;
+    }
+    public void agregarCiclo(){
+        this.numero_de_ciclo++;
+    }
+
+    public int getNumero_de_ciclo() {
+        return numero_de_ciclo;
     }
 
 }

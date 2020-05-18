@@ -56,17 +56,31 @@ public class CabinaPeaje extends Thread {
     }
 
     private synchronized void llamarVehiculo() {
-        Logger.log("Cabina llamando vehiculo, numero "+ numero);
+        Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo, a la cabina "+numero);
         if (!Colas_Vehiculos_Clasificados.especiales.isEmpty()) {
             vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
+            Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo, Vehiculo accede a cabina numero "
+                    + numero+" con matricula "+ 
+                    vehiculo.getMatricula());
         } else {
             vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
+            Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo"+" Cabina numero "+ numero 
+                    + " no encontro vehiculo ");
+             
         }
     }
 
     private void cobrarVehiculo() {
         if (vehiculo != null) {
-            Logger.log("Vehiculo "+ vehiculo.getMatricula() + "Cobrado por cabina numero" + numero);
+             Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+"CabinaPeaje,cobrarVehiculo,"+
+            "Vehiculo "+ vehiculo.getMatricula() + "Cobrado por cabina numero" + numero);
             int monto = fijarsePrecio(vehiculo);
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
