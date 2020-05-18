@@ -46,7 +46,10 @@ public class PivotComunAEspecifica extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        for (int i = 0; i < 100000; i++) {
+            
+//        }
+//        while (true) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -59,10 +62,10 @@ public class PivotComunAEspecifica extends Thread {
             Vehiculo vehiculo = Cola_Comun_Ruta.getVehiculo(direccion);
             if (vehiculo != null) {
                 if (vehiculo.isUnidad_especial()) {
-                    try {
-                        Thread.sleep(retraso_por_vehiculos_especiales);
-                    } catch (InterruptedException ex) {
-                    }
+//                    try {
+//                        Thread.sleep(retraso_por_vehiculos_especiales);
+//                    } catch (InterruptedException ex) {
+//                    }
                 }
                 Colas_Vehiculos_Clasificados.agregarVehiculo(vehiculo);
                 Logger.log(reloj.getNumero_de_ciclo() + ","

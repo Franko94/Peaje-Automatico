@@ -32,11 +32,11 @@ public class Peaje extends Thread {
         this.listaCabinas = new CabinaPeaje[cantCabinas];
         Logger.log(CREACION + nombre);
         for (int i = 0; i < numCabinas/2; i++) {
-            listaCabinas[i] = new CabinaPeaje(i + 4, r, "este");//cambiar segun si esta el peaje o no
+            listaCabinas[i] = new CabinaPeaje(i + 2, r, "este");//cambiar segun si esta el peaje o no
             listaCabinas[i].start();
         }
         for (int i = numCabinas/2; i < numCabinas; i++) {
-            listaCabinas[i] = new CabinaPeaje(i + 4, r, "oeste");
+            listaCabinas[i] = new CabinaPeaje(i + 2, r, "oeste");
             listaCabinas[i].start();
         }
     }
