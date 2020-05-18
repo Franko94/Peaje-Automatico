@@ -58,7 +58,7 @@ public class CabinaPeaje extends Thread {
     private synchronized void llamarVehiculo() {
         Logger.log(reloj.getNumero_de_ciclo()+","+
                 Thread.currentThread().getId()+","+
-                "CabinaPeaje,llamarVehiculo, a la cabina "+numero);
+                "CabinaPeaje,llamarVehiculo, Cabina numero "+numero + " se fija si hay vehiculos especiales");
         if (!Colas_Vehiculos_Clasificados.especiales.isEmpty()) {
             vehiculo = Colas_Vehiculos_Clasificados.especiales.poll();
             Logger.log(reloj.getNumero_de_ciclo()+","+
@@ -67,12 +67,24 @@ public class CabinaPeaje extends Thread {
                     + numero+" con matricula "+ 
                     vehiculo.getMatricula());
         } else {
-            vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
             Logger.log(reloj.getNumero_de_ciclo()+","+
                 Thread.currentThread().getId()+","+
-                "CabinaPeaje,llamarVehiculo"+" Cabina numero "+ numero 
-                    + " no encontro vehiculo ");
-             
+                "CabinaPeaje,llamarVehiculo, Cabina numero "+ numero 
+                    + " no encontro vehiculo especial y busca uno normal.");
+            vehiculo = Colas_Vehiculos_Clasificados.normales.poll();
+            if (vehiculo==null){
+                Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo,"+" Cabina numero "+ numero 
+                    + " no encontro vehiculo en ninguna cola.");
+            }
+            else{
+                Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "CabinaPeaje,llamarVehiculo,"+" Vehiculo accede a cabina numero "
+                    + numero+" con matricula "+ 
+                    vehiculo.getMatricula());
+            }
         }
     }
 
@@ -80,7 +92,7 @@ public class CabinaPeaje extends Thread {
         if (vehiculo != null) {
              Logger.log(reloj.getNumero_de_ciclo()+","+
                 Thread.currentThread().getId()+","+"CabinaPeaje,cobrarVehiculo,"+
-            "Vehiculo "+ vehiculo.getMatricula() + "Cobrado por cabina numero" + numero);
+            "Vehiculo "+ vehiculo.getMatricula() + " Cobrado por cabina numero" + numero);
             int monto = fijarsePrecio(vehiculo);
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
