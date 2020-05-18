@@ -62,8 +62,7 @@ public class Proyecto_peaje {
          * Cuarto: Guardado de datos
          */
         try {
-
-            Thread.sleep(60000);
+            Thread.sleep(20000);
         } catch (InterruptedException ex) {
             
         }
