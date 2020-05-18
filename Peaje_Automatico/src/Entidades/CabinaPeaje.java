@@ -97,6 +97,7 @@ public class CabinaPeaje extends Thread {
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
             Caja_de_finalizados.addVehiculo(vehiculo);
+            System.out.println(Caja_de_finalizados.cola.size()+" Peaje");
             vehiculo = null;
         }
     }

@@ -33,6 +33,7 @@ public class Caja_de_finalizados extends Thread{
     @Override
     public void run(){
         while(true){
+            System.out.println(cola.size());
             if(!cola.isEmpty()){
                 guardarAutosEnArchivo();
             }
@@ -57,6 +58,7 @@ public class Caja_de_finalizados extends Thread{
                 System.out.println("escribe");
             }
             bw.write("Monto Final: "+ String.valueOf(Peaje.totalDinero));
+            bw.newLine();
             bw.close();
             fw.close();
         } catch (IOException e) {
