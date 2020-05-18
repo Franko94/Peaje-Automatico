@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Agustín Picos
  */
-public class Caja_de_finalizados {
+public class Caja_de_finalizados extends Thread{
 
     public static Queue<Vehiculo> cola = new LinkedList<>();
     
@@ -29,8 +29,16 @@ public class Caja_de_finalizados {
         Caja_de_finalizados.cola.add(v);
     }
 
-    public Caja_de_finalizados() {
+    
+    @Override
+    public void run(){
+        while(true){
+            if(!cola.isEmpty()){
+                guardarAutosEnArchivo();
+            }
+        }
     }
+    
     /**
      * el metodo toma los autos de la cola y los pasa a string para guardarlos
      * para variar los campos, se debe modificar el metodo pasar a string de la 
@@ -42,9 +50,11 @@ public class Caja_de_finalizados {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             while (!cola.isEmpty()) {
+                System.out.println("Entra");
                 String lineaActual = cola.poll().pasar_a_String();
                 bw.write(lineaActual);
                 bw.newLine();
+                System.out.println("escribe");
             }
             bw.write("Monto Final: "+ String.valueOf(Peaje.totalDinero));
             bw.close();

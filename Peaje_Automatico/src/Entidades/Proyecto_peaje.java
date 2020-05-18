@@ -56,13 +56,9 @@ public class Proyecto_peaje {
         /**
          * Cuarto: Guardado de datos
          */
-        try {
-
-            Thread.sleep(10000);
-        } catch (InterruptedException ex) {
-            
-        }
-        Caja_de_finalizados.guardarAutosEnArchivo();
+        
+        Caja_de_finalizados cf = new Caja_de_finalizados();
+        cf.start();
     }
 
 }
