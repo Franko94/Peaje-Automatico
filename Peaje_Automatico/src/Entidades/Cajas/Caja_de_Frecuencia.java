@@ -10,7 +10,7 @@ import Entidades.Reloj;
 import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import Logger.Logger;
 
 /**
  *
@@ -67,11 +67,13 @@ public class Caja_de_Frecuencia extends Thread {
                 try {
                     Thread.sleep(autos_por_minuto);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
+                    
                 }
                 Vehiculo v = Caja_de_vehiculos.cola.poll();
                 v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
                 if(v!=null){Cola_Comun_Ruta.cola.add(v);}
+                Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+"Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
             }
             reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();

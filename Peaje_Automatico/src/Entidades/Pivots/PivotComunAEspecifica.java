@@ -11,7 +11,7 @@ import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import Logger.Logger;
 
 /**
  *
@@ -60,11 +60,17 @@ public class PivotComunAEspecifica extends Thread {
                     try {
                         Thread.sleep(retraso_por_vehiculos_especiales);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     }
                     Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
+                    Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo especial de matricula: " + vehiculo.getMatricula() + " se posiciona en la"
+                        + " cola de vehiculos especiales");
                 } else {
                     Colas_Vehiculos_Clasificados.normales.add(vehiculo);
+                    Logger.log(reloj.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo normal de matricula: " + vehiculo.getMatricula() + " se posiciona"
+                        + " en la cola de vehiculos normales");
                 }
             }
             reloj.hiloEjecutado(id_de_hilo);

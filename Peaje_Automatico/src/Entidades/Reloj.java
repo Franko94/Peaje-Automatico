@@ -5,6 +5,7 @@
  */
 package Entidades;
 
+import Logger.Logger;
 import java.util.ArrayList;
 
 /**
@@ -66,6 +67,10 @@ public class Reloj {
                 estadoPrevio = true;
             }
             agregarCiclo();
+            Logger.log(this.getNumero_de_ciclo()+","+
+                Thread.currentThread().getId()+","+
+                "Reloj,checkearEstados, CICLO NUMERO  "
+                    + numero_de_ciclo+" HA COMENZADO!");
             return true;
             
         }
