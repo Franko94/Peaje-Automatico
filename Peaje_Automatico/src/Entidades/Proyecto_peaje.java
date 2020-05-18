@@ -38,8 +38,10 @@ public class Proyecto_peaje {
          */
         final Reloj reloj = new Reloj();
         Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
-        Caja_de_Frecuencia caja_de_Frecuencia = new Caja_de_Frecuencia(0, reloj);
-        PivotComunAEspecifica pivotComunAEspecifica = new PivotComunAEspecifica(0, reloj);
+        Caja_de_Frecuencia caja_de_Frecuencia_Este = new Caja_de_Frecuencia(0, reloj,2,"este");
+        Caja_de_Frecuencia caja_de_Frecuencia_Oeste = new Caja_de_Frecuencia(0, reloj,3,"oeste");
+        PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj,0,"este");
+        PivotComunAEspecifica pivotComunAEspecificaOeste = new PivotComunAEspecifica(0, reloj,1,"oeste");
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
         Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
         Caja_de_finalizados caja_de_finalizados = new Caja_de_finalizados();
@@ -50,15 +52,17 @@ public class Proyecto_peaje {
         /**
          * Tercero: ejecucion del programa principal
          */
-        caja_de_Frecuencia.start();
-        pivotComunAEspecifica.start();
-        Peaje peaje = new Peaje("Peaje Pando", 2, reloj);//se crea y tambien se ejecuta, cambiar cantidad de cabinas
+        caja_de_Frecuencia_Este.start();
+        caja_de_Frecuencia_Oeste.start();
+        pivotComunAEspecificaEste.start();
+        pivotComunAEspecificaOeste.start();
+        Peaje peaje = new Peaje("Peaje Pando", 4, reloj);//se crea y tambien se ejecuta, cambiar cantidad de cabinas
         /**
          * Cuarto: Guardado de datos
          */
         try {
 
-            Thread.sleep(10000);
+            Thread.sleep(60000);
         } catch (InterruptedException ex) {
             
         }

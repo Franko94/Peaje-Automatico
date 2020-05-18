@@ -26,7 +26,8 @@ public class PivotComunAEspecifica extends Thread {
     private int retraso_por_vehiculos_especiales;
     private Reloj reloj;
     private boolean estado = false;
-    private int id_de_hilo = 0;
+    private int id_de_hilo;
+    private String direccion;
 
     /**
      *
@@ -34,10 +35,12 @@ public class PivotComunAEspecifica extends Thread {
      *
      * 20 ms equivale a 30 segundos de la vida real
      */
-    public PivotComunAEspecifica(int retraso, Reloj r) {
+    public PivotComunAEspecifica(int retraso, Reloj r,int idHilo, String dir) {
         super();
         this.reloj = r;
         this.retraso_por_vehiculos_especiales = retraso;
+        this.direccion = dir;
+        this.id_de_hilo=idHilo;
 
     }
 
@@ -50,28 +53,24 @@ public class PivotComunAEspecifica extends Thread {
                         reloj.wait();
                     }
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
+            Vehiculo vehiculo = Cola_Comun_Ruta.getVehiculo(direccion);
             if (vehiculo != null) {
                 if (vehiculo.isUnidad_especial()) {
                     try {
                         Thread.sleep(retraso_por_vehiculos_especiales);
                     } catch (InterruptedException ex) {
-                        
                     }
-                    Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
-                    Logger.log(reloj.getNumero_de_ciclo()+","+
-                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo especial de matricula: " + vehiculo.getMatricula() + " se posiciona en la"
-                        + " cola de vehiculos especiales");
-                } else {
-                    Colas_Vehiculos_Clasificados.normales.add(vehiculo);
-                    Logger.log(reloj.getNumero_de_ciclo()+","+
-                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo normal de matricula: " + vehiculo.getMatricula() + " se posiciona"
-                        + " en la cola de vehiculos normales");
                 }
+                Colas_Vehiculos_Clasificados.agregarVehiculo(vehiculo);
+                Logger.log(reloj.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + "," + 
+                                "PivotComunAEspecifica,run, "
+                                + "El vehiculo especial de matricula: " + 
+                        vehiculo.getMatricula() + " se posiciona en la"
+                        + " cola de vehiculos," + vehiculo.getDireccion());
             }
             reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();

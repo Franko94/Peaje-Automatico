@@ -33,6 +33,7 @@ public class Caja_de_Frecuencia extends Thread {
     private int autos_por_minuto;
     private int id_de_hilo;
     private int timempoInicial;
+    private String direccion;
 
     /**
      * @param autos_per_minute Este parametro debe ser seteado de acuerdo a lo
@@ -44,12 +45,13 @@ public class Caja_de_Frecuencia extends Thread {
      * <p>
      * Picos de trafico 50autos / min >> 1 ms
      */
-    public Caja_de_Frecuencia(int autos_per_minute, Reloj r) {
+    public Caja_de_Frecuencia(int autos_per_minute, Reloj r,int idhilo,String dir) {
         super();
         this.reloj = r;
         this.autos_por_minuto = autos_per_minute;
-        this.id_de_hilo = 1;
+        this.id_de_hilo = idhilo;
         this.timempoInicial = (int) System.currentTimeMillis();
+        this.direccion=dir;
     }
 
     @Override
@@ -64,14 +66,14 @@ public class Caja_de_Frecuencia extends Thread {
                     e.printStackTrace();
                 }
             }
-            if (Caja_de_vehiculos.cola.isEmpty() != true) {
+            if (Caja_de_vehiculos.estaVacia(direccion)!= true) {
                 int tiempoActual = (int) System.currentTimeMillis();
                 if (tiempoActual - timempoInicial > autos_por_minuto) {
                     timempoInicial=tiempoActual;
-                    Vehiculo v = Caja_de_vehiculos.cola.poll();
+                    Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
                     v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
                     if (v != null) {
-                        Cola_Comun_Ruta.cola.add(v);
+                        Cola_Comun_Ruta.agregarVehiculo(v);
                     }
                     Logger.log(reloj.getNumero_de_ciclo() + ","
                             + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");

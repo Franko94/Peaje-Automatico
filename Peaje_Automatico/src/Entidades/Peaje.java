@@ -31,8 +31,12 @@ public class Peaje extends Thread {
         this.estado = false;
         this.listaCabinas = new CabinaPeaje[cantCabinas];
         Logger.log(CREACION + nombre);
-        for (int i = 0; i < numCabinas; i++) {
-            listaCabinas[i] = new CabinaPeaje(i + 2, r, "A");//cambiar segun si esta el peaje o no
+        for (int i = 0; i < numCabinas/2; i++) {
+            listaCabinas[i] = new CabinaPeaje(i + 4, r, "este");//cambiar segun si esta el peaje o no
+            listaCabinas[i].start();
+        }
+        for (int i = numCabinas/2; i < numCabinas; i++) {
+            listaCabinas[i] = new CabinaPeaje(i + 4, r, "oeste");
             listaCabinas[i].start();
         }
     }
@@ -50,7 +54,7 @@ public class Peaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
+            //System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
             //reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();
 
