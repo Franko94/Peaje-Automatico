@@ -22,7 +22,7 @@ public class Proyecto_peaje {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
         
         /*
@@ -52,6 +52,7 @@ public class Proyecto_peaje {
         /**
          * Tercero: ejecucion del programa principal
          */
+        Thread.sleep(5000);
         caja_de_Frecuencia_Este.start();
         caja_de_Frecuencia_Oeste.start();
         pivotComunAEspecificaEste.start();

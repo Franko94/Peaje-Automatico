@@ -29,7 +29,7 @@ public class Caja_de_vehiculos {
         String linea;
 
         try {
-            archivo = new File("src\\Escenarios\\Copia de 8640.csv");
+            archivo = new File("src\\Escenarios\\8640.csv");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
             int i = 0;
