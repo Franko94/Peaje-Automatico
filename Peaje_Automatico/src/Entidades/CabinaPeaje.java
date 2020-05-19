@@ -132,6 +132,11 @@ public class CabinaPeaje extends Thread {
     public static synchronized void guardarAutosEnArchivo(Vehiculo v) {
         FileWriter fw;
         try {
+            sleep(1);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(CabinaPeaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
                 String lineaActual = v.pasar_a_String();
