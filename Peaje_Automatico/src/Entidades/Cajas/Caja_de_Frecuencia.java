@@ -59,7 +59,7 @@ public class Caja_de_Frecuencia extends Thread {
     @Override
     public void run() {
 
-         while(Proyecto_peaje.cantidadSalida<Proyecto_peaje.cantidadEntrada) {
+         while(true) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -70,17 +70,17 @@ public class Caja_de_Frecuencia extends Thread {
                 }
             }
             if (Caja_de_vehiculos.estaVacia(direccion)!= true) {
-                int tiempoActual = (int) System.currentTimeMillis();
-                if (tiempoActual - timempoInicial > autos_por_minuto) {
-                    timempoInicial=tiempoActual;
+                //int tiempoActual = (int) System.currentTimeMillis();
+                //if (tiempoActual - timempoInicial > autos_por_minuto) {
+                    //timempoInicial=tiempoActual;
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
-                    v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
+                   // v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
                     if (v != null) {
                         Cola_Comun_Ruta.agregarVehiculo(v);
                     }
                     Logger.log(reloj.getNumero_de_ciclo() + ","
                             + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
-                }
+                //}
             }
             
             reloj.hiloEjecutado(id_de_hilo);

@@ -44,7 +44,7 @@ public class Peaje extends Thread {
 
     @Override
     public void run() {
-        while (Proyecto_peaje.cantidadSalida<Proyecto_peaje.cantidadEntrada) {
+        while (true) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
