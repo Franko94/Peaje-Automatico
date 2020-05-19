@@ -46,20 +46,20 @@ public class Caja_de_Frecuencia extends Thread {
      * <p>
      * Picos de trafico 50autos / min >> 1 ms
      */
-    public Caja_de_Frecuencia(int autos_per_minute, Reloj r,int idhilo,String dir) {
+    public Caja_de_Frecuencia(int autos_per_minute, Reloj r, int idhilo, String dir) {
         super();
         this.reloj = r;
         this.autos_por_minuto = autos_per_minute;
         this.id_de_hilo = idhilo;
         this.timempoInicial = (int) System.currentTimeMillis();
-        this.direccion=dir;
-        
+        this.direccion = dir;
+
     }
 
     @Override
     public void run() {
 
-         while(true) {
+        while (true) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -69,27 +69,27 @@ public class Caja_de_Frecuencia extends Thread {
                     e.printStackTrace();
                 }
             }
-            if (Caja_de_vehiculos.estaVacia(direccion)!= true) {
-                //int tiempoActual = (int) System.currentTimeMillis();
-                //if (tiempoActual - timempoInicial > autos_por_minuto) {
-                    //timempoInicial=tiempoActual;
+            if (Caja_de_vehiculos.estaVacia(direccion) != true) {
+                int tiempoActual = (int) System.currentTimeMillis();
+                if (tiempoActual - timempoInicial > autos_por_minuto) {
+                    timempoInicial = tiempoActual;
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
-                   // v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
+                    v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
                     if (v != null) {
                         Cola_Comun_Ruta.agregarVehiculo(v);
                     }
                     Logger.log(reloj.getNumero_de_ciclo() + ","
                             + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
-                //}
+                }
             }
-            
+
             reloj.hiloEjecutado(id_de_hilo);
             try {
                 cambiarEstado();
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
     }
 
@@ -99,10 +99,8 @@ public class Caja_de_Frecuencia extends Thread {
         } else {
             estado = true;
         }
-        
-        sleep(1);
         synchronized (reloj) {
-            if (reloj.chequearEstados()==true) {
+            if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();
             }
         }

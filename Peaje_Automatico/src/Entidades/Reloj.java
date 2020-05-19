@@ -18,14 +18,14 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[2];//modificar acorde a tamaño
+    private Boolean[] listaDeHilos = new Boolean[4];//modificar acorde a tamaño
 
     public Reloj() {
         this.listaDeHilos[0] = false;//caja de frecuencias este
         this.listaDeHilos[1] = false;//caja de frecuencias oeste
-        //this.listaDeHilos[2] = false;//pivot este
-        //this.listaDeHilos[3] = false;//pivot oeste
-        //this.listaDeHilos[4] = false;//cabina1
+        this.listaDeHilos[2] = false;//pivot este
+        this.listaDeHilos[3] = false;//pivot oeste
+        //this.listaDeHilos[3] = false;//cabina1
         //this.listaDeHilos[5] = false;//cabina2
         //this.listaDeHilos[6] = false;//cabina3
         //this.listaDeHilos[7] = false;//cabina4
@@ -45,7 +45,7 @@ public class Reloj {
      * @param estadoHilo
      * @return
      */
-    public boolean nuevoCiclo(boolean estadoHilo) {
+    public synchronized boolean nuevoCiclo(boolean estadoHilo) {
         if (estadoHilo != estadoPrevio) {
             return true;
         }

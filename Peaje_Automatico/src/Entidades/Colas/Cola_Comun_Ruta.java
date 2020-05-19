@@ -15,24 +15,28 @@ import java.util.Queue;
  */
 public class Cola_Comun_Ruta {
 
-    private static Queue <Vehiculo> colaEste=new LinkedList<>();
-    private static Queue <Vehiculo> colaOeste=new LinkedList<>();
-    
+    private static Queue<Vehiculo> colaEste = new LinkedList<>();
+    private static Queue<Vehiculo> colaOeste = new LinkedList<>();
+
     public synchronized static void agregarVehiculo(Vehiculo v) {
         if (v.getDireccion().equalsIgnoreCase("este")) {
             colaEste.add(v);
         } else {
-            colaOeste.add(v);
+            colaEste.add(v);//cambiar para dos 
         }
     }
+
     public synchronized static Vehiculo getVehiculo(String sentido) {
-        if (sentido.equalsIgnoreCase("este")) {
-            return colaEste.poll();
-        } else {
-            return colaOeste.poll();
+        synchronized (Cola_Comun_Ruta.colaEste) {
+            if (sentido.equalsIgnoreCase("este")) {
+                return colaEste.poll();
+            } 
+            
         }
+        return null;
     }
-    public synchronized static boolean estaVacia(String sentido){
+
+    public synchronized static boolean estaVacia(String sentido) {
         if (sentido.equalsIgnoreCase("este")) {
             return colaEste.isEmpty();
         } else {

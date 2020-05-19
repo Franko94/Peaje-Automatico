@@ -37,16 +37,11 @@ public class Cabina extends Thread {
      *
      * @param idHilo
      */
-    public Cabina(int idHilo, Reloj r, String dir,Queue<Vehiculo> a, Queue<Vehiculo> b,Queue<Vehiculo> c,Queue<Vehiculo> d) {
+    public Cabina(int idHilo, Reloj r, String dir) {
         super();
         this.reloj = r;
         this.direccion = dir;
         this.id_de_hilo = idHilo;
-        this.ee=a;
-        this.eo=b;
-        this.ne=c;
-        this.no=d;
-
     }
 
     @Override
@@ -61,69 +56,28 @@ public class Cabina extends Thread {
                     e.printStackTrace();
                 }
             }
-            Vehiculo vehiculo = null;
-            if (direccion.equalsIgnoreCase("este")) {
-//                if (!Colas_Vehiculos_Clasificados.getemptyvee()) {
-if(!ee.isEmpty()){
-//                    vehiculo = Colas_Vehiculos_Clasificados.getvee();
-                    vehiculo = ee.poll();
-                } else {
-                    System.out.println("cola especiales este vacia");
-                    //if (!Colas_Vehiculos_Clasificados.getemptyvne()) {
-                        if(!ne.isEmpty()){
-                            vehiculo = ne.poll();
-//                        vehiculo = Colas_Vehiculos_Clasificados.getvne();
-                    } else {
-                        System.out.println("cola normales este vacia");
-                    }
-                }
-            } else {
-//                if (!Colas_Vehiculos_Clasificados.getemptyveo()) {
-                    if(!eo.isEmpty()){
-//                    vehiculo = Colas_Vehiculos_Clasificados.getveo();
-                    vehiculo = eo.poll();
-                } else {
-                    System.out.println("cola especiales oeste vacia");
-//                    if (!Colas_Vehiculos_Clasificados.getemptyvno()) {
-                        if(!no.isEmpty()){
-                            vehiculo = no.poll();
-//                        vehiculo = Colas_Vehiculos_Clasificados.getvno();
-                    } else {
-                        System.out.println("cola normales este vacia");
-                    }
-                }
-            }
-            if (vehiculo != null) {
-                contador++;
-                System.out.println(contador);
-                //System.out.println(vehiculo.pasar_a_String());
-//                Logger.log(reloj.getNumero_de_ciclo() + ","
-//                        + Thread.currentThread().getId() + ","
-//                        + "PivotComunAEspecifica,run, "
-//                        + "El vehiculo especial de matricula: "
-//                        + vehiculo.getMatricula() + " se posiciona en la"
-//                        + " cola de vehiculos," + vehiculo.getDireccion());
-            } else {
-                //System.out.println("nulll");
-                // contador++;
-                //System.out.println(contador);
+
+            Vehiculo v = Colas_Vehiculos_Clasificados.getVehiculo(direccion);
+            if (v != null) {
+                System.out.println(v.pasar_a_String());
+                guardarAutosEnArchivo(v);
+                //guardarAutosEnArchivo(v);
             }
             reloj.hiloEjecutado(id_de_hilo);
-            //try {
+            try {
                 cambiarEstado();
-            //} catch (InterruptedException ex) {
-            //    java.util.logging.Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
-            //}
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    public void cambiarEstado() {
+    public void cambiarEstado() throws InterruptedException {
         if (estado == true) {
             estado = false;
         } else {
             estado = true;
         }
-        //sleep(1);
         synchronized (reloj) {
             if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();
@@ -136,7 +90,6 @@ if(!ee.isEmpty()){
         try {
             sleep(1);
         } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(CabinaPeaje.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
@@ -152,4 +105,30 @@ if(!ee.isEmpty()){
             e.printStackTrace();
         }
     }
+
+    public Vehiculo getVehiculo() {
+        if (!isEmptyee()) {
+            Vehiculo v = ee.poll();
+            if (v != null) {
+                return v;
+            }
+        } else {
+            if (!isEmptyne()) {
+                Vehiculo v = ne.poll();
+                if (v != null) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isEmptyee() {
+        return ee.isEmpty();
+    }
+
+    public boolean isEmptyne() {
+        return ne.isEmpty();
+    }
+
 }

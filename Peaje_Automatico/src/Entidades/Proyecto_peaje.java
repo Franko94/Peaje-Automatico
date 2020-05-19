@@ -48,8 +48,8 @@ public class Proyecto_peaje {
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
         Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
         
-        PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 2, "este",colas_Vehiculos_Clasificados.especialesEste,colas_Vehiculos_Clasificados.especialesOeste,colas_Vehiculos_Clasificados.normalesEste,colas_Vehiculos_Clasificados.normalesOeste);
-        PivotComunAEspecifica pivotComunAEspecificaOeste = new PivotComunAEspecifica(0, reloj, 3, "oeste",colas_Vehiculos_Clasificados.especialesEste,colas_Vehiculos_Clasificados.especialesOeste,colas_Vehiculos_Clasificados.normalesEste,colas_Vehiculos_Clasificados.normalesOeste);
+        PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 2, "este");
+//        PivotComunAEspecifica pivotComunAEspecificaOeste = new PivotComunAEspecifica(0, reloj, 3, "oeste",colas_Vehiculos_Clasificados.especialesEste,colas_Vehiculos_Clasificados.especialesOeste,colas_Vehiculos_Clasificados.normalesEste,colas_Vehiculos_Clasificados.normalesOeste);
 
 //        Caja_de_finalizados caja_de_finalizados = new Caja_de_finalizados();
         /**
@@ -61,17 +61,17 @@ public class Proyecto_peaje {
          */
         caja_de_Frecuencia_Este.start();
         caja_de_Frecuencia_Oeste.start();
-        //pivotComunAEspecificaEste.start();
-        //pivotComunAEspecificaOeste.start();
+        pivotComunAEspecificaEste.start();
+//        pivotComunAEspecificaOeste.start();
         /**
          * prueba cabinas afuera
          */
-        Cabina cabina1= new Cabina(4, reloj, "este",colas_Vehiculos_Clasificados.especialesEste,colas_Vehiculos_Clasificados.especialesOeste,colas_Vehiculos_Clasificados.normalesEste,colas_Vehiculos_Clasificados.normalesOeste);
+        Cabina cabina1= new Cabina(3, reloj, "este"/*,colas_Vehiculos_Clasificados.especialesEste,colas_Vehiculos_Clasificados.especialesOeste,colas_Vehiculos_Clasificados.normalesEste,colas_Vehiculos_Clasificados.normalesOeste*/);
 //        CabinaPeaje cabina2= new CabinaPeaje(5, reloj, "este");
 //        CabinaPeaje cabina3= new CabinaPeaje(6, reloj, "oeste");
 //        CabinaPeaje cabina4= new CabinaPeaje(7, reloj, "oeste");
         
-        //cabina1.start();
+        cabina1.start();
 //        cabina2.start();
 //        cabina3.start();
 //        cabina4.start();
@@ -81,7 +81,7 @@ public class Proyecto_peaje {
          */
         System.out.println("comienza espera");
         
-        Thread.sleep(20000);
+        Thread.sleep(25000);
         Logger.guardarLogs();
         
         System.out.println("FIN");
@@ -90,8 +90,5 @@ public class Proyecto_peaje {
     public static synchronized void addSalida() throws InterruptedException{
         Thread.sleep(1);
         Proyecto_peaje.cantidadSalida++;
-    }
-    public static void addVehiculo(Vehiculo v){
-        
     }
 }
