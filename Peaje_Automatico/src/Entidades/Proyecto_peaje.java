@@ -63,7 +63,8 @@ public class Proyecto_peaje {
          * Cuarto: Guardado de datos
          */
     }
-    public static synchronized void addSalida(){
+    public static synchronized void addSalida() throws InterruptedException{
+        Thread.sleep(1);
         Proyecto_peaje.cantidadSalida++;
     }
 }
