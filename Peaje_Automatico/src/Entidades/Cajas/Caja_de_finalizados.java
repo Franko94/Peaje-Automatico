@@ -45,7 +45,7 @@ public class Caja_de_finalizados extends Thread{
      * para variar los campos, se debe modificar el metodo pasar a string de la 
      * clase vehiculo
      */
-    public static void guardarAutosEnArchivo() {
+    public synchronized static void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);

@@ -64,8 +64,8 @@ public class CabinaPeaje extends Thread {
             Logger.log(reloj.getNumero_de_ciclo()+","+
                 Thread.currentThread().getId()+","+
                 "CabinaPeaje,llamarVehiculo, Vehiculo accede a cabina numero "
-                    + numero+" con matricula "+ 
-                    vehiculo.getMatricula());
+                    + numero+" con matricula ");//+ 
+                    //vehiculo.getMatricula());
         } else {
             Logger.log(reloj.getNumero_de_ciclo()+","+
                 Thread.currentThread().getId()+","+
@@ -97,8 +97,9 @@ public class CabinaPeaje extends Thread {
             Peaje.cobrar(monto);
             vehiculo.setHoraSalida(System.nanoTime());
             Caja_de_finalizados.addVehiculo(vehiculo);
-            System.out.println(Caja_de_finalizados.cola.size()+" Peaje");
-            vehiculo = null;
+           // System.out.println(Caja_de_finalizados.cola.size()+" Peaje");
+           Caja_de_finalizados.guardarAutosEnArchivo();
+           vehiculo = null;
         }
     }
 
