@@ -51,7 +51,11 @@ public class CabinaPeaje extends Thread {
             }
             if (this.habilitada) {
                 llamarVehiculo();
-                cobrarVehiculo();
+                try {
+                    cobrarVehiculo();
+                } catch (InterruptedException ex) {
+                    java.util.logging.Logger.getLogger(CabinaPeaje.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             reloj.hiloEjecutado(numero);
             try {
@@ -78,7 +82,7 @@ public class CabinaPeaje extends Thread {
         }
     }
 
-    private void cobrarVehiculo() {
+    private void cobrarVehiculo() throws InterruptedException {
         if (vehiculo != null) {
             Logger.log(reloj.getNumero_de_ciclo() + ","
                     + Thread.currentThread().getId() + "," + "CabinaPeaje,cobrarVehiculo,"
