@@ -82,6 +82,10 @@ public class PivotComunAEspecifica extends Thread {
         } else {
             estado = true;
         }
+        Logger.log(reloj.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "PivotComunAEspecifica,cambiarEstado, "
+                        + "El hilo ha cambiado de estado");
         synchronized (reloj) {
             if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();

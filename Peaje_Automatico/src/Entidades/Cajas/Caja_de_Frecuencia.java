@@ -84,11 +84,19 @@ public class Caja_de_Frecuencia extends Thread {
             }
 
             reloj.hiloEjecutado(id_de_hilo);
+                    Logger.log(reloj.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Caja de frecuencia,hiloEjecutado, "
+                        + "la caja envia notificacion de hilo ejecutado");
             try {
                 cambiarEstado();
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Logger.log(reloj.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Caja de frecuencia,cambiarEstado, "
+                        + "la caja cambia su estado");
 
         }
     }

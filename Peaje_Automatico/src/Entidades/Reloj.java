@@ -18,17 +18,20 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[5];//modificar acorde a tamaño
+    private Boolean[] listaDeHilos = new Boolean[4];//modificar acorde a tamaño
 
     public Reloj() {
         this.listaDeHilos[0] = false;//caja de frecuencias este
         this.listaDeHilos[1] = false;//caja de frecuencias oeste
         this.listaDeHilos[2] = false;//pivot este
         this.listaDeHilos[3] = false;//pivot oeste
-        this.listaDeHilos[4] = false;//cabina1
     }
 
     public void hiloEjecutado(int i) {
+//        Logger.log(this.getNumero_de_ciclo() + ","
+//                        + Thread.currentThread().getId() + ","
+//                        + "Reloj,hiloEjecutado, "
+//                        + "El reloj recibe al hilo como ejecutado");
         if (listaDeHilos[i] == false) {
             this.listaDeHilos[i] = true;
         } else {
@@ -43,6 +46,10 @@ public class Reloj {
      * @return
      */
     public synchronized boolean nuevoCiclo(boolean estadoHilo) {
+//        Logger.log(this.getNumero_de_ciclo() + ","
+//                        + Thread.currentThread().getId() + ","
+//                        + "Reloj,nuevoCiclo, "
+//                        + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
         if (estadoHilo != estadoPrevio) {
             return true;
         }
@@ -54,6 +61,10 @@ public class Reloj {
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
      */
     public synchronized boolean chequearEstados() {
+//        Logger.log(this.getNumero_de_ciclo() + ","
+//                        + Thread.currentThread().getId() + ","
+//                        + "Reloj,chequeaEstado, "
+//                        + "El reloj comprueba estados");
         boolean cambiarEstado = true;
         for (Boolean estadoHilo : listaDeHilos) {
             if (estadoHilo != estadoPrevio) {
@@ -62,16 +73,20 @@ public class Reloj {
             }
         }
         if (cambiarEstado) {
+//            Logger.log(this.getNumero_de_ciclo() + ","
+//                        + Thread.currentThread().getId() + ","
+//                        + "Reloj,chequeaEstado, "
+//                        + "El reloj cambia de estado");
             if (estadoPrevio == true) {
                 estadoPrevio = false;
             } else {
                 estadoPrevio = true;
             }
             agregarCiclo();
-            Logger.log(this.getNumero_de_ciclo() + ","
-                    + Thread.currentThread().getId() + ","
-                    + "Reloj,checkearEstados, CICLO NUMERO  "
-                    + numero_de_ciclo + " HA COMENZADO!");
+//            Logger.log(this.getNumero_de_ciclo() + ","
+//                    + Thread.currentThread().getId() + ","
+//                    + "Reloj,checkearEstados, CICLO NUMERO  "
+//                    + numero_de_ciclo + " HA COMENZADO!");
             return true;
 
         }
@@ -80,6 +95,10 @@ public class Reloj {
 
     public void agregarCiclo() {
         this.numero_de_ciclo++;
+//                    Logger.log(this.getNumero_de_ciclo() + ","
+//                    + Thread.currentThread().getId() + ","
+//                    + "Reloj,checkearEstados, CICLO NUMERO  "
+//                    + numero_de_ciclo + " HA COMENZADO!");
     }
 
     public int getNumero_de_ciclo() {
