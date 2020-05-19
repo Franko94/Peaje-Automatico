@@ -16,21 +16,17 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[2];//modificar acorde a tamaño
+    private Boolean[] listaDeHilos = new Boolean[8];//modificar acorde a tamaño
 
     public Reloj() {
-        //this.listaDeHilos[0] = false;//pivot este
-        //this.listaDeHilos[1] = false;//pivot oeste
-        //this.listaDeHilos[2] = false;//caja de frecuencias este
-        //this.listaDeHilos[3] = false;//caja de frecuencias oeste
-        //this.listaDeHilos[4] = false;//cabina1
-        //this.listaDeHilos[5] = false;//cabina2
-        //this.listaDeHilos[6] = false;//cabina3
-        //this.listaDeHilos[7] = false;//cabina4
-  //        this.listaDeHilos[1] = false;//peaje   
-this.listaDeHilos[0] = false;//caja de frecuencias este
-this.listaDeHilos[1] = false;//pivot este
-//this.listaDeHilos[2] = false;//cabina1
+        this.listaDeHilos[0] = false;//pivot este
+        this.listaDeHilos[1] = false;//pivot oeste
+        this.listaDeHilos[2] = false;//caja de frecuencias este
+        this.listaDeHilos[3] = false;//caja de frecuencias oeste
+        this.listaDeHilos[4] = false;//cabina1
+        this.listaDeHilos[5] = false;//cabina2
+        this.listaDeHilos[6] = false;//cabina3
+        this.listaDeHilos[7] = false;//cabina4
     }
 
     public void hiloEjecutado(int i) {

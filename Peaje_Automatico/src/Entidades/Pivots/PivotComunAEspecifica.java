@@ -8,6 +8,7 @@ package Entidades.Pivots;
 import Entidades.Reloj;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Proyecto_peaje;
 import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -46,10 +47,7 @@ public class PivotComunAEspecifica extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 100000; i++) {
-            
-//        }
-//        while (true) {
+        while (Proyecto_peaje.cantidadSalida<Proyecto_peaje.cantidadEntrada) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -62,10 +60,10 @@ public class PivotComunAEspecifica extends Thread {
             Vehiculo vehiculo = Cola_Comun_Ruta.getVehiculo(direccion);
             if (vehiculo != null) {
                 if (vehiculo.isUnidad_especial()) {
-//                    try {
-//                        Thread.sleep(retraso_por_vehiculos_especiales);
-//                    } catch (InterruptedException ex) {
-//                    }
+                    try {
+                        Thread.sleep(retraso_por_vehiculos_especiales);
+                    } catch (InterruptedException ex) {
+                    }
                 }
                 Colas_Vehiculos_Clasificados.agregarVehiculo(vehiculo);
                 Logger.log(reloj.getNumero_de_ciclo() + ","
@@ -76,18 +74,23 @@ public class PivotComunAEspecifica extends Thread {
                         + " cola de vehiculos," + vehiculo.getDireccion());
             }
             reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
+            try {            
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    public void cambiarEstado() {
+    public synchronized void cambiarEstado() throws InterruptedException {
         if (estado == true) {
             estado = false;
         } else {
             estado = true;
         }
+        sleep(1);
         synchronized (reloj) {
-            if (reloj.chequearEstados()) {
+            if (reloj.chequearEstados()==true) {
                 reloj.notifyAll();
             }
         }

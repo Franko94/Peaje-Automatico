@@ -5,7 +5,6 @@
  */
 package Logger;
 
-import static Entidades.Cajas.Caja_de_finalizados.cola;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

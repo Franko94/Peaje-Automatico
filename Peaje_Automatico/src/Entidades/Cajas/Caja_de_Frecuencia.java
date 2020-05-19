@@ -6,6 +6,7 @@
 package Entidades.Cajas;
 
 import Entidades.Colas.Cola_Comun_Ruta;
+import Entidades.Proyecto_peaje;
 import Entidades.Reloj;
 import Entidades.Vehiculo;
 import java.util.Queue;
@@ -57,10 +58,8 @@ public class Caja_de_Frecuencia extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 9000; i++) {
-            
-//        }
-//         (true) {
+
+         while(Proyecto_peaje.cantidadSalida<Proyecto_peaje.cantidadEntrada) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -71,32 +70,39 @@ public class Caja_de_Frecuencia extends Thread {
                 }
             }
             if (Caja_de_vehiculos.estaVacia(direccion)!= true) {
-                //int tiempoActual = (int) System.currentTimeMillis();
-                //if (tiempoActual - timempoInicial > autos_por_minuto) {
-                    //timempoInicial=tiempoActual;
+                int tiempoActual = (int) System.currentTimeMillis();
+                if (tiempoActual - timempoInicial > autos_por_minuto) {
+                    timempoInicial=tiempoActual;
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
-                    //v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
+                    v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
                     if (v != null) {
                         Cola_Comun_Ruta.agregarVehiculo(v);
-                        System.out.println(v.pasar_a_String());
                     }
-                    //Logger.log(reloj.getNumero_de_ciclo() + ","
-                     //       + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
-                //}
+                    Logger.log(reloj.getNumero_de_ciclo() + ","
+                            + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
+                }
             }
+            
             reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
+            try {
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }
 
-    public void cambiarEstado() {
+    public synchronized void cambiarEstado() throws InterruptedException{
         if (estado == true) {
             estado = false;
         } else {
             estado = true;
         }
+        
+        sleep(1);
         synchronized (reloj) {
-            if (reloj.chequearEstados()) {
+            if (reloj.chequearEstados()==true) {
                 reloj.notifyAll();
             }
         }
