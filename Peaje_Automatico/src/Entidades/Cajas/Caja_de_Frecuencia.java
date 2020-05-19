@@ -63,22 +63,27 @@ public class Caja_de_Frecuencia extends Thread {
                     e.printStackTrace();
                 }
             }
-            if (Caja_de_vehiculos.cola.isEmpty() != true) {
+            if (!Caja_de_vehiculos.cola.isEmpty()) {
                 try {
                     Thread.sleep(autos_por_minuto);
                 } catch (InterruptedException ex) {
-                    
+                    System.out.println(ex);
                 }
-                Vehiculo v = Caja_de_vehiculos.cola.poll();
-                v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
-                if(v!=null){Cola_Comun_Ruta.cola.add(v);}
-                Logger.log(reloj.getNumero_de_ciclo()+","+
-                Thread.currentThread().getId()+","+"Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
+                pasarVehiculoACola();
             }
             reloj.hiloEjecutado(id_de_hilo);
             cambiarEstado();
         }
     }
+    
+    synchronized private void pasarVehiculoACola(){
+        Vehiculo v = Caja_de_vehiculos.cola.poll();
+        v.setHoraEntrada(System.nanoTime());//Se inicia la hora de entrada al sistema
+        if(v!=null){Cola_Comun_Ruta.cola.add(v);}
+        Logger.log(reloj.getNumero_de_ciclo()+","+
+        Thread.currentThread().getId()+","+"Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
+    }
+    
     public void cambiarEstado() {
         if (estado == true) {
             estado = false;

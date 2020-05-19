@@ -13,7 +13,7 @@ public class Vehiculo {
     private String matricula;
     
     public Vehiculo(String linea){
-        String[]datos = linea.split(";");
+        String[]datos = linea.split(",");
         this.matricula = datos[0];
         this.tipo = datos[1];
         this.unidad_especial = Boolean.valueOf(datos[2]);

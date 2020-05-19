@@ -37,12 +37,8 @@ public class Proyecto_peaje {
          * Primero: Creación de todos los objetos
          */
         final Reloj reloj = new Reloj();
-        Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
         Caja_de_Frecuencia caja_de_Frecuencia = new Caja_de_Frecuencia(0, reloj);
         PivotComunAEspecifica pivotComunAEspecifica = new PivotComunAEspecifica(0, reloj);
-        Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
-        Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
-        Caja_de_finalizados caja_de_finalizados = new Caja_de_finalizados();
         /**
          * Segundo: Carga de datos
          */

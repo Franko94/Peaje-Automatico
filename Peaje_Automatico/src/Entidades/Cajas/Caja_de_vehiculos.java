@@ -28,10 +28,9 @@ public class Caja_de_vehiculos {
         String linea;
 
         try {
-            archivo = new File("src\\Escenarios\\Escenario_Demo.csv");
+            archivo = new File("src\\Escenarios\\78000.csv");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
-            int i = 0;
             while ((linea = br.readLine()) != null) {
                 Vehiculo vehiculo = new Vehiculo(linea); //ACA MODIFICAR LOS DATOS QUE CREAN EL AUTO
                 cola.add(vehiculo);

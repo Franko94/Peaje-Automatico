@@ -52,12 +52,11 @@ public class Peaje extends Thread {
             }
             System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
             //reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
-
+            //cambiarEstado();
         }
     }
 
-    public static synchronized void cobrar(int monto) {
+    public static void cobrar(int monto) {
         totalDinero += monto;
     }
 

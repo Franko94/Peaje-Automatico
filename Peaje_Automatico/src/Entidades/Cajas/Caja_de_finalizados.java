@@ -5,6 +5,7 @@
  */
 package Entidades.Cajas;
 
+import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Peaje;
 import Entidades.Vehiculo;
 import java.io.BufferedReader;
@@ -15,6 +16,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,8 +27,9 @@ import javax.swing.JOptionPane;
 public class Caja_de_finalizados extends Thread{
 
     public static Queue<Vehiculo> cola = new LinkedList<>();
+    public static int i = 0;
     
-    public static synchronized void addVehiculo(Vehiculo v){
+    synchronized public static void addVehiculo(Vehiculo v){
         Caja_de_finalizados.cola.add(v);
     }
 
@@ -33,10 +37,17 @@ public class Caja_de_finalizados extends Thread{
     @Override
     public void run(){
         while(true){
-            System.out.println(cola.size());
             if(!cola.isEmpty()){
                 guardarAutosEnArchivo();
             }
+            else{
+                try {
+                    sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Caja_de_finalizados.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            System.out.println(Cola_Comun_Ruta.cola.size());
         }
     }
     
@@ -45,26 +56,27 @@ public class Caja_de_finalizados extends Thread{
      * para variar los campos, se debe modificar el metodo pasar a string de la 
      * clase vehiculo
      */
-    public synchronized static void guardarAutosEnArchivo() {
+    synchronized public static void guardarAutosEnArchivo() {
         FileWriter fw;
         try {
             fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            while (!cola.isEmpty()) {
-                System.out.println("Entra");
+            while (cola.size() > 0) {
                 String lineaActual = cola.poll().pasar_a_String();
                 bw.write(lineaActual);
                 bw.newLine();
-                System.out.println("escribe");
+                System.out.println("linea " +i);
+                i++;
             }
-            bw.write("Monto Final: "+ String.valueOf(Peaje.totalDinero));
-            bw.newLine();
             bw.close();
             fw.close();
         } catch (IOException e) {
             System.out.println("Error al escribir el archivo "
                     + "src\\Escenarios\\archivo_salida_vehiculos.txt");
             e.printStackTrace();
+        }
+        catch(Exception e){
+            System.out.println(e);
         }
     }
 }
