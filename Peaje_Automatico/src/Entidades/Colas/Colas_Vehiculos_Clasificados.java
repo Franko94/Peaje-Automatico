@@ -16,8 +16,6 @@ import java.util.Queue;
  * @author apicos
  */
 public class Colas_Vehiculos_Clasificados {
-//    private static Queue<Vehiculo> especialesEste = new LinkedList<>();
-//    private static Queue<Vehiculo> especialesOeste = new LinkedList<>();
 
     private static Queue<Vehiculo> normalesEste = new LinkedList<>();
     private static Queue<Vehiculo> normalesOeste = new LinkedList<>();
@@ -29,16 +27,9 @@ public class Colas_Vehiculos_Clasificados {
             normalesEste.add(v);//cambiar para sentidos
         }
     }
-
     public synchronized static Vehiculo getVehiculo(String sentido) {
-        synchronized (Colas_Vehiculos_Clasificados.normalesEste) {
-//            if (sentido.equalsIgnoreCase("este")) {
             return normalesEste.poll();
-//            } 
-
-        }
     }
-
     public synchronized static boolean estaVacia(String sentido) {
         return normalesEste.isEmpty();
     }

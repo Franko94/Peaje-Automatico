@@ -26,27 +26,21 @@ public class Cabina extends Thread {
     private boolean habilitada = false;
     private int id_de_hilo;
     private String direccion;
-    private boolean estado = false;
+    private boolean estado;
     private int contador = 0;
-    public Queue<Vehiculo> ee;
-    public Queue<Vehiculo> eo;
-    public Queue<Vehiculo> ne;
-    public Queue<Vehiculo> no;
 
-    /**
-     *
-     * @param idHilo
-     */
     public Cabina(int idHilo, Reloj r, String dir) {
         super();
         this.reloj = r;
         this.direccion = dir;
         this.id_de_hilo = idHilo;
+        this.estado = false;
     }
 
     @Override
     public void run() {
         while (true) {
+            Vehiculo v = null;
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -56,12 +50,10 @@ public class Cabina extends Thread {
                     e.printStackTrace();
                 }
             }
-
-            Vehiculo v = Colas_Vehiculos_Clasificados.getVehiculo(direccion);
+            v = getVehiculo(direccion);
             if (v != null) {
                 System.out.println(v.pasar_a_String());
                 guardarAutosEnArchivo(v);
-                //guardarAutosEnArchivo(v);
             }
             reloj.hiloEjecutado(id_de_hilo);
             try {
@@ -106,29 +98,9 @@ public class Cabina extends Thread {
         }
     }
 
-    public Vehiculo getVehiculo() {
-        if (!isEmptyee()) {
-            Vehiculo v = ee.poll();
-            if (v != null) {
-                return v;
-            }
-        } else {
-            if (!isEmptyne()) {
-                Vehiculo v = ne.poll();
-                if (v != null) {
-                    return v;
-                }
-            }
-        }
-        return null;
+    public synchronized Vehiculo getVehiculo(String dir) {
+        Vehiculo v;
+        v = Colas_Vehiculos_Clasificados.getVehiculo(direccion);
+        return v;
     }
-
-    public boolean isEmptyee() {
-        return ee.isEmpty();
-    }
-
-    public boolean isEmptyne() {
-        return ne.isEmpty();
-    }
-
 }
