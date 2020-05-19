@@ -8,6 +8,7 @@ package Entidades;
 import Entidades.Enums.PreciosDeVehiculos;
 import java.util.LinkedList;
 import Logger.Logger;
+import java.util.logging.Level;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Peaje extends Thread {
 
     private int cantCabinas;
     public static int totalDinero;
-    public CabinaPeaje[] listaCabinas;
+    public Cabina[] listaCabinas;
     private Reloj reloj;
     private boolean estado;
     //private int id_de_hilo;
@@ -25,17 +26,7 @@ public class Peaje extends Thread {
     private final String CREACION_CABINAS = "Cabina creada y corriendo numero ";
 
     public Peaje(String nombre, int numCabinas, Reloj r) {
-        //this.id_de_hilo = 1;
-        this.totalDinero = 0;
-        this.cantCabinas = numCabinas;
-        this.estado = false;
-        this.listaCabinas = new CabinaPeaje[cantCabinas];
-        Logger.log(CREACION + nombre);
-        for (int i = 0; i < numCabinas; i++) {
-            listaCabinas[i] = new CabinaPeaje(i + 2, r, "A");//cambiar segun si esta el peaje o no
-            listaCabinas[i].start();
-        }
-    }
+            }
 
     @Override
     public void run() {
@@ -50,9 +41,12 @@ public class Peaje extends Thread {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Ejecucion del ciclo del peaje que modifica las cabinas");//cambiar por sentencia para distrubucion de sentidos
-            //reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
+            try {
+                //gestion del peaje
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Peaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }
@@ -61,12 +55,13 @@ public class Peaje extends Thread {
         totalDinero += monto;
     }
 
-    public void cambiarEstado() {
+    public void cambiarEstado() throws InterruptedException {
         if (estado == true) {
             estado = false;
         } else {
             estado = true;
         }
+        sleep(1);
         synchronized (reloj) {
             if (reloj.chequearEstados()) {
                 reloj.notifyAll();

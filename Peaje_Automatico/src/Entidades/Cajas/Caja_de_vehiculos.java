@@ -18,8 +18,9 @@ import javax.swing.JOptionPane;
  * @author Agustín Picos
  */
 public class Caja_de_vehiculos {
-    
-    public static Queue<Vehiculo> cola = new LinkedList<>();
+
+    private static Queue<Vehiculo> colaEste = new LinkedList<>();
+    private static Queue<Vehiculo> colaOeste = new LinkedList<>();
 
     public static void cargar_vehiculos() {
         File archivo;
@@ -28,18 +29,40 @@ public class Caja_de_vehiculos {
         String linea;
 
         try {
-            archivo = new File("src\\Escenarios\\Escenario_Demo.csv");
+            archivo = new File("src\\Escenarios\\prueba.csv");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
             int i = 0;
             while ((linea = br.readLine()) != null) {
                 Vehiculo vehiculo = new Vehiculo(linea); //ACA MODIFICAR LOS DATOS QUE CREAN EL AUTO
-                cola.add(vehiculo);
+                agregarVehiculo(vehiculo);
             }
             br.close();
             fr.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Hubo un error leyendo el archivo" + e);
+        }
+    }
+
+    public static void agregarVehiculo(Vehiculo v) {
+        if (v.getDireccion().equalsIgnoreCase("este")) {
+            colaEste.add(v);
+        } else {
+            colaOeste.add(v);
+        }
+    }
+    public static Vehiculo getVehiculo(String sentido) {
+        if (sentido.equalsIgnoreCase("este")) {
+            return colaEste.poll();
+        } else {
+            return colaOeste.poll();
+        }
+    }
+    public static boolean estaVacia(String sentido){
+        if (sentido.equalsIgnoreCase("este")) {
+            return colaEste.isEmpty();
+        } else {
+            return colaOeste.isEmpty();
         }
     }
 }

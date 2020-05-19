@@ -11,6 +11,7 @@ public class Vehiculo {
     private long horaEntrada;
     private long horaSalida;
     private String matricula;
+    private String direccion;
     
     public Vehiculo(String linea){
         String[]datos = linea.split(";");
@@ -18,6 +19,7 @@ public class Vehiculo {
         this.tipo = datos[1];
         this.unidad_especial = Boolean.valueOf(datos[2]);
         this.genera_accidente = Boolean.valueOf(datos[3]);
+        this.direccion=datos[4];
     }
     public String pasar_a_String(){
         String dato="";
@@ -27,7 +29,8 @@ public class Vehiculo {
         dato+=String.valueOf(genera_accidente)+",";
         dato+=String.valueOf(horaEntrada)+",";
         dato+=String.valueOf(horaSalida)+",";
-        dato+=String.valueOf(horaSalida-horaEntrada);
+        dato+=String.valueOf(horaSalida-horaEntrada+",");
+        dato+=direccion;
         return dato;
     }
 
@@ -48,6 +51,10 @@ public class Vehiculo {
     }
     public String getMatricula(){
         return matricula;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
 }

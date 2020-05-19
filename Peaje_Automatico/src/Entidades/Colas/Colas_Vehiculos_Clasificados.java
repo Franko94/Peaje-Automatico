@@ -5,7 +5,9 @@
  */
 package Entidades.Colas;
 
+import Entidades.Reloj;
 import Entidades.Vehiculo;
+import Logger.Logger;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -14,9 +16,21 @@ import java.util.Queue;
  * @author apicos
  */
 public class Colas_Vehiculos_Clasificados {
-    public static Queue<Vehiculo> especiales=new LinkedList<>();
-    
-    public static Queue<Vehiculo> normales=new LinkedList<>();
-    
-   
+
+    private static Queue<Vehiculo> normalesEste = new LinkedList<>();
+    private static Queue<Vehiculo> normalesOeste = new LinkedList<>();
+
+    public synchronized static void agregarVehiculo(Vehiculo v) {
+        if (v.getDireccion().equalsIgnoreCase("este")) {
+            normalesEste.add(v);
+        } else {
+            normalesEste.add(v);//cambiar para sentidos
+        }
+    }
+    public synchronized static Vehiculo getVehiculo(String sentido) {
+            return normalesEste.poll();
+    }
+    public synchronized static boolean estaVacia(String sentido) {
+        return normalesEste.isEmpty();
+    }
 }

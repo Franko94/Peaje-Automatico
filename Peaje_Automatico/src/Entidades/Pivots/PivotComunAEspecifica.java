@@ -5,9 +5,11 @@
  */
 package Entidades.Pivots;
 
+import Entidades.Cabina;
 import Entidades.Reloj;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Proyecto_peaje;
 import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -26,7 +28,8 @@ public class PivotComunAEspecifica extends Thread {
     private int retraso_por_vehiculos_especiales;
     private Reloj reloj;
     private boolean estado = false;
-    private int id_de_hilo = 0;
+    private int id_de_hilo;
+    private String direccion;
 
     /**
      *
@@ -34,11 +37,12 @@ public class PivotComunAEspecifica extends Thread {
      *
      * 20 ms equivale a 30 segundos de la vida real
      */
-    public PivotComunAEspecifica(int retraso, Reloj r) {
+    public PivotComunAEspecifica(int retraso, Reloj r, int idHilo, String dir/*, Queue<Vehiculo> a, Queue<Vehiculo> b, Queue<Vehiculo> c, Queue<Vehiculo> d*/) {
         super();
         this.reloj = r;
         this.retraso_por_vehiculos_especiales = retraso;
-
+        this.direccion = dir;
+        this.id_de_hilo = idHilo;
     }
 
     @Override
@@ -50,42 +54,36 @@ public class PivotComunAEspecifica extends Thread {
                         reloj.wait();
                     }
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            Vehiculo vehiculo = Cola_Comun_Ruta.cola.poll();
-            if (vehiculo != null) {
-                if (vehiculo.isUnidad_especial()) {
-                    try {
-                        Thread.sleep(retraso_por_vehiculos_especiales);
-                    } catch (InterruptedException ex) {
-                        
-                    }
-                    Colas_Vehiculos_Clasificados.especiales.add(vehiculo);
-                    Logger.log(reloj.getNumero_de_ciclo()+","+
-                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo especial de matricula: " + vehiculo.getMatricula() + " se posiciona en la"
-                        + " cola de vehiculos especiales");
-                } else {
-                    Colas_Vehiculos_Clasificados.normales.add(vehiculo);
-                    Logger.log(reloj.getNumero_de_ciclo()+","+
-                Thread.currentThread().getId()+","+"PivotComunAEspecifica,run, El vehiculo normal de matricula: " + vehiculo.getMatricula() + " se posiciona"
-                        + " en la cola de vehiculos normales");
-                }
+            Vehiculo v = Cola_Comun_Ruta.getVehiculo(direccion);
+            if (v != null) {
+                Colas_Vehiculos_Clasificados.agregarVehiculo(v);
+                Logger.log(reloj.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "PivotComunAEspecifica,run, "
+                        + "El vehiculo especial de matricula: "
+                        + v.getMatricula() + " se posiciona en la"
+                        + " cola de vehiculos," + v.getDireccion());
             }
             reloj.hiloEjecutado(id_de_hilo);
-            cambiarEstado();
+            try {
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
-    public void cambiarEstado() {
+    public void cambiarEstado()throws InterruptedException {
         if (estado == true) {
             estado = false;
         } else {
             estado = true;
         }
         synchronized (reloj) {
-            if (reloj.chequearEstados()) {
+            if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();
             }
         }
