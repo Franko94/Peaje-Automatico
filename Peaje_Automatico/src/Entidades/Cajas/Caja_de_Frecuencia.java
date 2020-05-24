@@ -114,3 +114,6 @@ public class Caja_de_Frecuencia extends Thread {
         }
     }
 }
+/**
+ * hacer que la caja tire de forma alternada un auto para el carril 1 y 2 de la ruta comun
+ */

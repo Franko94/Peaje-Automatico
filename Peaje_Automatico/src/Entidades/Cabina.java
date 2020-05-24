@@ -25,7 +25,7 @@ public class Cabina extends Thread {
     private Reloj reloj;
     private boolean habilitada = false;
     private int id_de_hilo;
-    private String direccion;
+    private String direccion; // esto hay que verlo
     private boolean estado;
     private int contador = 0;
 

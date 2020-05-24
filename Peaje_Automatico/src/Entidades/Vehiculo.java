@@ -5,7 +5,7 @@ package Entidades;
  * @author Agustín Picos
  */
 public class Vehiculo {
-    private boolean unidad_especial;
+    private boolean tag;
     private String tipo;
     private boolean genera_accidente;
     private long horaEntrada;
@@ -14,10 +14,10 @@ public class Vehiculo {
     private String direccion;
     
     public Vehiculo(String linea){
-        String[]datos = linea.split(";");
+        String[]datos = linea.split(",");
         this.matricula = datos[0];
         this.tipo = datos[1];
-        this.unidad_especial = Boolean.valueOf(datos[2]);
+        this.tag = Boolean.valueOf(datos[2]);
         this.genera_accidente = Boolean.valueOf(datos[3]);
         this.direccion=datos[4];
     }
@@ -25,7 +25,7 @@ public class Vehiculo {
         String dato="";
         dato+=String.valueOf(matricula)+",";
         dato+=tipo+",";
-        dato+=String.valueOf(unidad_especial)+",";
+        dato+=String.valueOf(tag)+",";
         dato+=String.valueOf(genera_accidente)+",";
         dato+=String.valueOf(horaEntrada)+",";
         dato+=String.valueOf(horaSalida)+",";
@@ -34,8 +34,8 @@ public class Vehiculo {
         return dato;
     }
 
-    public boolean isUnidad_especial() {
-        return unidad_especial;
+    public boolean isTag() {
+        return tag;
     }
 
     public String getTipo() {
