@@ -44,3 +44,10 @@ public class Cola_Comun_Ruta {
         }
     }
 }
+/**
+ * hay que ver si los metodos los podemos acceder desde objetos distintos
+ * en casa afirmativo, creamos dos carriles o colas por ruta
+ * en caso negativo, hay que crear dos clases de ruta.
+ * 
+ * hay que hacer la cola de los manuales/automaticos
+ */

@@ -71,3 +71,18 @@ public class Proyecto_peaje {
     }
 
 }
+/**
+ * crear la clase camaras/antenas/tag
+ * va a trabajar como la cabina, los metodos varian un poco
+ * sacar foto de la matricula
+ * cobrar por tag, ver si tiene saldo
+ * si tiene tag se cobra
+ * si tiene tag sin saldo o si no tiene tag, hay que ver la foto y reportarla
+ * pasarlo a una lista.
+ */
+/**
+ * hay que arreglar el logger
+ */
+/**
+ * hay que manejar los accidentes y la redistribucion de los carriles
+ */
