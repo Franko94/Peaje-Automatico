@@ -14,6 +14,7 @@ import Entidades.Vehiculo;
 import java.util.Queue;
 import java.util.logging.Level;
 import Logger.Logger;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -47,7 +48,7 @@ public class PivotComunAEspecifica extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -60,12 +61,12 @@ public class PivotComunAEspecifica extends Thread {
             Vehiculo v = Cola_Comun_Ruta.getVehiculo(direccion);
             if (v != null) {
                 Colas_Vehiculos_Clasificados.agregarVehiculo(v);
-                Logger.log(reloj.getNumero_de_ciclo() + ","
+                Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "PivotComunAEspecifica,run, "
                         + "El vehiculo especial de matricula: "
                         + v.getMatricula() + " se posiciona en la"
-                        + " cola de vehiculos," + v.getDireccion());
+                        + " cola de vehiculos," + v.getDireccion()+","+LocalDateTime.now());
             }
             reloj.hiloEjecutado(id_de_hilo);
             try {
@@ -82,10 +83,10 @@ public class PivotComunAEspecifica extends Thread {
         } else {
             estado = true;
         }
-        Logger.log(reloj.getNumero_de_ciclo() + ","
+        Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "PivotComunAEspecifica,cambiarEstado, "
-                        + "El hilo ha cambiado de estado");
+                        + "El hilo ha cambiado de estado,"+LocalDateTime.now());
         synchronized (reloj) {
             if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();

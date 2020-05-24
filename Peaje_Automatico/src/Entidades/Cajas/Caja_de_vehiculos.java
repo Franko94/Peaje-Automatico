@@ -4,6 +4,7 @@
  */
 package Entidades.Cajas;
 
+import Entidades.Proyecto_peaje;
 import Entidades.Vehiculo;
 import java.io.BufferedReader;
 import java.io.File;
@@ -36,6 +37,7 @@ public class Caja_de_vehiculos {
             while ((linea = br.readLine()) != null) {
                 Vehiculo vehiculo = new Vehiculo(linea); //ACA MODIFICAR LOS DATOS QUE CREAN EL AUTO
                 agregarVehiculo(vehiculo);
+                Proyecto_peaje.cantidadEntrada++;
             }
             br.close();
             fr.close();
