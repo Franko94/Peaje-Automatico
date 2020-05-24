@@ -6,9 +6,7 @@
 package Entidades;
 
 import Logger.Logger;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -18,7 +16,7 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private Boolean[] listaDeHilos = new Boolean[4];//modificar acorde a tamaño
+    private final Boolean[] listaDeHilos = new Boolean[4];//modificar acorde a tamaño
 
     public Reloj() {
         this.listaDeHilos[0] = false;//caja de frecuencias este
@@ -59,12 +57,13 @@ public class Reloj {
     /**
      * se fija que todos los hilos hayan sido ejecutados. Si lo fueron, cambia
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
+     * @return 
      */
     public synchronized boolean chequearEstados() {
-//        Logger.log(this.getNumero_de_ciclo() + ","
-//                        + Thread.currentThread().getId() + ","
-//                        + "Reloj,chequeaEstado, "
-//                        + "El reloj comprueba estados");
+        Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Reloj,chequeaEstado, "
+                        + "El reloj comprueba estados,"+ LocalDateTime.now());
         boolean cambiarEstado = true;
         for (Boolean estadoHilo : listaDeHilos) {
             if (estadoHilo != estadoPrevio) {
@@ -73,20 +72,12 @@ public class Reloj {
             }
         }
         if (cambiarEstado) {
-//            Logger.log(this.getNumero_de_ciclo() + ","
-//                        + Thread.currentThread().getId() + ","
-//                        + "Reloj,chequeaEstado, "
-//                        + "El reloj cambia de estado");
-            if (estadoPrevio == true) {
-                estadoPrevio = false;
-            } else {
-                estadoPrevio = true;
-            }
+            Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Reloj,chequeaEstado, "
+                        + "El reloj cambia de estado,"+ LocalDateTime.now());
+            estadoPrevio = estadoPrevio != true;
             agregarCiclo();
-//            Logger.log(this.getNumero_de_ciclo() + ","
-//                    + Thread.currentThread().getId() + ","
-//                    + "Reloj,checkearEstados, CICLO NUMERO  "
-//                    + numero_de_ciclo + " HA COMENZADO!");
             return true;
 
         }
@@ -95,10 +86,10 @@ public class Reloj {
 
     public void agregarCiclo() {
         this.numero_de_ciclo++;
-//                    Logger.log(this.getNumero_de_ciclo() + ","
-//                    + Thread.currentThread().getId() + ","
-//                    + "Reloj,checkearEstados, CICLO NUMERO  "
-//                    + numero_de_ciclo + " HA COMENZADO!");
+                    Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                    + Thread.currentThread().getId() + ","
+                    + "Reloj,checkearEstados, CICLO NUMERO  "
+                    + numero_de_ciclo + " HA COMENZADO!,"+ LocalDateTime.now());
     }
 
     public int getNumero_de_ciclo() {

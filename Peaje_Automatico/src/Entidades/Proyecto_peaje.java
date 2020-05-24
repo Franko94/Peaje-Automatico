@@ -11,8 +11,6 @@ import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
 import Entidades.Pivots.PivotComunAEspecifica;
 import Logger.Logger;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  *
@@ -23,7 +21,7 @@ public class Proyecto_peaje {
     /**
      * @param args the command line arguments
      */
-    public static int cantidadEntrada = 8640;
+    public static int cantidadEntrada = 0;
     public static int cantidadSalida = 0;
     
 
@@ -41,6 +39,7 @@ public class Proyecto_peaje {
         /**
          * Primero: Creación de todos los objetos
          */
+        Logger logger = new Logger();
         final Reloj reloj = new Reloj();
         Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
         Caja_de_Frecuencia caja_de_Frecuencia_Este = new Caja_de_Frecuencia(0, reloj, 0, "este");
@@ -65,6 +64,7 @@ public class Proyecto_peaje {
         Cabina cabina1= new Cabina(3, reloj, "este");
         
         cabina1.start();
+        System.out.println("fin");
         /**
          * Cuarto: Guardado de datos
          */

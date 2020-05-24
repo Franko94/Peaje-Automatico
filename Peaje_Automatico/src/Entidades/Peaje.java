@@ -61,7 +61,6 @@ public class Peaje extends Thread {
         } else {
             estado = true;
         }
-        sleep(1);
         synchronized (reloj) {
             if (reloj.chequearEstados()) {
                 reloj.notifyAll();

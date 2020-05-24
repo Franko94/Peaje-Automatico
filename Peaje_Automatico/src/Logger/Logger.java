@@ -5,16 +5,14 @@
  */
 package Logger;
 
-import Entidades.Vehiculo;
+
+import Entidades.Peaje;
+import Entidades.Proyecto_peaje;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Level;
 
 /**
  *
@@ -22,32 +20,71 @@ import java.util.logging.Level;
  */
 public class Logger {
 
-    private static final String RUTA = "src\\Escenarios\\log.csv";
+    private static final String RUTALOG = "src\\Escenarios\\log.csv";
+    private static final String RUTAVEHICULO = "src\\Escenarios\\archivo_salida_vehiculos.txt";
+    private static final Queue<String> COLALOG = new LinkedList<>();
+    private static final Queue<String> COLAVEHICULOS = new LinkedList<>();
 
-    public static void log(String linea) {
-        FileWriter fw;
-        try {
-            sleep(3);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(Logger.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            fw = new FileWriter(RUTA, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            
-            
-           String lineaActual = linea + "," + now;
-            bw.write(lineaActual);
-            bw.newLine();
-            bw.close();
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error al escribir el archivo "
-                    + RUTA);
-            e.printStackTrace();
+    public synchronized static void agregarLog(String linea) {
+        COLALOG.add(linea);
+    }
+
+    public synchronized static String getLog() {
+        return COLALOG.poll();
+    }
+
+    public synchronized static boolean isVaciaLog() {
+        return COLALOG.isEmpty();
+    }
+    public synchronized static void agregarVehiculo(String linea) {
+        COLAVEHICULOS.add(linea);
+        Proyecto_peaje.cantidadSalida ++;
+        if(Proyecto_peaje.cantidadSalida == Proyecto_peaje.cantidadEntrada){
+            guardarVehiculos();
+            log();
         }
     }
 
+    public synchronized static String getVehiculo() {
+        return COLAVEHICULOS.poll();
+    }
+
+    public synchronized static boolean isVaciaVehiculos() {
+        return COLAVEHICULOS.isEmpty();
+    }
+
+    public static void log() {
+        FileWriter fw;
+        try {
+            fw = new FileWriter(RUTALOG, true);
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                while (!isVaciaLog()) {
+                    String lineaActual = getLog();
+                    bw.append(lineaActual);
+                    bw.newLine();
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error al escribir el archivo "
+                    + RUTALOG);
+        }
+    }
+    public static void guardarVehiculos() {
+        FileWriter fw;
+        try {
+            fw = new FileWriter(RUTAVEHICULO, true);
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                while (!isVaciaVehiculos()) {
+                    String lineaActual = getVehiculo();
+                    bw.append(lineaActual);
+                    bw.newLine();
+                }
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Error al escribir el archivo "
+                    + RUTAVEHICULO);
+        }
+    }
 }

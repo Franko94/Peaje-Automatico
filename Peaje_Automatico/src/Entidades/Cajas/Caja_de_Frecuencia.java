@@ -9,9 +9,9 @@ import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Proyecto_peaje;
 import Entidades.Reloj;
 import Entidades.Vehiculo;
-import java.util.Queue;
 import java.util.logging.Level;
 import Logger.Logger;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -29,12 +29,12 @@ import Logger.Logger;
  */
 public class Caja_de_Frecuencia extends Thread {
 
-    private Reloj reloj;
+    private final Reloj reloj;
     private boolean estado = false;
-    private int autos_por_minuto;
-    private int id_de_hilo;
+    private final int autos_por_minuto;
+    private final int id_de_hilo;
     private int timempoInicial;
-    private String direccion;
+    private final String direccion;
 
     /**
      * @param autos_per_minute Este parametro debe ser seteado de acuerdo a lo
@@ -59,14 +59,13 @@ public class Caja_de_Frecuencia extends Thread {
     @Override
     public void run() {
 
-        while (true) {
+        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
             if (Caja_de_vehiculos.estaVacia(direccion) != true) {
@@ -75,38 +74,32 @@ public class Caja_de_Frecuencia extends Thread {
                     timempoInicial = tiempoActual;
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
                     v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
-                    if (v != null) {
-                        Cola_Comun_Ruta.agregarVehiculo(v);
-                    }
-                    Logger.log(reloj.getNumero_de_ciclo() + ","
-                            + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!");
+                    Cola_Comun_Ruta.agregarVehiculo(v);
+                    Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+                            + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
                 }
             }
 
             reloj.hiloEjecutado(id_de_hilo);
-                    Logger.log(reloj.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
-                        + "Caja de frecuencia,hiloEjecutado, "
-                        + "la caja envia notificacion de hilo ejecutado");
+            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+                    + Thread.currentThread().getId() + ","
+                    + "Caja de frecuencia,hiloEjecutado, "
+                    + "la caja envia notificacion de hilo ejecutado," + LocalDateTime.now());
             try {
                 cambiarEstado();
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Logger.log(reloj.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
-                        + "Caja de frecuencia,cambiarEstado, "
-                        + "la caja cambia su estado");
+            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+                    + Thread.currentThread().getId() + ","
+                    + "Caja de frecuencia,cambiarEstado, "
+                    + "la caja cambia su estado," + LocalDateTime.now());
 
         }
     }
 
-    public synchronized void cambiarEstado() throws InterruptedException{
-        if (estado == true) {
-            estado = false;
-        } else {
-            estado = true;
-        }
+    public synchronized void cambiarEstado() throws InterruptedException {
+        estado = estado != true;
         synchronized (reloj) {
             if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();

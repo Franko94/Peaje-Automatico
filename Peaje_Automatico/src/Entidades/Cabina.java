@@ -5,15 +5,10 @@
  */
 package Entidades;
 
-import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_Clasificados;
-import Entidades.Pivots.PivotComunAEspecifica;
-import Logger.Logger;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
-import static java.lang.Thread.sleep;
-import java.util.Queue;
+import Logger.Logger;
 import java.util.logging.Level;
 
 /**
@@ -22,12 +17,12 @@ import java.util.logging.Level;
  */
 public class Cabina extends Thread {
 
-    private Reloj reloj;
-    private boolean habilitada = false;
-    private int id_de_hilo;
-    private String direccion; // esto hay que verlo
+    private final Reloj reloj;
+    private final boolean habilitada = false;
+    private final int id_de_hilo;
+    private final String direccion; // esto hay que verlo
     private boolean estado;
-    private int contador = 0;
+    private final int contador = 0;
 
     public Cabina(int idHilo, Reloj r, String dir) {
         super();
@@ -39,21 +34,24 @@ public class Cabina extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            Vehiculo v = null;
+        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
-            v = getVehiculo(direccion);
+            Vehiculo v = Colas_Vehiculos_Clasificados.getVehiculo(direccion);
             if (v != null) {
                 System.out.println(v.pasar_a_String());
-                guardarAutosEnArchivo(v);
+                try {
+                    Logger.agregarVehiculo(v.pasar_a_String());
+                    Thread.currentThread().sleep(1);
+                } catch (InterruptedException ex) {
+                    java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             reloj.hiloEjecutado(id_de_hilo);
             try {
@@ -65,42 +63,11 @@ public class Cabina extends Thread {
     }
 
     public void cambiarEstado() throws InterruptedException {
-        if (estado == true) {
-            estado = false;
-        } else {
-            estado = true;
-        }
+        estado = estado != true;
         synchronized (reloj) {
             if (reloj.chequearEstados() == true) {
                 reloj.notifyAll();
             }
         }
-    }
-
-    public static synchronized void guardarAutosEnArchivo(Vehiculo v) {
-        FileWriter fw;
-        try {
-            sleep(1);
-        } catch (InterruptedException ex) {
-        }
-        try {
-            fw = new FileWriter("src\\Escenarios\\archivo_salida_vehiculos.txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            String lineaActual = v.pasar_a_String();
-            bw.write(lineaActual);
-            bw.newLine();
-            bw.close();
-            fw.close();
-        } catch (IOException e) {
-            System.out.println("Error al escribir el archivo "
-                    + "src\\Escenarios\\archivo_salida_vehiculos.txt");
-            e.printStackTrace();
-        }
-    }
-
-    public synchronized Vehiculo getVehiculo(String dir) {
-        Vehiculo v;
-        v = Colas_Vehiculos_Clasificados.getVehiculo(direccion);
-        return v;
     }
 }
