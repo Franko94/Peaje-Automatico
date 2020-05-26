@@ -19,17 +19,17 @@ public class Reloj {
     private final Boolean[] listaDeHilos = new Boolean[4];//modificar acorde a tamaño
 
     public Reloj() {
-        this.listaDeHilos[0] = false;//caja de frecuencias este
-        this.listaDeHilos[1] = false;//caja de frecuencias oeste
-        this.listaDeHilos[2] = false;//pivot este
-        this.listaDeHilos[3] = false;//pivot oeste
+        this.listaDeHilos[0] = false;
+        this.listaDeHilos[1] = false;
+        this.listaDeHilos[2] = false;
+        this.listaDeHilos[3] = false;
     }
 
     public void hiloEjecutado(int i) {
-//        Logger.log(this.getNumero_de_ciclo() + ","
-//                        + Thread.currentThread().getId() + ","
-//                        + "Reloj,hiloEjecutado, "
-//                        + "El reloj recibe al hilo como ejecutado");
+        Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Reloj,hiloEjecutado, Id del hilo:,"+i+","
+                        + "El reloj recibe al hilo como ejecutado");
         if (listaDeHilos[i] == false) {
             this.listaDeHilos[i] = true;
         } else {
@@ -44,13 +44,18 @@ public class Reloj {
      * @return
      */
     public synchronized boolean nuevoCiclo(boolean estadoHilo) {
-//        Logger.log(this.getNumero_de_ciclo() + ","
-//                        + Thread.currentThread().getId() + ","
-//                        + "Reloj,nuevoCiclo, "
-//                        + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
+        Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Reloj,nuevoCiclo, "
+                        + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
         if (estadoHilo != estadoPrevio) {
+            
             return true;
         }
+        Logger.agregarLog(this.getNumero_de_ciclo() + ","
+                        + Thread.currentThread().getId() + ","
+                        + "Reloj,nuevoCiclo, "
+                        + "No se puede dar un nuevo ciclo faltan ejecutar hilos");
         return false;
     }
 

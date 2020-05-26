@@ -8,7 +8,7 @@ package Entidades;
 import Entidades.Cajas.Caja_de_vehiculos;
 import Entidades.Cajas.Caja_de_Frecuencia;
 import Entidades.Colas.Cola_Comun_Ruta;
-import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
 import Entidades.Pivots.PivotComunAEspecifica;
 import Logger.Logger;
 
@@ -45,7 +45,7 @@ public class Proyecto_peaje {
         Caja_de_Frecuencia caja_de_Frecuencia_Este = new Caja_de_Frecuencia(0, reloj, 0, "este");
         Caja_de_Frecuencia caja_de_Frecuencia_Oeste = new Caja_de_Frecuencia(0, reloj, 1, "oeste");
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
-        Colas_Vehiculos_Clasificados colas_Vehiculos_Clasificados = new Colas_Vehiculos_Clasificados();
+        Colas_Vehiculos_ManualesyAutomaticos colas_Vehiculos_Clasificados = new Colas_Vehiculos_ManualesyAutomaticos();
         
         PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 2, "este");
         /**
@@ -80,9 +80,8 @@ public class Proyecto_peaje {
  * si tiene tag sin saldo o si no tiene tag, hay que ver la foto y reportarla
  * pasarlo a una lista.
  */
+
 /**
- * hay que arreglar el logger
- */
-/**
+ * pendiente:
  * hay que manejar los accidentes y la redistribucion de los carriles
  */
