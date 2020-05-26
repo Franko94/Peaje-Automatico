@@ -15,16 +15,15 @@ import java.util.logging.Level;
  *
  * @author apicos
  */
-public class Cabina extends Thread {
+public class Telepeaje extends Thread {
 
     private final Reloj reloj;
     private final boolean habilitada = false;
     private final int id_de_hilo;
-    private final String direccion; // esto hay que verlo
+    private final String direccion;
     private boolean estado;
-    private final int contador = 0;
 
-    public Cabina(int idHilo, Reloj r, String dir) {
+    public Telepeaje(int idHilo, Reloj r, String dir) {
         super();
         this.reloj = r;
         this.direccion = dir;
@@ -50,14 +49,14 @@ public class Cabina extends Thread {
                     Logger.agregarVehiculo(v.pasar_a_String());
                     Thread.currentThread().sleep(1);
                 } catch (InterruptedException ex) {
-                    java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+                    java.util.logging.Logger.getLogger(Telepeaje.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             reloj.hiloEjecutado(id_de_hilo);
             try {
                 cambiarEstado();
             } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+                java.util.logging.Logger.getLogger(Telepeaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

@@ -15,22 +15,22 @@ import java.util.Queue;
  *
  * @author apicos
  */
-public class Colas_Vehiculos_Clasificados {
+public class Colas_Vehiculos_ManualesyAutomaticos {
 
-    private static Queue<Vehiculo> normalesEste = new LinkedList<>();
-    private static Queue<Vehiculo> normalesOeste = new LinkedList<>();
+    private static Queue<Vehiculo> telepeaje = new LinkedList<>();
+    private static Queue<Vehiculo> manual = new LinkedList<>();
 
     public synchronized static void agregarVehiculo(Vehiculo v) {
-        if (v.getDireccion().equalsIgnoreCase("este")) {
-            normalesEste.add(v);
+        if (v.isTag()) {
+            manual.add(v);
         } else {
-            normalesEste.add(v);//cambiar para sentidos
+            manual.add(v);//cambiar para sentidos
         }
     }
     public synchronized static Vehiculo getVehiculo(String sentido) {
-            return normalesEste.poll();
+            return manual.poll();
     }
     public synchronized static boolean estaVacia(String sentido) {
-        return normalesEste.isEmpty();
+        return manual.isEmpty();
     }
 }

@@ -8,7 +8,7 @@ package Entidades.Pivots;
 import Entidades.Cabina;
 import Entidades.Reloj;
 import Entidades.Colas.Cola_Comun_Ruta;
-import Entidades.Colas.Colas_Vehiculos_Clasificados;
+import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
 import Entidades.Proyecto_peaje;
 import Entidades.Vehiculo;
 import java.util.Queue;
@@ -60,7 +60,7 @@ public class PivotComunAEspecifica extends Thread {
             }
             Vehiculo v = Cola_Comun_Ruta.getVehiculo(direccion);
             if (v != null) {
-                Colas_Vehiculos_Clasificados.agregarVehiculo(v);
+                Colas_Vehiculos_ManualesyAutomaticos.agregarVehiculo(v);
                 Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "PivotComunAEspecifica,run, "
