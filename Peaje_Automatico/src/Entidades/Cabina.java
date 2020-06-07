@@ -66,6 +66,12 @@ public class Cabina extends Thread {
                 }
 
             }
+            reloj.hiloEjecutado(id_de_hilo);
+            try {
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+            }
                     
         }
     }
