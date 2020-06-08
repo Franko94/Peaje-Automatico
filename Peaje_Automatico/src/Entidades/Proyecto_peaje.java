@@ -65,7 +65,7 @@ public class Proyecto_peaje {
         Peaje.listaCabinas.add(cabina1);
         cabina1.start();
         
-        HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas();
+        HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
         habilitadorDeCabinas.start();
         System.out.println("fin");
         /**

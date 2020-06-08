@@ -31,17 +31,18 @@ public class Cabina extends Thread {
         this.id_de_hilo = idHilo;
         this.estado = false;
     }
-    
-    public boolean getHabilitada(){
+
+    public boolean getHabilitada() {
         return habilitada;
     }
-    
-    public void  setHabilitada(boolean habilitada){
+
+    public void setHabilitada(boolean habilitada) {
         this.habilitada = habilitada;
     }
+
     @Override
     public void run() {
-        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
+        while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
@@ -50,7 +51,7 @@ public class Cabina extends Thread {
                 } catch (InterruptedException e) {
                 }
             }
-            if(getHabilitada()){
+            if (getHabilitada()) {
                 Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
                 if (v != null) {
                     System.out.println(v.pasar_a_String());
@@ -60,8 +61,8 @@ public class Cabina extends Thread {
                     } catch (InterruptedException ex) {
                         java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    if(v.getGeneraAccidente()){
-                    setHabilitada(false);
+                    if (v.getGeneraAccidente()) {
+                        setHabilitada(false);
                     }
                 }
 
@@ -72,10 +73,10 @@ public class Cabina extends Thread {
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
             }
-                    
+
         }
     }
-    
+
     public void cambiarEstado() throws InterruptedException {
         estado = estado != true;
         synchronized (reloj) {
