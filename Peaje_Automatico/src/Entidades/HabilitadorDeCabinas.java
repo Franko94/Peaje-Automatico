@@ -5,41 +5,26 @@
  */
 package Entidades;
 
-import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import Logger.Logger;
+import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author apicos
+ * @author Usuario
  */
-public class Cabina extends Thread {
-
+public class HabilitadorDeCabinas extends Thread {
     private final Reloj reloj;
-    private boolean habilitada = true;
     private final int id_de_hilo;
-    private final String direccion; // esto hay que verlo
     private boolean estado;
-    private final int contador = 0;
 
-    public Cabina(int idHilo, Reloj r, String dir) {
+    public HabilitadorDeCabinas(Reloj r, int idHilo) {
         super();
         this.reloj = r;
-        this.direccion = dir;
         this.id_de_hilo = idHilo;
         this.estado = false;
     }
-
-    public boolean getHabilitada() {
-        return habilitada;
-    }
-
-    public void setHabilitada(boolean habilitada) {
-        this.habilitada = habilitada;
-    }
-
+    
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
@@ -51,22 +36,11 @@ public class Cabina extends Thread {
                 } catch (InterruptedException e) {
                 }
             }
-            if (getHabilitada()) {
-                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
-                if (v != null) {
-                    System.out.println(v.pasar_a_String());
-                    try {
-                        Logger.agregarVehiculo(v.pasar_a_String());
-                        Thread.currentThread().sleep(1);
-                    } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    if (v.getGeneraAccidente()) {
-                        setHabilitada(false);
+            for(Cabina cabina : Peaje.getListaCabinas() ){
+                    if(!cabina.getHabilitada()){
+                        cabina.setHabilitada(true);
                     }
                 }
-
-            }
             reloj.hiloEjecutado(id_de_hilo);
             try {
                 cambiarEstado();

@@ -8,6 +8,7 @@ package Entidades;
 import Entidades.Enums.PreciosDeVehiculos;
 import java.util.LinkedList;
 import Logger.Logger;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 /**
@@ -18,7 +19,7 @@ public class Peaje extends Thread {
 
     private int cantCabinas;
     public static int totalDinero;
-    public Cabina[] listaCabinas;
+    public static ArrayList<Cabina> listaCabinas = new ArrayList<>();
     private Reloj reloj;
     private boolean estado;
     //private int id_de_hilo;
@@ -27,7 +28,11 @@ public class Peaje extends Thread {
 
     public Peaje(String nombre, int numCabinas, Reloj r) {
             }
-
+    
+    public static ArrayList<Cabina> getListaCabinas(){
+        return listaCabinas;
+    }
+    
     @Override
     public void run() {
         while (true) {

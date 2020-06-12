@@ -56,5 +56,9 @@ public class Vehiculo {
     public String getDireccion() {
         return direccion;
     }
+    
+    public boolean getGeneraAccidente(){
+        return genera_accidente;
+    }
 
 }
