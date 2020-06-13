@@ -16,26 +16,24 @@ public class Reloj {
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private final Boolean[] listaDeHilos = new Boolean[5];//modificar acorde a tamaño
+    private final Boolean[] listaDeHilos = new Boolean[3];//modificar acorde a tamaño
 
     public Reloj() {
-        this.listaDeHilos[0] = false;//caja de frecuencias este
-        this.listaDeHilos[1] = false;//caja de frecuencias oeste
-        this.listaDeHilos[2] = false;//pivot
-        this.listaDeHilos[3] = false;//cabina 1
-        this.listaDeHilos[4] = false;//habilitador de cabinas
+       // this.listaDeHilos[0] = false;//caja de frecuencias este
+        this.listaDeHilos[0] = false;//caja de frecuencias oeste
+        this.listaDeHilos[1] = false;//pivot
+        this.listaDeHilos[2] = false;//cabina 1
+        //this.listaDeHilos[4] = false;//habilitador de cabinas
     }
 
-    public void hiloEjecutado(int i) {
-        Logger.agregarLog(this.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
-                        + "Reloj,hiloEjecutado, Id del hilo:,"+i+","
-                        + "El reloj recibe al hilo como ejecutado");
-        if (listaDeHilos[i] == false) {
+    public synchronized boolean hiloEjecutado(int i) {
+        if (!listaDeHilos[i]) {
             this.listaDeHilos[i] = true;
         } else {
             listaDeHilos[i] = false;
         }
+        chequearEstados();
+        return listaDeHilos[i];
     }
 
     /**
@@ -50,7 +48,6 @@ public class Reloj {
                         + "Reloj,nuevoCiclo, "
                         + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
         if (estadoHilo != estadoPrevio) {
-            
             return true;
         }
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
@@ -65,11 +62,7 @@ public class Reloj {
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
      * @return 
      */
-    public synchronized boolean chequearEstados() {
-        Logger.agregarLog(this.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
-                        + "Reloj,chequeaEstado, "
-                        + "El reloj comprueba estados,"+ LocalDateTime.now());
+    public synchronized void chequearEstados() {
         boolean cambiarEstado = true;
         for (Boolean estadoHilo : listaDeHilos) {
             if (estadoHilo != estadoPrevio) {
@@ -84,10 +77,9 @@ public class Reloj {
                         + "El reloj cambia de estado,"+ LocalDateTime.now());
             estadoPrevio = estadoPrevio != true;
             agregarCiclo();
-            return true;
-
+            System.out.println("nuevo ciclo");
+            this.notifyAll();
         }
-        return false;
     }
 
     public void agregarCiclo() {
@@ -101,4 +93,5 @@ public class Reloj {
     public int getNumero_de_ciclo() {
         return numero_de_ciclo;
     }
+    
 }

@@ -42,21 +42,21 @@ public class HabilitadorDeCabinas extends Thread {
                     }
                 }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                cambiarEstado();
+//            } catch (InterruptedException ex) {
+//                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
     }
 
-    public void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
-        }
-    }
+//    public void cambiarEstado() throws InterruptedException {
+//        estado = estado != true;
+//        synchronized (reloj) {
+//            if (reloj.chequearEstados() == true) {
+//                reloj.notifyAll();
+//            }
+//        }
+//    }
 }

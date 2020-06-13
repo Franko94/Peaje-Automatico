@@ -8,6 +8,7 @@ package Entidades.Cajas;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Proyecto_peaje;
 import Entidades.Reloj;
+import Entidades.Reloj2;
 import Entidades.Vehiculo;
 import java.util.logging.Level;
 import Logger.Logger;
@@ -29,8 +30,7 @@ import java.time.LocalDateTime;
  */
 public class Caja_de_Frecuencia extends Thread {
 
-    private final Reloj reloj;
-    private boolean estado = false;
+    private final Reloj2 reloj;
     private final int autos_por_minuto;
     private final int id_de_hilo;
     private int timempoInicial;
@@ -46,7 +46,7 @@ public class Caja_de_Frecuencia extends Thread {
      * <p>
      * Picos de trafico 50autos / min >> 1 ms
      */
-    public Caja_de_Frecuencia(int autos_per_minute, Reloj r, int idhilo, String dir) {
+    public Caja_de_Frecuencia(int autos_per_minute, Reloj2 r, int idhilo, String dir) {
         super();
         this.reloj = r;
         this.autos_por_minuto = autos_per_minute;
@@ -58,55 +58,79 @@ public class Caja_de_Frecuencia extends Thread {
 
     @Override
     public void run() {
-
-        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
-                try {
-                    synchronized (reloj) {
-                        reloj.wait();
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-            if (Caja_de_vehiculos.estaVacia(direccion) != true) {
-                int tiempoActual = (int) System.currentTimeMillis();
-                if (tiempoActual - timempoInicial > autos_por_minuto) {
-                    timempoInicial = tiempoActual;
-                    Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
-                    v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
-                    Cola_Comun_Ruta.agregarVehiculo(v);
-                    Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                            + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
-                }
-            }
-
-            reloj.hiloEjecutado(id_de_hilo);
-            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                    + Thread.currentThread().getId() + ","
-                    + "Caja de frecuencia,hiloEjecutado, "
-                    + "la caja envia notificacion de hilo ejecutado," + LocalDateTime.now());
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                    + Thread.currentThread().getId() + ","
-                    + "Caja de frecuencia,cambiarEstado, "
-                    + "la caja cambia su estado," + LocalDateTime.now());
-
-        }
-    }
-
-    public synchronized void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
         synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
+            while (reloj.nuevoCiclo(id_de_hilo)) {
+                try {
+                    System.out.println("caja en espera");
+                    reloj.wait();
+                    
+                    System.out.println("caja ejecuta");
+                        if (Caja_de_vehiculos.estaVacia(direccion) != true) {
+                            int tiempoActual = (int) System.currentTimeMillis();
+                            if (tiempoActual - timempoInicial > autos_por_minuto) {
+                                timempoInicial = tiempoActual;
+                                Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
+                                v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
+                                Cola_Comun_Ruta.agregarVehiculo(v);
+                                Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+                                        + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
+                            }
+                        }
+
+                        reloj.hiloEjecutado(id_de_hilo);
+
+                    
+                } catch (InterruptedException ex) {
+                    java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
+//        while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
+//            System.out.println("nuevo ciclo de caja");
+//            if (!reloj.nuevoCiclo(id_de_hilo)) {
+//                System.out.println("caja en espera");
+//                try {
+//                    synchronized (reloj) {
+//                        reloj.wait();
+//                        System.out.println("caja ejecuta");
+//                        if (Caja_de_vehiculos.estaVacia(direccion) != true) {
+//                            int tiempoActual = (int) System.currentTimeMillis();
+//                            if (tiempoActual - timempoInicial > autos_por_minuto) {
+//                                timempoInicial = tiempoActual;
+//                                Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
+//                                v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
+//                                Cola_Comun_Ruta.agregarVehiculo(v);
+//                                Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+//                                        + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
+//                            }
+//                        }
+//
+//                        reloj.hiloEjecutado(id_de_hilo);
+//                    }
+//                } catch (InterruptedException e) {
+//                    System.out.println("excepcion");
+//                }
+//                System.out.println("salio del wait la caja");
+//            }
+//
+//            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
+//                    + Thread.currentThread().getId() + ","
+//                    + "Caja de frecuencia,hiloEjecutado, "
+//                    + "la caja envia notificacion de hilo ejecutado," + LocalDateTime.now());
+//        }
     }
+
+//    public synchronized void cambiarEstado() throws InterruptedException {
+//        estado = estado != true;
+//        synchronized (reloj) {
+//            if (reloj.chequearEstados() == true) {
+//                reloj.notifyAll();
+//            }
+//        }
+//    }
 }
 /**
- * hacer que la caja tire de forma alternada un auto para el carril 1 y 2 de la ruta comun
+ * hacer que la caja tire de forma alternada un auto para el carril 1 y 2 de la
+ * ruta comun
  */
