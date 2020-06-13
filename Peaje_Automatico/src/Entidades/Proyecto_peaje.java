@@ -62,8 +62,11 @@ public class Proyecto_peaje {
          * prueba cabinas afuera
          */
         Cabina cabina1= new Cabina(3, reloj, "este");
-        
+        Peaje.listaCabinas.add(cabina1);
         cabina1.start();
+        
+        HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
+        habilitadorDeCabinas.start();
         System.out.println("fin");
         /**
          * Cuarto: Guardado de datos
