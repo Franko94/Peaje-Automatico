@@ -46,12 +46,12 @@ public class Peaje extends Thread {
                     e.printStackTrace();
                 }
             }
-//            try {
-//                //gestion del peaje
-//                cambiarEstado();
-//            } catch (InterruptedException ex) {
-//                java.util.logging.Logger.getLogger(Peaje.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+                //gestion del peaje
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Peaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }
@@ -60,16 +60,16 @@ public class Peaje extends Thread {
         totalDinero += monto;
     }
 
-//    public void cambiarEstado() throws InterruptedException {
-//        if (estado == true) {
-//            estado = false;
-//        } else {
-//            estado = true;
-//        }
-//        synchronized (reloj) {
-//            if (reloj.chequearEstados()) {
-//                reloj.notifyAll();
-//            }
-//        }
-//    }
+    public void cambiarEstado() throws InterruptedException {
+        if (estado == true) {
+            estado = false;
+        } else {
+            estado = true;
+        }
+        synchronized (reloj) {
+            if (reloj.chequearEstados()) {
+                reloj.notifyAll();
+            }
+        }
+    }
 }

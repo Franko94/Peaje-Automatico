@@ -17,14 +17,14 @@ import java.util.logging.Level;
  */
 public class Cabina extends Thread {
 
-    private final Reloj2 reloj;
+    private final Reloj reloj;
     private boolean habilitada = true;
     private final int id_de_hilo;
     private final String direccion; // esto hay que verlo
     private boolean estado;
     private final int contador = 0;
 
-    public Cabina(int idHilo, Reloj2 r, String dir) {
+    public Cabina(int idHilo, Reloj r, String dir) {
         super();
         this.reloj = r;
         this.direccion = dir;
@@ -43,45 +43,46 @@ public class Cabina extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            System.out.println("nuevo ciclo de cabina");
-            if (!reloj.nuevoCiclo(id_de_hilo)) {
-                System.out.println("cabina en espera");
+            if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
-                        System.out.println("cabina ejecuta");
-                        if (getHabilitada()) {
-                            Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
-                            if (v != null) {
-                                System.out.println(v.pasar_a_String());
-                                try {
-                                    Logger.agregarVehiculo(v.pasar_a_String());
-                                    Thread.currentThread().sleep(1);
-                                } catch (InterruptedException ex) {
-                                    java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                if (v.getGeneraAccidente()) {
-                                    setHabilitada(false);
-                                }
-                            }
-
-                        }
-                        reloj.hiloEjecutado(id_de_hilo);
                     }
                 } catch (InterruptedException e) {
                 }
-                System.out.println("salio del wait la cabina");
+            }
+            if (getHabilitada()) {
+                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
+                if (v != null) {
+                    System.out.println(v.pasar_a_String());
+                    try {
+                        Logger.agregarVehiculo(v.pasar_a_String());
+                        Thread.currentThread().sleep(1);
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if (v.getGeneraAccidente()) {
+                        setHabilitada(false);
+                    }
+                }
+
+            }
+            reloj.hiloEjecutado(id_de_hilo);
+            try {
+                cambiarEstado();
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
     }
 
-//    public void cambiarEstado() throws InterruptedException {
-//        estado = estado != true;
-//        synchronized (reloj) {
-//            if (reloj.chequearEstados() == true) {
-//                reloj.notifyAll();
-//            }
-//        }
-//    }
+    public void cambiarEstado() throws InterruptedException {
+        estado = estado != true;
+        synchronized (reloj) {
+            if (reloj.chequearEstados() == true) {
+                reloj.notifyAll();
+            }
+        }
+    }
 }

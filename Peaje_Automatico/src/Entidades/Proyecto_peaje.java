@@ -40,14 +40,14 @@ public class Proyecto_peaje {
          * Primero: Creación de todos los objetos
          */
         Logger logger = new Logger();
-        final Reloj2 reloj = new Reloj2();
+        final Reloj reloj = new Reloj();
         Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
         Caja_de_Frecuencia caja_de_Frecuencia_Este = new Caja_de_Frecuencia(0, reloj, 0, "este");
-        //Caja_de_Frecuencia caja_de_Frecuencia_Oeste = new Caja_de_Frecuencia(0, reloj, 1, "oeste");
+        Caja_de_Frecuencia caja_de_Frecuencia_Oeste = new Caja_de_Frecuencia(0, reloj, 1, "oeste");
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
         Colas_Vehiculos_ManualesyAutomaticos colas_Vehiculos_Clasificados = new Colas_Vehiculos_ManualesyAutomaticos();
         
-        PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 1, "este");
+        PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 2, "este");
         /**
          * Segundo: Carga de datos
          */
@@ -56,17 +56,17 @@ public class Proyecto_peaje {
          * Tercero: ejecucion del programa principal
          */
         caja_de_Frecuencia_Este.start();
-        //caja_de_Frecuencia_Oeste.start();
+        caja_de_Frecuencia_Oeste.start();
         pivotComunAEspecificaEste.start();
         /**
          * prueba cabinas afuera
          */
-        Cabina cabina1= new Cabina(2, reloj, "este");
-        //Peaje.listaCabinas.add(cabina1);
+        Cabina cabina1= new Cabina(3, reloj, "este");
+        Peaje.listaCabinas.add(cabina1);
         cabina1.start();
         
-        //HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
-        //habilitadorDeCabinas.start();
+        HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
+        habilitadorDeCabinas.start();
         System.out.println("fin");
         /**
          * Cuarto: Guardado de datos
