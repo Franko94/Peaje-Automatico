@@ -31,7 +31,7 @@ public class HabilitadorDeCabinas extends Thread {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait();
+                        reloj.wait(10);
                     }
                 } catch (InterruptedException e) {
                 }

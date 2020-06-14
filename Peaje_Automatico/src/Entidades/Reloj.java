@@ -7,16 +7,17 @@ package Entidades;
 
 import Logger.Logger;
 import java.time.LocalDateTime;
+import java.util.logging.Level;
 
 /**
  *
  * @author Agustin
  */
-public class Reloj {
+public class Reloj{
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private final Boolean[] listaDeHilos = new Boolean[5];//modificar acorde a tamaño
+    private final Boolean[] listaDeHilos = new Boolean[8];//modificar acorde a tamaño
 
     public Reloj() {
         this.listaDeHilos[0] = false;//caja de frecuencias este
@@ -24,6 +25,9 @@ public class Reloj {
         this.listaDeHilos[2] = false;//pivot
         this.listaDeHilos[3] = false;//cabina 1
         this.listaDeHilos[4] = false;//habilitador de cabinas
+        this.listaDeHilos[5] = false;//cabina2
+        this.listaDeHilos[6] = false;//cabina3
+        this.listaDeHilos[7] = false;//cabina4
     }
 
     public void hiloEjecutado(int i) {

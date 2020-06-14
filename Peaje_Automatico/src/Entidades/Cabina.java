@@ -46,7 +46,8 @@ public class Cabina extends Thread {
             if (reloj.nuevoCiclo(estado) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait();
+                        
+                        reloj.wait(10);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -55,12 +56,12 @@ public class Cabina extends Thread {
                 Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
                 if (v != null) {
                     System.out.println(v.pasar_a_String());
-                    try {
+//                    try {
                         Logger.agregarVehiculo(v.pasar_a_String());
-                        Thread.currentThread().sleep(1);
-                    } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                        Thread.currentThread().sleep(1);
+//                    } catch (InterruptedException ex) {
+//                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                     if (v.getGeneraAccidente()) {
                         setHabilitada(false);
                     }

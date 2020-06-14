@@ -62,8 +62,14 @@ public class Proyecto_peaje {
          * prueba cabinas afuera
          */
         Cabina cabina1= new Cabina(3, reloj, "este");
+        Cabina cabina2= new Cabina(5, reloj, "oeste");
+        Cabina cabina3= new Cabina(6, reloj, "este");
+        Cabina cabina4= new Cabina(7, reloj, "oeste");
         Peaje.listaCabinas.add(cabina1);
         cabina1.start();
+        cabina2.start();
+        cabina3.start();
+        cabina4.start();
         
         HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
         habilitadorDeCabinas.start();

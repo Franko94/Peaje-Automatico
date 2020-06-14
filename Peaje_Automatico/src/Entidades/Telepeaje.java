@@ -38,6 +38,7 @@ public class Telepeaje extends Thread {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
+                        Thread.yield();
                     }
                 } catch (InterruptedException e) {
                 }
