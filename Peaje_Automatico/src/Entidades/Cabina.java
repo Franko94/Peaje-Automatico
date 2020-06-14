@@ -43,10 +43,10 @@ public class Cabina extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        
+
                         reloj.wait(10);
                     }
                 } catch (InterruptedException e) {
@@ -56,12 +56,7 @@ public class Cabina extends Thread {
                 Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
                 if (v != null) {
                     System.out.println(v.pasar_a_String());
-//                    try {
-                        Logger.agregarVehiculo(v.pasar_a_String());
-//                        Thread.currentThread().sleep(1);
-//                    } catch (InterruptedException ex) {
-//                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    Logger.agregarVehiculo(v.pasar_a_String());
                     if (v.getGeneraAccidente()) {
                         setHabilitada(false);
                     }
@@ -69,21 +64,6 @@ public class Cabina extends Thread {
 
             }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    public void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
         }
     }
 }

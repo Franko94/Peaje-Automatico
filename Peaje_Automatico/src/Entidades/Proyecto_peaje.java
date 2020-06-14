@@ -11,6 +11,7 @@ import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
 import Entidades.Pivots.PivotComunAEspecifica;
 import Logger.Logger;
+import java.util.Set;
 
 /**
  *
@@ -70,12 +71,13 @@ public class Proyecto_peaje {
         cabina2.start();
         cabina3.start();
         cabina4.start();
-        
         HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
-        habilitadorDeCabinas.start();
+        habilitadorDeCabinas.start();       
         System.out.println("fin");
         /**
          * Cuarto: Guardado de datos
+         * Al completarse el pasaje de todos los vehiculos, el logger guarda 
+         * la salida y los logs en un archivo cada uno
          */
     }
 

@@ -60,7 +60,7 @@ public class Caja_de_Frecuencia extends Thread {
     public void run() {
 
         while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(10);
@@ -85,27 +85,9 @@ public class Caja_de_Frecuencia extends Thread {
                     + Thread.currentThread().getId() + ","
                     + "Caja de frecuencia,hiloEjecutado, "
                     + "la caja envia notificacion de hilo ejecutado," + LocalDateTime.now());
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Caja_de_Frecuencia.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                    + Thread.currentThread().getId() + ","
-                    + "Caja de frecuencia,cambiarEstado, "
-                    + "la caja cambia su estado," + LocalDateTime.now());
-
         }
     }
 
-    public synchronized void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
-        }
-    }
 }
 /**
  * hacer que la caja tire de forma alternada un auto para el carril 1 y 2 de la ruta comun

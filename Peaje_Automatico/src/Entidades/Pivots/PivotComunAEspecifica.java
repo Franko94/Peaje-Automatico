@@ -48,8 +48,8 @@ public class PivotComunAEspecifica extends Thread {
 
     @Override
     public void run() {
-        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+        while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(10);
@@ -66,31 +66,9 @@ public class PivotComunAEspecifica extends Thread {
                         + "PivotComunAEspecifica,run, "
                         + "El vehiculo especial de matricula: "
                         + v.getMatricula() + " se posiciona en la"
-                        + " cola de vehiculos," + v.getDireccion()+","+LocalDateTime.now());
+                        + " cola de vehiculos," + v.getDireccion() + "," + LocalDateTime.now());
             }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(PivotComunAEspecifica.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public void cambiarEstado()throws InterruptedException {
-        if (estado == true) {
-            estado = false;
-        } else {
-            estado = true;
-        }
-        Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
-                        + "PivotComunAEspecifica,cambiarEstado, "
-                        + "El hilo ha cambiado de estado,"+LocalDateTime.now());
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
         }
     }
 }

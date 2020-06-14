@@ -28,7 +28,7 @@ public class HabilitadorDeCabinas extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(10);
@@ -42,21 +42,6 @@ public class HabilitadorDeCabinas extends Thread {
                     }
                 }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    public void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
         }
     }
 }

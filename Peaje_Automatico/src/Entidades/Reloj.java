@@ -7,7 +7,6 @@ package Entidades;
 
 import Logger.Logger;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
 
 /**
  *
@@ -30,7 +29,7 @@ public class Reloj{
         this.listaDeHilos[7] = false;//cabina4
     }
 
-    public void hiloEjecutado(int i) {
+    public synchronized void hiloEjecutado(int i) {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,hiloEjecutado, Id del hilo:,"+i+","
@@ -40,6 +39,8 @@ public class Reloj{
         } else {
             listaDeHilos[i] = false;
         }
+        chequearEstados();
+        
     }
 
     /**
@@ -48,12 +49,12 @@ public class Reloj{
      * @param estadoHilo
      * @return
      */
-    public synchronized boolean nuevoCiclo(boolean estadoHilo) {
+    public synchronized boolean nuevoCiclo(int id) {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,nuevoCiclo, "
                         + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
-        if (estadoHilo != estadoPrevio) {
+        if (listaDeHilos[id] != estadoPrevio) {
             
             return true;
         }
@@ -69,7 +70,7 @@ public class Reloj{
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
      * @return 
      */
-    public synchronized boolean chequearEstados() {
+    public void chequearEstados() {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,chequeaEstado, "
@@ -88,10 +89,9 @@ public class Reloj{
                         + "El reloj cambia de estado,"+ LocalDateTime.now());
             estadoPrevio = estadoPrevio != true;
             agregarCiclo();
-            return true;
+            this.notifyAll();
 
         }
-        return false;
     }
 
     public void agregarCiclo() {
