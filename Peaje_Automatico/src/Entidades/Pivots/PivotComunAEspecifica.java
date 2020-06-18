@@ -55,7 +55,6 @@ public class PivotComunAEspecifica extends Thread {
                         reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
             Vehiculo v = Cola_Comun_Ruta.getVehiculo(direccion);

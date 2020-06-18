@@ -22,7 +22,7 @@ public class Cabina extends Thread {
     private final int id_de_hilo;
     private final String direccion; // esto hay que verlo
     private boolean estado;
-    private final int contador = 0;
+    private int contador = 20;
 
     public Cabina(int idHilo, Reloj r, String dir) {
         super();
@@ -52,9 +52,13 @@ public class Cabina extends Thread {
                 } catch (InterruptedException e) {
                 }
             }
-            if (getHabilitada()) {
-                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
+            if (getHabilitada()& contador==0) {
+                contador =20;
+                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getManual(direccion);
                 if (v != null) {
+                    
+                    int tiempoActual = (int) System.currentTimeMillis();
+                    v.setHoraSalida(tiempoActual);
                     System.out.println(v.pasar_a_String());
                     Logger.agregarVehiculo(v.pasar_a_String());
                     if (v.getGeneraAccidente()) {
@@ -62,6 +66,9 @@ public class Cabina extends Thread {
                     }
                 }
 
+            }
+            else{
+                contador --;
             }
             reloj.hiloEjecutado(id_de_hilo);
         }

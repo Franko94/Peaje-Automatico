@@ -42,13 +42,21 @@ public class Proyecto_peaje {
          */
         Logger logger = new Logger();
         final Reloj reloj = new Reloj();
+        
         Caja_de_vehiculos caja_de_vehiculos = new Caja_de_vehiculos();
+        
         Caja_de_Frecuencia caja_de_Frecuencia_Este = new Caja_de_Frecuencia(0, reloj, 0, "este");
         Caja_de_Frecuencia caja_de_Frecuencia_Oeste = new Caja_de_Frecuencia(0, reloj, 1, "oeste");
+        
         Cola_Comun_Ruta cola_Comun_Ruta = new Cola_Comun_Ruta();
+        
         Colas_Vehiculos_ManualesyAutomaticos colas_Vehiculos_Clasificados = new Colas_Vehiculos_ManualesyAutomaticos();
         
         PivotComunAEspecifica pivotComunAEspecificaEste = new PivotComunAEspecifica(0, reloj, 2, "este");
+        PivotComunAEspecifica pivotComunAEspecificaOeste = new PivotComunAEspecifica(0, reloj, 8, "oeste");
+        
+        Telepeaje telepeajeEste = new Telepeaje(9, reloj, "este");
+        Telepeaje telepeajeOeste = new Telepeaje(10, reloj, "oeste");
         /**
          * Segundo: Carga de datos
          */
@@ -59,6 +67,9 @@ public class Proyecto_peaje {
         caja_de_Frecuencia_Este.start();
         caja_de_Frecuencia_Oeste.start();
         pivotComunAEspecificaEste.start();
+        pivotComunAEspecificaOeste.start();
+        telepeajeEste.start();
+        telepeajeOeste.start();
         /**
          * prueba cabinas afuera
          */
@@ -73,7 +84,7 @@ public class Proyecto_peaje {
         cabina4.start();
         HabilitadorDeCabinas habilitadorDeCabinas = new HabilitadorDeCabinas(reloj, 4);
         habilitadorDeCabinas.start();       
-        System.out.println("fin");
+        
         /**
          * Cuarto: Guardado de datos
          * Al completarse el pasaje de todos los vehiculos, el logger guarda 

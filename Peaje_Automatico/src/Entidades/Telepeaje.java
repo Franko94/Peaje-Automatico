@@ -42,8 +42,10 @@ public class Telepeaje extends Thread {
                 } catch (InterruptedException e) {
                 }
             }
-            Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
+            Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getTelepeaje(direccion);
             if (v != null) {
+                int tiempoActual = (int) System.currentTimeMillis();
+                v.setHoraSalida(tiempoActual);
                 System.out.println(v.pasar_a_String());
                 Logger.agregarVehiculo(v.pasar_a_String());
             }

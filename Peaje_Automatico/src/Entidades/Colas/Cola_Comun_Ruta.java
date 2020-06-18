@@ -22,19 +22,17 @@ public class Cola_Comun_Ruta {
         if (v.getDireccion().equalsIgnoreCase("este")) {
             colaEste.add(v);
         } else {
-            colaEste.add(v);//cambiar para dos 
+            colaOeste.add(v);//cambiar para dos 
         }
     }
 
     public synchronized static Vehiculo getVehiculo(String sentido) {
-        synchronized (Cola_Comun_Ruta.colaEste) {
             if (sentido.equalsIgnoreCase("este")) {
                 return colaEste.poll();
             } else {
                 return colaOeste.poll();
 
             }
-        }
     }
 
     public synchronized static boolean estaVacia(String sentido) {
@@ -46,9 +44,6 @@ public class Cola_Comun_Ruta {
     }
 }
 /**
- * hay que ver si los metodos los podemos acceder desde objetos distintos en
- * casa afirmativo, creamos dos carriles o colas por ruta en caso negativo, hay
- * que crear dos clases de ruta.
  *
  * hay que hacer la cola de los manuales/automaticos
  */
