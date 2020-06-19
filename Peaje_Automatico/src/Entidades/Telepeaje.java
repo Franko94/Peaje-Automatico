@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class Telepeaje extends Thread {
 
     private final Reloj reloj;
-    private final boolean habilitada = false;
+    private boolean habilitada = false;
     private final int id_de_hilo;
     private final String direccion;
     private boolean estado;
@@ -37,7 +37,7 @@ public class Telepeaje extends Thread {
             if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait(5);
+                        reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -48,8 +48,19 @@ public class Telepeaje extends Thread {
                 v.setHoraSalida(tiempoActual);
                 System.out.println(v.pasar_a_String());
                 Logger.agregarVehiculo(v.pasar_a_String());
+                if (v.getGeneraAccidente()) {
+                        setHabilitada(false);
+                    }
             }
             reloj.hiloEjecutado(id_de_hilo);
         }
+    }
+
+    public void setHabilitada(boolean habilitada) {
+        this.habilitada = habilitada;
+    }
+
+    public boolean getHabilitada() {
+        return habilitada;
     }
 }

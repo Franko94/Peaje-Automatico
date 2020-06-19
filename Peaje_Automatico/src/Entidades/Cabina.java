@@ -47,7 +47,7 @@ public class Cabina extends Thread {
                 try {
                     synchronized (reloj) {
 
-                        reloj.wait(5);
+                        reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
                 }

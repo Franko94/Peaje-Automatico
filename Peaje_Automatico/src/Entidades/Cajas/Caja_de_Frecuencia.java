@@ -63,14 +63,14 @@ public class Caja_de_Frecuencia extends Thread {
             if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait(5);
+                        reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
                 }
             }
             if (Caja_de_vehiculos.estaVacia(direccion) != true) {
                 int tiempoActual = (int) System.currentTimeMillis();
-                if (tiempoActual - timempoInicial > autos_por_minuto) {
+                if (tiempoActual - timempoInicial > (42*(1/autos_por_minuto))) {
                     timempoInicial = tiempoActual;
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
                     v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
@@ -89,6 +89,3 @@ public class Caja_de_Frecuencia extends Thread {
     }
 
 }
-/**
- * hacer que la caja tire de forma alternada un auto para el carril 1 y 2 de la ruta comun
- */

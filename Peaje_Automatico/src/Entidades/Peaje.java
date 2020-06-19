@@ -20,6 +20,7 @@ public class Peaje extends Thread {
     private int cantCabinas;
     public static int totalDinero;
     public static ArrayList<Cabina> listaCabinas = new ArrayList<>();
+    public static ArrayList<Telepeaje> listaTelepeaje = new ArrayList<>();
     private final Reloj reloj;
     private boolean estado;
     private int id_de_hilo;
@@ -32,6 +33,10 @@ public class Peaje extends Thread {
 
     public static ArrayList<Cabina> getListaCabinas() {
         return listaCabinas;
+    }
+
+    public static ArrayList<Telepeaje> getListaTelepeaje() {
+        return listaTelepeaje;
     }
 
     @Override
