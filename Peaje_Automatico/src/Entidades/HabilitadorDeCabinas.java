@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  * @author Usuario
  */
 public class HabilitadorDeCabinas extends Thread {
+
     private final Reloj reloj;
     private final int id_de_hilo;
     private boolean estado;
@@ -25,11 +26,11 @@ public class HabilitadorDeCabinas extends Thread {
         this.id_de_hilo = idHilo;
         this.estado = false;
     }
-    
+
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo, "habilitador de cabinas") != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(1);
@@ -37,20 +38,22 @@ public class HabilitadorDeCabinas extends Thread {
                 } catch (InterruptedException e) {
                 }
             }
-            if(contador ==0){
-                contador=30;
-            for(Cabina cabina : Peaje.getListaCabinas() ){
-                    if(!cabina.getHabilitada()){
+            if (contador == 0) {
+                contador = 30;
+                for (Cabina cabina : Peaje.getListaCabinas()) {
+                    if (!cabina.getHabilitada()) {
                         cabina.setHabilitada(true);
                     }
                 }
-            for(Telepeaje telepeaje : Peaje.getListaTelepeaje()){
-                    if(!telepeaje.getHabilitada()){
+                for (Telepeaje telepeaje : Peaje.getListaTelepeaje()) {
+                    if (!telepeaje.getHabilitada()) {
                         telepeaje.setHabilitada(true);
                     }
                 }
-            reloj.hiloEjecutado(id_de_hilo);}
-            else{contador--;}
+                
+            } else {
+                contador--;
+            }reloj.hiloEjecutado("Habilitador de cabinas",id_de_hilo);
         }
     }
 }

@@ -49,7 +49,7 @@ public class PivotComunAEspecifica extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo,"pivot") != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(1);
@@ -60,14 +60,14 @@ public class PivotComunAEspecifica extends Thread {
             Vehiculo v = Cola_Comun_Ruta.getVehiculo(direccion);
             if (v != null) {
                 Colas_Vehiculos_ManualesyAutomaticos.agregarVehiculo(v);
-                Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                        + Thread.currentThread().getId() + ","
+                Logger.agregarLog(reloj.getNumero_de_ciclo() + ","+"Pivot,"
+                        + id_de_hilo + ","
                         + "PivotComunAEspecifica,run, "
                         + "El vehiculo especial de matricula: "
                         + v.getMatricula() + " se posiciona en la"
-                        + " cola de vehiculos," + v.getDireccion() + "," + LocalDateTime.now());
+                        + " cola de vehiculos " + v.getDireccion() + "," + LocalDateTime.now());
             }
-            reloj.hiloEjecutado(id_de_hilo);
+            reloj.hiloEjecutado("Pivot",id_de_hilo);
         }
     }
 }

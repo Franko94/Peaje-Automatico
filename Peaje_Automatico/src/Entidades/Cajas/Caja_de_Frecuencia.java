@@ -60,7 +60,7 @@ public class Caja_de_Frecuencia extends Thread {
     public void run() {
 
         while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo,"caja de frecuencia") != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait(1);
@@ -75,16 +75,12 @@ public class Caja_de_Frecuencia extends Thread {
                     Vehiculo v = Caja_de_vehiculos.getVehiculo(direccion);
                     v.setHoraEntrada(tiempoActual);//Se inicia la hora de entrada al sistema
                     Cola_Comun_Ruta.agregarVehiculo(v);
-                    Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                            + Thread.currentThread().getId() + "," + "Caja_de_Frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
+                    Logger.agregarLog(reloj.getNumero_de_ciclo() + ","+"caja de frecuencia,"+
+                            + id_de_hilo + "," + "Caja de frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
                 }
             }
 
-            reloj.hiloEjecutado(id_de_hilo);
-            Logger.agregarLog(reloj.getNumero_de_ciclo() + ","
-                    + Thread.currentThread().getId() + ","
-                    + "Caja de frecuencia,hiloEjecutado, "
-                    + "la caja envia notificacion de hilo ejecutado," + LocalDateTime.now());
+            reloj.hiloEjecutado("Caja de frecuencia",id_de_hilo);
         }
     }
 

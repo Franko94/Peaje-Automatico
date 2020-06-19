@@ -42,7 +42,7 @@ public class Peaje extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo,"peaje") != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();

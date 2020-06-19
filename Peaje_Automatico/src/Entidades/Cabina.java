@@ -43,10 +43,9 @@ public class Cabina extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo,"Cabina") != true) {
                 try {
                     synchronized (reloj) {
-
                         reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
@@ -69,7 +68,7 @@ public class Cabina extends Thread {
             else{
                 contador --;
             }
-            reloj.hiloEjecutado(id_de_hilo);
+            reloj.hiloEjecutado("Cabina",id_de_hilo);
         }
     }
 }
