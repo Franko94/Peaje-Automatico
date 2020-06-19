@@ -52,7 +52,7 @@ public class PivotComunAEspecifica extends Thread {
             if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait(1);
+                        reloj.wait(5);
                     }
                 } catch (InterruptedException e) {
                 }

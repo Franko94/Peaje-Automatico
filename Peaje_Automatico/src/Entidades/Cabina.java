@@ -47,16 +47,15 @@ public class Cabina extends Thread {
                 try {
                     synchronized (reloj) {
 
-                        reloj.wait(1);
+                        reloj.wait(5);
                     }
                 } catch (InterruptedException e) {
                 }
             }
             if (getHabilitada()& contador==0) {
-                contador =20;
+                contador =5;
                 Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getManual(direccion);
                 if (v != null) {
-                    
                     int tiempoActual = (int) System.currentTimeMillis();
                     v.setHoraSalida(tiempoActual);
                     System.out.println(v.pasar_a_String());

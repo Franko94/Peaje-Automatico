@@ -57,6 +57,8 @@ public class Proyecto_peaje {
         
         Telepeaje telepeajeEste = new Telepeaje(9, reloj, "este");
         Telepeaje telepeajeOeste = new Telepeaje(10, reloj, "oeste");
+        Telepeaje telepeajeEste2 = new Telepeaje(11, reloj, "este");
+        Telepeaje telepeajeOeste2 = new Telepeaje(12, reloj, "oeste");
         /**
          * Segundo: Carga de datos
          */
@@ -70,6 +72,9 @@ public class Proyecto_peaje {
         pivotComunAEspecificaOeste.start();
         telepeajeEste.start();
         telepeajeOeste.start();
+        telepeajeEste2.start();
+        telepeajeOeste2.start();
+        
         /**
          * prueba cabinas afuera
          */
