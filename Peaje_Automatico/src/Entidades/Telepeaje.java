@@ -22,6 +22,7 @@ public class Telepeaje extends Thread {
     private final int id_de_hilo;
     private final String direccion;
     private boolean estado;
+    private int contador = -1;
 
     public Telepeaje(int idHilo, Reloj r, String dir) {
         super();
@@ -34,10 +35,10 @@ public class Telepeaje extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo,"telepeaje") != true) {
+            if (reloj.nuevoCiclo(id_de_hilo, "telepeaje") != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait(1);
+                        reloj.wait(5);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -54,7 +55,7 @@ public class Telepeaje extends Thread {
                     }
                 }
             }
-            reloj.hiloEjecutado("Telepeaje",id_de_hilo);
+            reloj.hiloEjecutado("Telepeaje", id_de_hilo);
         }
     }
 
