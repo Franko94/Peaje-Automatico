@@ -12,21 +12,29 @@ import java.time.LocalDateTime;
  *
  * @author Agustin
  */
-public class Reloj {
+public class Reloj{
 
     private int numero_de_ciclo = 0;
     private boolean estadoPrevio = true;
-    private final Boolean[] listaDeHilos = new Boolean[5];//modificar acorde a tamaño
+    private final Boolean[] listaDeHilos = new Boolean[13];//modificar acorde a tamaño
 
     public Reloj() {
         this.listaDeHilos[0] = false;//caja de frecuencias este
         this.listaDeHilos[1] = false;//caja de frecuencias oeste
-        this.listaDeHilos[2] = false;//pivot
+        this.listaDeHilos[2] = false;//pivot este
         this.listaDeHilos[3] = false;//cabina 1
         this.listaDeHilos[4] = false;//habilitador de cabinas
+        this.listaDeHilos[5] = false;//cabina2
+        this.listaDeHilos[6] = false;//cabina3
+        this.listaDeHilos[7] = false;//cabina4
+        this.listaDeHilos[8] = false;//pivot oeste
+        this.listaDeHilos[9] = false;//telepeaje este
+        this.listaDeHilos[10] = false;//telepeaje oeste
+        this.listaDeHilos[11] = false;//telepeaje este2
+        this.listaDeHilos[12] = false;//telepeaje oeste2
     }
 
-    public void hiloEjecutado(int i) {
+    public synchronized void hiloEjecutado(int i) {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,hiloEjecutado, Id del hilo:,"+i+","
@@ -36,6 +44,8 @@ public class Reloj {
         } else {
             listaDeHilos[i] = false;
         }
+        chequearEstados();
+        
     }
 
     /**
@@ -44,12 +54,12 @@ public class Reloj {
      * @param estadoHilo
      * @return
      */
-    public synchronized boolean nuevoCiclo(boolean estadoHilo) {
+    public synchronized boolean nuevoCiclo(int id) {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,nuevoCiclo, "
                         + "El reloj comprueba si el hilo puede dar un nuevo ciclo");
-        if (estadoHilo != estadoPrevio) {
+        if (listaDeHilos[id] != estadoPrevio) {
             
             return true;
         }
@@ -65,7 +75,7 @@ public class Reloj {
      * el estado previo para un nuevo ciclo y notifica a todos los ciclos
      * @return 
      */
-    public synchronized boolean chequearEstados() {
+    public void chequearEstados() {
         Logger.agregarLog(this.getNumero_de_ciclo() + ","
                         + Thread.currentThread().getId() + ","
                         + "Reloj,chequeaEstado, "
@@ -84,10 +94,9 @@ public class Reloj {
                         + "El reloj cambia de estado,"+ LocalDateTime.now());
             estadoPrevio = estadoPrevio != true;
             agregarCiclo();
-            return true;
+            this.notifyAll();
 
         }
-        return false;
     }
 
     public void agregarCiclo() {

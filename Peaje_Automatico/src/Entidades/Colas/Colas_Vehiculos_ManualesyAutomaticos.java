@@ -17,20 +17,44 @@ import java.util.Queue;
  */
 public class Colas_Vehiculos_ManualesyAutomaticos {
 
-    private static Queue<Vehiculo> telepeaje = new LinkedList<>();
-    private static Queue<Vehiculo> manual = new LinkedList<>();
+    private static Queue<Vehiculo> telepeajeEste = new LinkedList<>();
+    private static Queue<Vehiculo> manualEste = new LinkedList<>();
+    private static Queue<Vehiculo> telepeajeOeste = new LinkedList<>();
+    private static Queue<Vehiculo> manualOeste = new LinkedList<>();
 
     public synchronized static void agregarVehiculo(Vehiculo v) {
         if (v.isTag()) {
-            manual.add(v);
+            if (v.getDireccion().equalsIgnoreCase("este")) {
+                telepeajeEste.add(v);
+            } else {
+                telepeajeOeste.add(v);
+            }
         } else {
-            manual.add(v);//cambiar para sentidos
+            if (v.getDireccion().equalsIgnoreCase("este")) {
+                manualEste.add(v);
+            } else {
+                manualOeste.add(v);
+            }
         }
     }
-    public synchronized static Vehiculo getVehiculo(String sentido) {
-            return manual.poll();
+
+    public synchronized static Vehiculo getManual(String sentido) {
+        Vehiculo v = null;
+        if (sentido.equalsIgnoreCase("este")) {
+            v = manualEste.poll();
+        } else {
+            v = manualOeste.poll();
+        }
+        return v;
     }
-    public synchronized static boolean estaVacia(String sentido) {
-        return manual.isEmpty();
+
+    public synchronized static Vehiculo getTelepeaje(String sentido) {
+        Vehiculo v = null;
+        if (sentido.equalsIgnoreCase("este")) {
+            v=telepeajeEste.poll();
+        } else {
+            v=telepeajeOeste.poll();
+        }
+        return v;
     }
 }

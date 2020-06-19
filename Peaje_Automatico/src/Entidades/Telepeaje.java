@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class Telepeaje extends Thread {
 
     private final Reloj reloj;
-    private final boolean habilitada = false;
+    private boolean habilitada = false;
     private final int id_de_hilo;
     private final String direccion;
     private boolean estado;
@@ -33,40 +33,34 @@ public class Telepeaje extends Thread {
 
     @Override
     public void run() {
-        while (Proyecto_peaje.cantidadEntrada> Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+        while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait();
+                        reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
                 }
             }
-            Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
+            Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getTelepeaje(direccion);
             if (v != null) {
+                int tiempoActual = (int) System.currentTimeMillis();
+                v.setHoraSalida(tiempoActual);
                 System.out.println(v.pasar_a_String());
-                try {
-                    Logger.agregarVehiculo(v.pasar_a_String());
-                    Thread.currentThread().sleep(1);
-                } catch (InterruptedException ex) {
-                    java.util.logging.Logger.getLogger(Telepeaje.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Logger.agregarVehiculo(v.pasar_a_String());
+                if (v.getGeneraAccidente()) {
+                        setHabilitada(false);
+                    }
             }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Telepeaje.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
-    public void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
-        }
+    public void setHabilitada(boolean habilitada) {
+        this.habilitada = habilitada;
+    }
+
+    public boolean getHabilitada() {
+        return habilitada;
     }
 }

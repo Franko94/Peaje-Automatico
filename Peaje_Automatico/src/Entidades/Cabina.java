@@ -22,7 +22,7 @@ public class Cabina extends Thread {
     private final int id_de_hilo;
     private final String direccion; // esto hay que verlo
     private boolean estado;
-    private final int contador = 0;
+    private int contador = 20;
 
     public Cabina(int idHilo, Reloj r, String dir) {
         super();
@@ -43,46 +43,33 @@ public class Cabina extends Thread {
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(estado) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo) != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait();
+
+                        reloj.wait(1);
                     }
                 } catch (InterruptedException e) {
                 }
             }
-            if (getHabilitada()) {
-                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getVehiculo(direccion);
+            if (getHabilitada()& contador==0) {
+                contador =5;
+                Vehiculo v = Colas_Vehiculos_ManualesyAutomaticos.getManual(direccion);
                 if (v != null) {
+                    int tiempoActual = (int) System.currentTimeMillis();
+                    v.setHoraSalida(tiempoActual);
                     System.out.println(v.pasar_a_String());
-                    try {
-                        Logger.agregarVehiculo(v.pasar_a_String());
-                        Thread.currentThread().sleep(1);
-                    } catch (InterruptedException ex) {
-                        java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Logger.agregarVehiculo(v.pasar_a_String());
                     if (v.getGeneraAccidente()) {
                         setHabilitada(false);
                     }
                 }
 
             }
+            else{
+                contador --;
+            }
             reloj.hiloEjecutado(id_de_hilo);
-            try {
-                cambiarEstado();
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(Cabina.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
-
-    public void cambiarEstado() throws InterruptedException {
-        estado = estado != true;
-        synchronized (reloj) {
-            if (reloj.chequearEstados() == true) {
-                reloj.notifyAll();
-            }
         }
     }
 }

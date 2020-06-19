@@ -40,8 +40,8 @@ public class Logger {
         COLAVEHICULOS.add(linea);
         Proyecto_peaje.cantidadSalida ++;
         if(Proyecto_peaje.cantidadSalida == Proyecto_peaje.cantidadEntrada){
-            guardarVehiculos();
-            log();
+            //guardarVehiculos();
+            //log();
         }
     }
 
