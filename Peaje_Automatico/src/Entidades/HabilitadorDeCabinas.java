@@ -5,19 +5,17 @@
  */
 package Entidades;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Usuario
  */
 public class HabilitadorDeCabinas extends Thread {
+
     private final Reloj reloj;
     private final int id_de_hilo;
     private boolean estado;
-    private int contador = 30;
+    private int contadorc = -1;
+    private int contadort = -1;
 
     public HabilitadorDeCabinas(Reloj r, int idHilo) {
         super();
@@ -25,32 +23,39 @@ public class HabilitadorDeCabinas extends Thread {
         this.id_de_hilo = idHilo;
         this.estado = false;
     }
-    
+
     @Override
     public void run() {
         while (Proyecto_peaje.cantidadEntrada > Proyecto_peaje.cantidadSalida) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo, "habilitador de cabinas") != true) {
                 try {
                     synchronized (reloj) {
-                        reloj.wait(1);
+                        reloj.wait(5);
                     }
                 } catch (InterruptedException e) {
                 }
             }
-            if(contador ==0){
-                contador=30;
-            for(Cabina cabina : Peaje.getListaCabinas() ){
-                    if(!cabina.getHabilitada()){
+            if (contadorc <= 0) {
+                contadorc = 600;
+                for (Cabina cabina : Peaje.getListaCabinas()) {
+                    if (!cabina.getHabilitada()) {
                         cabina.setHabilitada(true);
                     }
                 }
-            for(Telepeaje telepeaje : Peaje.getListaTelepeaje()){
-                    if(!telepeaje.getHabilitada()){
+            } else {
+                contadorc--;
+            }
+            if (contadort <= 0) {
+                contadort =350;
+                for (Telepeaje telepeaje : Peaje.getListaTelepeaje()) {
+                    if (!telepeaje.getHabilitada()) {
                         telepeaje.setHabilitada(true);
                     }
                 }
-            reloj.hiloEjecutado(id_de_hilo);}
-            else{contador--;}
+            } else {
+                contadort--;
+            }
+            reloj.hiloEjecutado("Habilitador de cabinas", id_de_hilo);
         }
     }
 }

@@ -4,10 +4,7 @@
  * and open the template in the editor.
  */
 package Entidades.Colas;
-
-import Entidades.Reloj;
 import Entidades.Vehiculo;
-import Logger.Logger;
 import java.util.LinkedList;
 import java.util.Queue;
 

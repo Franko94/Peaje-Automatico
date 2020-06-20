@@ -22,10 +22,9 @@ public class Cola_Comun_Ruta {
         if (v.getDireccion().equalsIgnoreCase("este")) {
             colaEste.add(v);
         } else {
-            colaOeste.add(v);//cambiar para dos 
+            colaOeste.add(v);
         }
     }
-
     public synchronized static Vehiculo getVehiculo(String sentido) {
             if (sentido.equalsIgnoreCase("este")) {
                 return colaEste.poll();
@@ -43,7 +42,3 @@ public class Cola_Comun_Ruta {
         }
     }
 }
-/**
- *
- * hay que hacer la cola de los manuales/automaticos
- */

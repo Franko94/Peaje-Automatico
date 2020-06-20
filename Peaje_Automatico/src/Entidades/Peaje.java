@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 package Entidades;
-
-import Entidades.Enums.PreciosDeVehiculos;
-import java.util.LinkedList;
-import Logger.Logger;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 /**
  *
@@ -42,7 +37,7 @@ public class Peaje extends Thread {
     @Override
     public void run() {
         while (true) {
-            if (reloj.nuevoCiclo(id_de_hilo) != true) {
+            if (reloj.nuevoCiclo(id_de_hilo,"peaje") != true) {
                 try {
                     synchronized (reloj) {
                         reloj.wait();
