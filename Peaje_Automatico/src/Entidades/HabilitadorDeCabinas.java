@@ -5,10 +5,6 @@
  */
 package Entidades;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Usuario
@@ -46,7 +42,6 @@ public class HabilitadorDeCabinas extends Thread {
                         cabina.setHabilitada(true);
                     }
                 }
-
             } else {
                 contadorc--;
             }

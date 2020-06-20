@@ -4,12 +4,7 @@
  * and open the template in the editor.
  */
 package Entidades;
-
-import Entidades.Enums.PreciosDeVehiculos;
-import java.util.LinkedList;
-import Logger.Logger;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 /**
  *

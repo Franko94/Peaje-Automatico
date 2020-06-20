@@ -9,7 +9,6 @@ import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Proyecto_peaje;
 import Entidades.Reloj;
 import Entidades.Vehiculo;
-import java.util.logging.Level;
 import Logger.Logger;
 import java.time.LocalDateTime;
 
@@ -53,9 +52,7 @@ public class Caja_de_Frecuencia extends Thread {
         this.id_de_hilo = idhilo;
         this.timempoInicial = (int) System.currentTimeMillis();
         this.direccion = dir;
-
     }
-
     @Override
     public void run() {
 
@@ -79,9 +76,7 @@ public class Caja_de_Frecuencia extends Thread {
                             + id_de_hilo + "," + "Caja de frecuencia,run, El vehiculo " + v.getMatricula() + " ha llegado por la ruta!," + LocalDateTime.now());
                 }
             }
-
             reloj.hiloEjecutado("Caja de frecuencia",id_de_hilo);
         }
     }
-
 }

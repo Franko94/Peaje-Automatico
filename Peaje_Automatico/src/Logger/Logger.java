@@ -41,7 +41,7 @@ public class Logger {
         Proyecto_peaje.cantidadSalida ++;
         if(Proyecto_peaje.cantidadSalida == Proyecto_peaje.cantidadEntrada){
             guardarVehiculos();
-            //log();
+            log();
         }
     }
 

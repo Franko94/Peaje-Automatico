@@ -6,10 +6,7 @@
 package Entidades;
 
 import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import Logger.Logger;
-import java.util.logging.Level;
 
 /**
  *

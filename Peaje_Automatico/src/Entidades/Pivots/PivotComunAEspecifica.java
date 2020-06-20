@@ -4,25 +4,17 @@
  * and open the template in the editor.
  */
 package Entidades.Pivots;
-
-import Entidades.Cabina;
 import Entidades.Reloj;
 import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
 import Entidades.Proyecto_peaje;
 import Entidades.Vehiculo;
-import java.util.Queue;
-import java.util.logging.Level;
 import Logger.Logger;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author Teo
- */
-/**
- * Dado que los hilos están sincronizados, el retraso por vehiculos especiales
- * se puede implementar aquí
  */
 public class PivotComunAEspecifica extends Thread {
 
@@ -32,13 +24,7 @@ public class PivotComunAEspecifica extends Thread {
     private int id_de_hilo;
     private String direccion;
 
-    /**
-     *
-     * @param retraso
-     *
-     * 20 ms equivale a 30 segundos de la vida real
-     */
-    public PivotComunAEspecifica(int retraso, Reloj r, int idHilo, String dir/*, Queue<Vehiculo> a, Queue<Vehiculo> b, Queue<Vehiculo> c, Queue<Vehiculo> d*/) {
+    public PivotComunAEspecifica(int retraso, Reloj r, int idHilo, String dir) {
         super();
         this.reloj = r;
         this.retraso_por_vehiculos_especiales = retraso;

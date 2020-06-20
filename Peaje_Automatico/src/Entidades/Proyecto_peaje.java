@@ -11,31 +11,16 @@ import Entidades.Colas.Cola_Comun_Ruta;
 import Entidades.Colas.Colas_Vehiculos_ManualesyAutomaticos;
 import Entidades.Pivots.PivotComunAEspecifica;
 import Logger.Logger;
-import java.util.Set;
 
 /**
  *
  * @author Agustín Picos
  */
 public class Proyecto_peaje {
-
-    /**
-     * @param args the command line arguments
-     */
     public static int cantidadEntrada = 0;
     public static int cantidadSalida = 0;
 
     public static void main(String[] args) throws InterruptedException {
-        // TODO code application logic here
-
-        /*
-        CSV
-        Ciclo reloj;ihHilo;Clase;Metodo,descripcion
-        
-         */
-        /**
-         * Acá abajos vamos armado la ejecucion del programa final
-         */
         /**
          * Primero: Creación de todos los objetos
          */
@@ -104,8 +89,4 @@ public class Proyecto_peaje {
          * uno
          */
     }
-
 }
-/**
- * pendiente: hay que manejar los accidentes y la redistribucion de los carriles
- */
